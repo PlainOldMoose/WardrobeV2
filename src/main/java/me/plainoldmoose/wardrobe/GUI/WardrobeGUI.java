@@ -63,7 +63,7 @@ public class WardrobeGUI {
         }
 
         // Add navigation buttons and background elements
-        createGoBackAndCloseButton(wardrobePage1);
+        createCloseButton(wardrobePage1);
         Page1 = wardrobePage1;
         createNextAndPreviousButton(wardrobePage1);
         createBaseBackground(wardrobePage1);
@@ -138,7 +138,7 @@ public class WardrobeGUI {
         }
 
         // Add navigation buttons and background elements
-        createGoBackAndCloseButton(wardrobePage2);
+        createCloseButton(wardrobePage2);
         Page2 = wardrobePage2;
         createNextAndPreviousButton(wardrobePage2);
         createBaseBackground(wardrobePage2);
@@ -706,93 +706,74 @@ public class WardrobeGUI {
         return Button;
     }
 
-    public static void createGoBackAndCloseButton(Inventory inv) {
-        ItemStack Close;
-        ItemMeta CloseMeta;
-        ArrayList CloseLore;
-        Iterator var4;
-        String Lore;
-        if (Wardrobe.ConfigData.getConfig().getBoolean("Go-Back-Button.Enable")) {
-            Close = new ItemStack(Material.ARROW);
-            CloseMeta = Close.getItemMeta();
-            CloseMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getConfig().getString("Go-Back-Button.Name")));
-            CloseLore = new ArrayList();
-            if (Wardrobe.ConfigData.getConfig().getStringList("Go-Back-Button.Lore") != null) {
-                var4 = Wardrobe.ConfigData.getConfig().getStringList("Go-Back-Button.Lore").iterator();
-
-                while(var4.hasNext()) {
-                    Lore = (String)var4.next();
-                    CloseLore.add(ChatColor.translateAlternateColorCodes('&', Lore));
-                }
-            }
-
-            CloseMeta.setLore(CloseLore);
-            Close.setItemMeta(CloseMeta);
-            inv.setItem(Wardrobe.ConfigData.getConfig().getInt("Go-Back-Button.Slot"), Close);
-        }
-
+    /**
+     * Creates a "Close" button in the inventory if enabled in the configuration.
+     *
+     * @param inv The inventory where the "Close" button will be added.
+     */
+    public static void createCloseButton(Inventory inv) {
+        // Check if the "Close" button is enabled
         if (Wardrobe.ConfigData.getConfig().getBoolean("Close-Button.Enable")) {
-            Close = new ItemStack(Material.BARRIER);
-            CloseMeta = Close.getItemMeta();
-            CloseMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getConfig().getString("Close-Button.Name")));
-            CloseLore = new ArrayList();
-            var4 = Wardrobe.ConfigData.getConfig().getStringList("Close-Button.Lore").iterator();
+            ItemStack close = new ItemStack(Material.BARRIER);
+            ItemMeta closeMeta = close.getItemMeta();
+            closeMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getConfig().getString("Close-Button.Name")));
 
-            while(var4.hasNext()) {
-                Lore = (String)var4.next();
-                CloseLore.add(ChatColor.translateAlternateColorCodes('&', Lore));
+            List<String> closeLore = new ArrayList<>();
+            Iterator<String> loreIterator = Wardrobe.ConfigData.getConfig().getStringList("Close-Button.Lore").iterator();
+            while (loreIterator.hasNext()) {
+                String lore = loreIterator.next();
+                closeLore.add(ChatColor.translateAlternateColorCodes('&', lore));
             }
 
-            CloseMeta.setLore(CloseLore);
-            Close.setItemMeta(CloseMeta);
-            inv.setItem(Wardrobe.ConfigData.getConfig().getInt("Close-Button.Slot"), Close);
-        }
+            closeMeta.setLore(closeLore);
+            close.setItemMeta(closeMeta);
 
+            inv.setItem(Wardrobe.ConfigData.getConfig().getInt("Close-Button.Slot"), close);
+        }
     }
 
+    /**
+     * Creates "Next" and "Previous" page navigation buttons in the inventory if enabled in the configuration.
+     *
+     * @param inv The inventory where the navigation buttons will be added.
+     */
     public static void createNextAndPreviousButton(Inventory inv) {
-        ItemStack NextPage;
-        ItemMeta NextPageMeta;
-        ArrayList NextPageLore;
-        Iterator var4;
-        String Lore;
+        // Check if the inventory is Page1
         if (inv == Page1) {
+            // Check if the "Next Page" button is enabled
             if (Wardrobe.ConfigData.getConfig().getBoolean("Next-Page-Button.Enable")) {
-                NextPage = new ItemStack(Material.ARROW);
-                NextPageMeta = NextPage.getItemMeta();
-                NextPageMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getConfig().getString("Next-Page-Button.Name")));
-                NextPageLore = new ArrayList();
-                if (Wardrobe.ConfigData.getConfig().getStringList("Next-Page-Button.Lore") != null) {
-                    var4 = Wardrobe.ConfigData.getConfig().getStringList("Next-Page-Button.Lore").iterator();
+                ItemStack nextPage = new ItemStack(Material.ARROW);
+                ItemMeta nextPageMeta = nextPage.getItemMeta();
+                nextPageMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getConfig().getString("Next-Page-Button.Name")));
 
-                    while(var4.hasNext()) {
-                        Lore = (String)var4.next();
-                        NextPageLore.add(ChatColor.translateAlternateColorCodes('&', Lore));
-                    }
+                List<String> nextPageLore = new ArrayList<>();
+                Iterator<String> loreIterator = Wardrobe.ConfigData.getConfig().getStringList("Next-Page-Button.Lore").iterator();
+                while (loreIterator.hasNext()) {
+                    String lore = loreIterator.next();
+                    nextPageLore.add(ChatColor.translateAlternateColorCodes('&', lore));
                 }
 
-                NextPageMeta.setLore(NextPageLore);
-                NextPage.setItemMeta(NextPageMeta);
-                inv.setItem(Wardrobe.ConfigData.getConfig().getInt("Next-Page-Button.Slot"), NextPage);
+                nextPageMeta.setLore(nextPageLore);
+                nextPage.setItemMeta(nextPageMeta);
+                inv.setItem(Wardrobe.ConfigData.getConfig().getInt("Next-Page-Button.Slot"), nextPage);
             }
-        } else if (inv == Page2 && Wardrobe.ConfigData.getConfig().getBoolean("Previous-Page-Button.Enable")) {
-            NextPage = new ItemStack(Material.ARROW);
-            NextPageMeta = NextPage.getItemMeta();
-            NextPageMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getConfig().getString("Previous-Page-Button.Name")));
-            NextPageLore = new ArrayList();
-            if (Wardrobe.ConfigData.getConfig().getStringList("Previous-Page-Button.Lore") != null) {
-                var4 = Wardrobe.ConfigData.getConfig().getStringList("Previous-Page-Button.Lore").iterator();
-
-                while(var4.hasNext()) {
-                    Lore = (String)var4.next();
-                    NextPageLore.add(ChatColor.translateAlternateColorCodes('&', Lore));
-                }
-            }
-
-            NextPageMeta.setLore(NextPageLore);
-            NextPage.setItemMeta(NextPageMeta);
-            inv.setItem(Wardrobe.ConfigData.getConfig().getInt("Previous-Page-Button.Slot"), NextPage);
         }
+        // Check if the inventory is Page2 and "Previous Page" button is enabled
+        else if (inv == Page2 && Wardrobe.ConfigData.getConfig().getBoolean("Previous-Page-Button.Enable")) {
+            ItemStack previousPage = new ItemStack(Material.ARROW);
+            ItemMeta previousPageMeta = previousPage.getItemMeta();
+            previousPageMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getConfig().getString("Previous-Page-Button.Name")));
 
+            List<String> previousPageLore = new ArrayList<>();
+            Iterator<String> loreIterator = Wardrobe.ConfigData.getConfig().getStringList("Previous-Page-Button.Lore").iterator();
+            while (loreIterator.hasNext()) {
+                String lore = loreIterator.next();
+                previousPageLore.add(ChatColor.translateAlternateColorCodes('&', lore));
+            }
+
+            previousPageMeta.setLore(previousPageLore);
+            previousPage.setItemMeta(previousPageMeta);
+            inv.setItem(Wardrobe.ConfigData.getConfig().getInt("Previous-Page-Button.Slot"), previousPage);
+        }
     }
 }
