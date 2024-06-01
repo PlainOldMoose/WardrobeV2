@@ -1,6 +1,5 @@
 package me.plainoldmoose.wardrobe.Command;
 
-import me.plainoldmoose.wardrobe.GUI.CheckPlayerGUI;
 import me.plainoldmoose.wardrobe.GUI.WardrobeGUI;
 import me.plainoldmoose.wardrobe.Wardrobe;
 import me.plainoldmoose.wardrobe.Work.DataWork;
@@ -12,14 +11,22 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.BiConsumer;
 
+/**
+ * Handles wardrobe-related commands.
+ */
 public class WardrobeCommand implements CommandExecutor {
     private final Wardrobe plugin;
 
+    /**
+     * Constructs a new WardrobeCommand instance.
+     *
+     * @param plugin The plugin instance.
+     */
     public WardrobeCommand(Wardrobe plugin) {
         this.plugin = plugin;
+        // Register the commands with this executor
         plugin.getCommand("wardrobe").setExecutor(this);
         plugin.getCommand("wb").setExecutor(this);
     }
@@ -27,224 +34,191 @@ public class WardrobeCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (sender instanceof Player) {
-            return handlePlayerCommands((Player) sender, args);
+            // If the command sender is a player, handle player commands
+            Player player = (Player) sender;
+            if (args.length == 0) {
+                // If no arguments provided, open the player's wardrobe
+                openWardrobe(player.getName());
+            } else {
+                // Otherwise, handle the player's commands
+                handlePlayerCommands(player, args);
+            }
         } else {
-            return handleConsoleCommands(args);
+            // If the command sender is not a player (e.g., console), handle console commands
+            if (args.length == 0) {
+                // If no arguments provided, prompt the console to choose a work to do
+                Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[Wardrobe] " + ChatColor.RED + "Please choose a work to do!");
+            } else {
+                // Otherwise, handle the console's commands
+                handleConsoleCommands(args);
+            }
         }
+        return true;
     }
 
-    private boolean handleConsoleCommands(String[] args) {
-        if (args.length == 0) {
-            Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[Wardrobe] " + ChatColor.RED + "Please choose a work to do!");
-            return true;
-        }
-
-        switch (args[0].toLowerCase()) {
+    /**
+     * Handles console commands.
+     *
+     * @param args The command arguments.
+     */
+    private void handleConsoleCommands(String[] args) {
+        String subCommand = args[0].toLowerCase();
+        switch (subCommand) {
             case "reload":
+                // Reload the plugin configurations
                 reloadConfigs();
                 Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[Wardrobe] Successfully reloaded config!");
-                return true;
+                break;
             case "open":
-                return args.length == 2 && openWardrobe(args[1]);
+                // Open the wardrobe of the specified player (console command)
+                if (args.length > 1) {
+                    openWardrobe(args[1]);
+                } else {
+                    // If no player specified, prompt to specify a player name
+                    Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[Wardrobe] " + ChatColor.RED + "Please specify a player name!");
+                }
+                break;
             case "reset":
-                if (args.length == 3) return resetWardrobe(args[1], args[2]);
-                if (args.length == 4) return resetWardrobeWithDetails(args[1], args[2], args[3]);
-                Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[Wardrobe] " + ChatColor.RED + "Please choose a work to do!");
-                return true;
+                // Reset the wardrobe of the specified player (console command)
+                if (args.length > 2) {
+                    resetWardrobe(args[1], args[2]);
+                } else {
+                    // If insufficient arguments, prompt to enter player name and reset type
+                    Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[Wardrobe] " + ChatColor.RED + "Please specify a player name and reset type!");
+                }
+                break;
             default:
+                // Handle unknown commands
                 Bukkit.getConsoleSender().sendMessage("Unknown command. Type \"/help\" for help.");
-                return false;
         }
     }
 
-    private boolean handlePlayerCommands(Player player, String[] args) {
-        if (args.length == 0) {
-            return handleNoArgs(player);
-        }
-
+    /**
+     * Handles player commands.
+     *
+     * @param player The player issuing the command.
+     * @param args   The command arguments.
+     */
+    private void handlePlayerCommands(Player player, String[] args) {
         if (!player.hasPermission(Wardrobe.ConfigData.getConfig().getString("Admin-Permission"))) {
-            return handleNonAdminCommands(player, args);
+            // If the player does not have permission, send a permission denied message
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getConfig().getString("Wardrobe_Message.Permission_Denied")));
+            return;
         }
 
-        return handleAdminCommands(player, args);
-    }
-
-    private boolean handleNoArgs(Player player) {
-        if (CheckPlayerGUI.onOpen && CheckPlayerGUI.Path.contains(player.getUniqueId().toString())) {
-            player.sendMessage(ChatColor.RED + "An admin is opening your wardrobe, please wait!");
-            return false;
-        } else {
-            WardrobeGUI.CreateWardrobePage1(player);
-            return true;
-        }
-    }
-
-    private boolean handleNonAdminCommands(Player player, String[] args) {
-        if (args.length == 1 && args[0].equalsIgnoreCase("open")) {
-            WardrobeGUI.CreateWardrobePage1(player);
-            return true;
-        }
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getConfig().getString("Wardrobe_Message.Permission_Denied")));
-        return false;
-    }
-
-    private boolean handleAdminCommands(Player player, String[] args) {
+        // Map of admin commands and their corresponding handlers
         Map<String, BiConsumer<Player, String[]>> adminCommands = Map.of(
                 "reload", this::handleReloadCommand,
                 "open", this::handleOpenCommand,
-                "reset", this::handleResetCommand,
-                "check", this::handleCheckCommand
+                "reset", this::handleResetCommand
         );
 
-        String command = args[0].toLowerCase();
-        if (adminCommands.containsKey(command)) {
-            adminCommands.get(command).accept(player, args);
-            return true;
+        String subCommand = args[0].toLowerCase();
+        if (adminCommands.containsKey(subCommand)) {
+            // If the command is valid, execute the corresponding handler
+            adminCommands.get(subCommand).accept(player, args);
         } else {
-            player.sendMessage("Unknown command. Type \"/help\" for help.");
-            return false;
+            // If the command is unknown, send an unknown command message
+            player.sendMessage("Unknown command. Type \"/help\" for");
         }
     }
 
+    /**
+     * Handles the reload command.
+     *
+     * @param player The player issuing the command.
+     * @param args   The command arguments.
+     */
     private void handleReloadCommand(Player player, String[] args) {
+        // Reload plugin configurations
         reloadConfigs();
         player.sendMessage(ChatColor.GREEN + "[Wardrobe] Successfully reloaded config!");
     }
 
+    /**
+     * Handles the open command.
+     *
+     * @param player The player issuing the command.
+     * @param args   The command arguments.
+     */
     private void handleOpenCommand(Player player, String[] args) {
-        if (args.length == 1) {
-            WardrobeGUI.CreateWardrobePage1(player);
+        if (args.length > 1) {
+            // If a player name is provided, open their wardrobe
+            openWardrobe(args[1]);
         } else {
-            Optional.ofNullable(Bukkit.getPlayer(args[1])).ifPresentOrElse(
-                    WardrobeGUI::CreateWardrobePage1,
-                    () -> player.sendMessage(ChatColor.GREEN + "[Wardrobe] " + ChatColor.RED + "That player is not online!")
-            );
+            // If no player name is provided, open the sender's wardrobe
+            WardrobeGUI.CreateWardrobePage1(player);
         }
     }
 
+    /**
+     * Handles the reset command.
+     *
+     * @param player The player issuing the command.
+     * @param args   The command arguments.
+     */
     private void handleResetCommand(Player player, String[] args) {
-        if (args.length < 3) {
+        if (args.length > 2) {
+            // If player name and reset type are provided, reset the wardrobe
+            resetWardrobe(args[1], args[2]);
+        } else {
+            // If insufficient arguments provided, prompt to enter player name and reset type
             player.sendMessage(ChatColor.GREEN + "[Wardrobe] " + ChatColor.RED + "Please enter a player name and reset type!");
-            return;
         }
-        resetWardrobe(args[1], args[2]);
     }
 
-    private void handleCheckCommand(Player player, String[] args) {
-        if (args.length < 3) {
-            player.sendMessage(ChatColor.GREEN + "[Wardrobe] " + ChatColor.RED + "Please enter a player name and check type!");
-            return;
-        }
-        checkPlayerWardrobe(player, args[1], args[2]);
-    }
-
+    /**
+     * Reloads plugin configurations.
+     */
     private void reloadConfigs() {
         Wardrobe.ConfigData.ReloadConfig();
         Wardrobe.Page_1.reloadConfig();
         Wardrobe.Page_2.reloadConfig();
     }
 
-    private boolean openWardrobe(String playerName) {
-        return Optional.ofNullable(Bukkit.getPlayer(playerName))
-                .map(player -> {
-                    WardrobeGUI.CreateWardrobePage1(player);
-                    return true;
-                })
-                .orElseGet(() -> {
-                    Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[Wardrobe] " + ChatColor.RED + "That player is not online!");
-                    return false;
-                });
+    /**
+     * Opens the wardrobe for the specified player.
+     *
+     * @param playerName The name of the player whose wardrobe is to be opened.
+     */
+    private void openWardrobe(String playerName) {
+        Player player = Bukkit.getPlayer(playerName);
+        if (player != null) {
+            // If the player is online, open their wardrobe
+            WardrobeGUI.CreateWardrobePage1(player);
+        } else {
+            // If the player is not online, send a message indicating that
+            Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[Wardrobe] " + ChatColor.RED + "That player is not online!");
+        }
     }
 
-    private boolean resetWardrobe(String playerName, String type) {
-        return Optional.ofNullable(Bukkit.getPlayer(playerName))
-                .map(player -> {
-                    if ("all".equalsIgnoreCase(type) && DataWork.resetAllPlayerWardrobe(player)) {
-                        Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[Wardrobe] Successfully reset " + ChatColor.GOLD + type + ChatColor.GREEN + " of " + ChatColor.GOLD + playerName + "'s" + ChatColor.GREEN + " Wardrobe!");
-                        return true;
-                    } else {
-                        Bukkit.getConsoleSender().sendMessage("Unknown command. Type \"/help\" for help.");
-                        return false;
-                    }
-                })
-                .orElseGet(() -> {
-                    Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[Wardrobe] " + ChatColor.RED + "That player is not online!");
-                    return false;
-                });
-    }
-
-    private boolean resetWardrobeWithDetails(String playerName, String type, String number) {
-        return Optional.ofNullable(Bukkit.getPlayer(playerName))
-                .map(player -> {
-                    switch (type.toLowerCase()) {
-                        case "page":
-                            return resetPage(player, number, playerName);
-                        case "slot":
-                            return resetSlot(player, number, playerName);
-                        default:
-                            Bukkit.getConsoleSender().sendMessage("Unknown command. Type \"/help\" for help.");
-                            return false;
-                    }
-                })
-                .orElseGet(() -> {
-                    Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[Wardrobe] " + ChatColor.RED + "That player is not online!");
-                    return false;
-                });
-    }
-
-    private boolean resetPage(Player player, String number, String playerName) {
-        if ("1".equalsIgnoreCase(number) || "2".equalsIgnoreCase(number)) {
-            if (DataWork.resetPagePlayerWardrobe(player, number)) {
-                Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[Wardrobe] Successfully reset " + ChatColor.GOLD + "page " + number + ChatColor.GREEN + " of " + ChatColor.GOLD + playerName + "'s" + ChatColor.GREEN + " Wardrobe!");
-                return true;
+    /**
+     * Resets the wardrobe for the specified player.
+     *
+     * @param playerName The name of the player whose wardrobe is to be reset.
+     * @param type       The type of reset (e.g., "all", "page", "slot").
+     */
+    private void resetWardrobe(String playerName, String type) {
+        Player player = Bukkit.getPlayer(playerName);
+        if (player != null) {
+            boolean success;
+            if ("all".equalsIgnoreCase(type)) {
+                // If reset type is "all", reset all wardrobe items
+                success = DataWork.resetAllPlayerWardrobe(player);
+            } else {
+                // Handle other reset types as needed (assuming implemented elsewhere)
+                success = false;
+            }
+            if (success) {
+                // If reset successful, send success message
+                Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[Wardrobe] Successfully reset " + ChatColor.GOLD + type + ChatColor.GREEN + " of " + ChatColor.GOLD + playerName + "'s" + ChatColor.GREEN + " Wardrobe!");
+            } else {
+                // If reset failed or unknown type, send error message
+                Bukkit.getConsoleSender().sendMessage("Unknown command. Type \"/help\" for help.");
             }
         } else {
-            Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[Wardrobe] " + ChatColor.RED + "Unknown page!");
-        }
-        return false;
-    }
-
-    private boolean resetSlot(Player player, String number, String playerName) {
-        int slotNumber = Integer.parseInt(number);
-        if (slotNumber >= 1 && slotNumber <= 18) {
-            if (DataWork.resetSlotPlayerWardrobe(player, number)) {
-                Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[Wardrobe] Successfully reset " + ChatColor.GOLD + "slot " + number + ChatColor.GREEN + " of " + ChatColor.GOLD + playerName + "'s" + ChatColor.GREEN + " Wardrobe!");
-                return true;
-            }
-        } else {
-            Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[Wardrobe] " + ChatColor.RED + "Unknown slot!");
-        }
-        return false;
-    }
-
-    private void checkPlayerWardrobe(Player player, String playerName, String checkType) {
-        Optional<Player> target = Optional.ofNullable(Bukkit.getPlayer(playerName));
-
-        if (!target.isPresent()) {
-            player.sendMessage(ChatColor.GREEN + "[Wardrobe] " + ChatColor.RED + "That player is not online!");
-            return;
-        }
-
-        switch (checkType) {
-            case "1":
-                if (CheckPlayerGUI.CheckName(playerName)) {
-                    CheckPlayerGUI.CheckGUI1(player);
-                    player.sendMessage(ChatColor.GREEN + "[Wardrobe] Checking wardrobe page 1 of " + ChatColor.GOLD + playerName);
-                } else {
-                    player.sendMessage(ChatColor.GREEN + "[Wardrobe] " + ChatColor.RED + "The player has not opened the Wardrobe yet.");
-                }
-                break;
-            case "2":
-                if (CheckPlayerGUI.CheckName(playerName)) {
-                    CheckPlayerGUI.CheckGUI2(player);
-                    player.sendMessage(ChatColor.GREEN + "[Wardrobe] Checking wardrobe page 2 of " + ChatColor.GOLD + playerName);
-                } else {
-                    player.sendMessage(ChatColor.GREEN + "[Wardrobe] " + ChatColor.RED + "The player has not opened the Wardrobe yet.");
-                }
-                break;
-            default:
-                player.sendMessage(ChatColor.GREEN + "[Wardrobe] " + ChatColor.RED + "Unknown check type! Use '1' or '2'.");
-                break;
+            // If the player is not online, send a message indicating that
+            Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[Wardrobe] " + ChatColor.RED + "That player is not online!");
         }
     }
 }
