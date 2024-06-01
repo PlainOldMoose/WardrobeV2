@@ -601,7 +601,7 @@ public class GUIWork {
                                             inv.setItem(ClickedSlot, WardrobeGUI.CreateEquippedButton(ClickedSlot - 36, inv, Title));
                                             Wardrobe.Page_2.getConfig().set(String.valueOf(p.getUniqueId().toString()) + "." + Path + ".Button", "Ready");
                                             Wardrobe.Page_2.saveConfig();
-                                            Wardrobe.Page_2.ReloadConfig();
+                                            Wardrobe.Page_2.reloadConfig();
                                             return;
                                         }
                                     }
@@ -666,7 +666,7 @@ public class GUIWork {
                                             inv.setItem(ClickedSlot, WardrobeGUI.CreateEquippedButton(ClickedSlot - 36, inv, Title));
                                             Wardrobe.Page_1.getConfig().set(String.valueOf(p.getUniqueId().toString()) + "." + Path + ".Button", "Ready");
                                             Wardrobe.Page_1.saveConfig();
-                                            Wardrobe.Page_1.ReloadConfig();
+                                            Wardrobe.Page_1.reloadConfig();
                                             return;
                                         }
                                     }

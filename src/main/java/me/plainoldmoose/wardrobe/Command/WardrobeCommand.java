@@ -140,8 +140,8 @@ public class WardrobeCommand implements CommandExecutor {
 
     private void reloadConfigs() {
         Wardrobe.ConfigData.ReloadConfig();
-        Wardrobe.Page_1.ReloadConfig();
-        Wardrobe.Page_2.ReloadConfig();
+        Wardrobe.Page_1.reloadConfig();
+        Wardrobe.Page_2.reloadConfig();
     }
 
     private boolean openWardrobe(String playerName) {
@@ -159,7 +159,7 @@ public class WardrobeCommand implements CommandExecutor {
     private boolean resetWardrobe(String playerName, String type) {
         return Optional.ofNullable(Bukkit.getPlayer(playerName))
                 .map(player -> {
-                    if ("all".equalsIgnoreCase(type) && DataWork.ResetAllPlayerWardrobe(player)) {
+                    if ("all".equalsIgnoreCase(type) && DataWork.resetAllPlayerWardrobe(player)) {
                         Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[Wardrobe] Successfully reset " + ChatColor.GOLD + type + ChatColor.GREEN + " of " + ChatColor.GOLD + playerName + "'s" + ChatColor.GREEN + " Wardrobe!");
                         return true;
                     } else {
@@ -194,7 +194,7 @@ public class WardrobeCommand implements CommandExecutor {
 
     private boolean resetPage(Player player, String number, String playerName) {
         if ("1".equalsIgnoreCase(number) || "2".equalsIgnoreCase(number)) {
-            if (DataWork.ResetPagePlayerWardrobe(player, number)) {
+            if (DataWork.resetPagePlayerWardrobe(player, number)) {
                 Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[Wardrobe] Successfully reset " + ChatColor.GOLD + "page " + number + ChatColor.GREEN + " of " + ChatColor.GOLD + playerName + "'s" + ChatColor.GREEN + " Wardrobe!");
                 return true;
             }
@@ -207,7 +207,7 @@ public class WardrobeCommand implements CommandExecutor {
     private boolean resetSlot(Player player, String number, String playerName) {
         int slotNumber = Integer.parseInt(number);
         if (slotNumber >= 1 && slotNumber <= 18) {
-            if (DataWork.ResetSlotPlayerWardrobe(player, number)) {
+            if (DataWork.resetSlotPlayerWardrobe(player, number)) {
                 Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[Wardrobe] Successfully reset " + ChatColor.GOLD + "slot " + number + ChatColor.GREEN + " of " + ChatColor.GOLD + playerName + "'s" + ChatColor.GREEN + " Wardrobe!");
                 return true;
             }

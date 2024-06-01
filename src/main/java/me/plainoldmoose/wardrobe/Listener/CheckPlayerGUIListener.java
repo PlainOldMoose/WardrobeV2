@@ -75,7 +75,7 @@ public class CheckPlayerGUIListener implements Listener {
                 }
 
                 Wardrobe.Page_1.saveConfig();
-                Wardrobe.Page_1.ReloadConfig();
+                Wardrobe.Page_1.reloadConfig();
             } else if (e.getView().getTitle().equals(WardrobeGUI.Page2Name)) {
                 Wardrobe.Page_2.getConfig().set(CheckPlayerGUI.CheckPlayerMain.getUniqueId().toString() + ".name", CheckPlayerGUI.CheckPlayerMain.getName());
 
@@ -129,7 +129,7 @@ public class CheckPlayerGUIListener implements Listener {
                 }
 
                 Wardrobe.Page_2.saveConfig();
-                Wardrobe.Page_2.ReloadConfig();
+                Wardrobe.Page_2.reloadConfig();
             }
 
             CheckPlayerGUI.onOpen = false;

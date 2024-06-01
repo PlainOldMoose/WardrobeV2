@@ -120,7 +120,7 @@ public class WardrobeGUI {
                         }
 
                         Wardrobe.Page_2.saveConfig();
-                        Wardrobe.Page_2.ReloadConfig();
+                        Wardrobe.Page_2.reloadConfig();
                     }
                 }
             }

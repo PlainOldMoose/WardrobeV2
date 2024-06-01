@@ -237,7 +237,7 @@ public class WardrobeListener implements Listener {
                 }
 
                 Wardrobe.Page_1.saveConfig();
-                Wardrobe.Page_1.ReloadConfig();
+                Wardrobe.Page_1.reloadConfig();
             } else if (e.getView().getTitle().equals(WardrobeGUI.Page2Name)) {
                 Wardrobe.Page_2.getConfig().set(e.getPlayer().getUniqueId().toString() + ".name", e.getPlayer().getName());
 
@@ -291,7 +291,7 @@ public class WardrobeListener implements Listener {
                 }
 
                 Wardrobe.Page_2.saveConfig();
-                Wardrobe.Page_2.ReloadConfig();
+                Wardrobe.Page_2.reloadConfig();
             }
         }
 

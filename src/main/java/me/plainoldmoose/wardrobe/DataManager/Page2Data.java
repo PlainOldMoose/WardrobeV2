@@ -20,7 +20,7 @@ public class Page2Data {
         this.saveDefaultConfig();
     }
 
-    public void ReloadConfig() {
+    public void reloadConfig() {
         if (this.Page2 == null) {
             this.Page2 = new File("plugins/Wardrobe/Page2.yml");
         }
@@ -36,7 +36,7 @@ public class Page2Data {
 
     public FileConfiguration getConfig() {
         if (this.dataPage2 == null) {
-            this.ReloadConfig();
+            this.reloadConfig();
         }
 
         return this.dataPage2;
