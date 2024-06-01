@@ -557,93 +557,133 @@ public class WardrobeGUI {
         return prefix;
     }
 
-    public static ItemStack createEmptyButton(int Slot, Inventory inv, String Title) {
-        ItemStack Button = new ItemStack(Material.DIRT);
-        ItemMeta ButtonMeta = Button.getItemMeta();
-        String Name;
+    /**
+     * Creates an empty button ItemStack for a specified slot in the inventory.
+     *
+     * @param slotIndex The index of the slot.
+     * @param inventory The inventory.
+     * @param title     The title of the inventory.
+     * @return The empty button ItemStack.
+     */
+    public static ItemStack createEmptyButton(int slotIndex, Inventory inventory, String title) {
+        // Initialize default button ItemStack
+        ItemStack button = new ItemStack(Material.DIRT);
+        ItemMeta buttonMeta = button.getItemMeta();
+        String materialName;
+
+        // Determine button material based on Minecraft version
         if (Ver.contains("1.8") || Ver.contains("1.9") || Ver.contains("1.10") || Ver.contains("1.11") || Ver.contains("1.12")) {
-            Name = "INK_SACK";
-            Button.setType(Material.valueOf(Name));
-            Button.setDurability((short)8);
+            materialName = "INK_SACK";
+            button.setType(Material.valueOf(materialName));
+            button.setDurability((short) 8); // Set durability for pre-1.13 versions
         }
 
         if (Ver.contains("1.13") || Ver.contains("1.14") || Ver.contains("1.15") || Ver.contains("1.16") || Ver.contains("1.17") || Ver.contains("1.18") || Ver.contains("1.19") || Ver.contains("1.20")) {
-            Name = "GRAY_DYE";
-            Button.setType(Material.valueOf(Name));
+            materialName = "GRAY_DYE";
+            button.setType(Material.valueOf(materialName)); // Set material for 1.13+ versions
         }
 
-        Name = "";
-        if (Title.contains(Page1Name)) {
-            Name = Wardrobe.ConfigData.getConfig().getString("Availabel-Slot.Empty-Slot-Button.Name").replace("%Slot%", Integer.toString(Slot + 1));
-        } else if (Title.contains(Page2Name)) {
-            Name = Wardrobe.ConfigData.getConfig().getString("Availabel-Slot.Empty-Slot-Button.Name").replace("%Slot%", Integer.toString(Slot + 10));
+        // Determine button display name based on the title
+        String buttonName = "";
+        if (title.contains(Page1Name)) {
+            buttonName = Wardrobe.ConfigData.getConfig().getString("Availabel-Slot.Empty-Slot-Button.Name").replace("%Slot%", Integer.toString(slotIndex + 1));
+        } else if (title.contains(Page2Name)) {
+            buttonName = Wardrobe.ConfigData.getConfig().getString("Availabel-Slot.Empty-Slot-Button.Name").replace("%Slot%", Integer.toString(slotIndex + 10));
         }
 
-        ButtonMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Name));
-        List<String> ButtonLore = new ArrayList();
-        Iterator var7 = Wardrobe.ConfigData.getConfig().getStringList("Availabel-Slot.Empty-Slot-Button.Lore").iterator();
+        // Set display name and lore for the button
+        buttonMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', buttonName));
+        List<String> buttonLore = new ArrayList<>();
+        Iterator<String> loreIterator = Wardrobe.ConfigData.getConfig().getStringList("Availabel-Slot.Empty-Slot-Button.Lore").iterator();
 
-        while(var7.hasNext()) {
-            String Lore = (String)var7.next();
-            ButtonLore.add(ChatColor.translateAlternateColorCodes('&', Lore));
+        // Translate lore color codes and add them to the button lore list
+        while (loreIterator.hasNext()) {
+            String lore = loreIterator.next();
+            buttonLore.add(ChatColor.translateAlternateColorCodes('&', lore));
         }
 
-        ButtonMeta.setLore(ButtonLore);
-        Button.setItemMeta(ButtonMeta);
-        return Button;
+        // Set lore and metadata for the button ItemStack
+        buttonMeta.setLore(buttonLore);
+        button.setItemMeta(buttonMeta);
+        return button;
     }
 
-    public static ItemStack createReadyButton(int Slot, Inventory inv, String Title) {
-        ItemStack Button = new ItemStack(Material.DIRT);
-        ItemMeta ButtonMeta = Button.getItemMeta();
-        String Name;
+    /**
+     * Creates a ready button ItemStack for a specified slot in the inventory.
+     *
+     * @param slotIndex The index of the slot.
+     * @param inventory The inventory.
+     * @param title     The title of the inventory.
+     * @return The ready button ItemStack.
+     */
+    public static ItemStack createReadyButton(int slotIndex, Inventory inventory, String title) {
+        // Initialize default button ItemStack
+        ItemStack button = new ItemStack(Material.DIRT);
+        ItemMeta buttonMeta = button.getItemMeta();
+        String materialName;
+
+        // Determine button material based on Minecraft version
         if (Ver.contains("1.8") || Ver.contains("1.9") || Ver.contains("1.10") || Ver.contains("1.11") || Ver.contains("1.12")) {
-            Name = "INK_SACK";
-            Button.setType(Material.valueOf(Name));
-            Button.setDurability((short)9);
+            materialName = "INK_SACK";
+            button.setType(Material.valueOf(materialName));
+            button.setDurability((short) 9); // Set durability for pre-1.13 versions
         }
 
         if (Ver.contains("1.13") || Ver.contains("1.14") || Ver.contains("1.15") || Ver.contains("1.16") || Ver.contains("1.17") || Ver.contains("1.18") || Ver.contains("1.19") || Ver.contains("1.20")) {
-            Name = "PINK_DYE";
-            Button.setType(Material.valueOf(Name));
+            materialName = "PINK_DYE";
+            button.setType(Material.valueOf(materialName)); // Set material for 1.13+ versions
         }
 
-        Name = "";
-        if (Title.contains(Page1Name)) {
-            Name = Wardrobe.ConfigData.getConfig().getString("Availabel-Slot.Ready-Button.Name").replace("%Slot%", Integer.toString(Slot + 1));
-        } else if (Title.contains(Page2Name)) {
-            Name = Wardrobe.ConfigData.getConfig().getString("Availabel-Slot.Ready-Button.Name").replace("%Slot%", Integer.toString(Slot + 10));
+        // Determine button display name based on the title
+        String buttonName = "";
+        if (title.contains(Page1Name)) {
+            buttonName = Wardrobe.ConfigData.getConfig().getString("Availabel-Slot.Ready-Button.Name").replace("%Slot%", Integer.toString(slotIndex + 1));
+        } else if (title.contains(Page2Name)) {
+            buttonName = Wardrobe.ConfigData.getConfig().getString("Availabel-Slot.Ready-Button.Name").replace("%Slot%", Integer.toString(slotIndex + 10));
         }
 
-        ButtonMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Name));
-        List<String> ButtonLore = new ArrayList();
-        Iterator var7 = Wardrobe.ConfigData.getConfig().getStringList("Availabel-Slot.Ready-Button.Lore").iterator();
+        // Set display name and lore for the button
+        buttonMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', buttonName));
+        List<String> buttonLore = new ArrayList<>();
+        Iterator<String> loreIterator = Wardrobe.ConfigData.getConfig().getStringList("Availabel-Slot.Ready-Button.Lore").iterator();
 
-        while(var7.hasNext()) {
-            String Lore = (String)var7.next();
-            ButtonLore.add(ChatColor.translateAlternateColorCodes('&', Lore));
+        // Translate lore color codes and add them to the button lore list
+        while (loreIterator.hasNext()) {
+            String lore = loreIterator.next();
+            buttonLore.add(ChatColor.translateAlternateColorCodes('&', lore));
         }
 
-        ButtonMeta.setLore(ButtonLore);
-        Button.setItemMeta(ButtonMeta);
-        return Button;
+        // Set lore and metadata for the button ItemStack
+        buttonMeta.setLore(buttonLore);
+        button.setItemMeta(buttonMeta);
+        return button;
     }
 
+    /**
+     * Creates an equipped button for an inventory.
+     *
+     * @param Slot  The slot index of the button.
+     * @param inv   The inventory where the button will be added.
+     * @param Title The title of the inventory.
+     * @return The equipped button as an ItemStack.
+     */
     public static ItemStack createEquippedButton(int Slot, Inventory inv, String Title) {
+        // Create a new ItemStack and its metadata
         ItemStack Button = new ItemStack(Material.DIRT);
         ItemMeta ButtonMeta = Button.getItemMeta();
         String Name;
+
+        // Determine the material based on server version
         if (Ver.contains("1.8") || Ver.contains("1.9") || Ver.contains("1.10") || Ver.contains("1.11") || Ver.contains("1.12")) {
             Name = "INK_SACK";
             Button.setType(Material.valueOf(Name));
-            Button.setDurability((short)10);
-        }
-
-        if (Ver.contains("1.13") || Ver.contains("1.14") || Ver.contains("1.15") || Ver.contains("1.16") || Ver.contains("1.17") || Ver.contains("1.18") || Ver.contains("1.19") || Ver.contains("1.20")) {
+            Button.setDurability((short) 10);
+        } else if (Ver.contains("1.13") || Ver.contains("1.14") || Ver.contains("1.15") || Ver.contains("1.16") || Ver.contains("1.17") || Ver.contains("1.18") || Ver.contains("1.19") || Ver.contains("1.20")) {
             Name = "LIME_DYE";
             Button.setType(Material.valueOf(Name));
         }
 
+        // Determine the display name based on the title
         Name = "";
         if (Title.contains(Page1Name)) {
             Name = Wardrobe.ConfigData.getConfig().getString("Availabel-Slot.Equipped-Button.Name").replace("%Slot%", Integer.toString(Slot + 1));
@@ -651,16 +691,17 @@ public class WardrobeGUI {
             Name = Wardrobe.ConfigData.getConfig().getString("Availabel-Slot.Equipped-Button.Name").replace("%Slot%", Integer.toString(Slot + 10));
         }
 
+        // Set display name and lore for the button
         ButtonMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Name));
-        List<String> ButtonLore = new ArrayList();
-        Iterator var7 = Wardrobe.ConfigData.getConfig().getStringList("Availabel-Slot.Equipped-Button.Lore").iterator();
-
-        while(var7.hasNext()) {
-            String Lore = (String)var7.next();
+        List<String> ButtonLore = new ArrayList<>();
+        Iterator<String> loreIterator = Wardrobe.ConfigData.getConfig().getStringList("Availabel-Slot.Equipped-Button.Lore").iterator();
+        while (loreIterator.hasNext()) {
+            String Lore = loreIterator.next();
             ButtonLore.add(ChatColor.translateAlternateColorCodes('&', Lore));
         }
-
         ButtonMeta.setLore(ButtonLore);
+
+        // Apply metadata to the ItemStack and return it
         Button.setItemMeta(ButtonMeta);
         return Button;
     }
