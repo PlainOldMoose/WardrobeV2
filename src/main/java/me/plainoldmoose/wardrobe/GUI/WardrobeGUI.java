@@ -23,7 +23,12 @@ public class WardrobeGUI {
     public static String Page1Name = "";
     public static String Page2Name = "";
 
-    public static void CreateWardrobePage1(Player p) {
+    /**
+     * Creates and opens the first page of the wardrobe GUI for the specified player.
+     *
+     * @param p The player to create the wardrobe GUI for.
+     */
+    public static void createWardrobePage1(Player p) {
         FileConfiguration var10001 = Wardrobe.ConfigData.getConfig();
         String Name = ChatColor.translateAlternateColorCodes('&', var10001.getString("Title")) + " (1/2)";
         Inventory WardrobePage1 = Bukkit.createInventory(p, 54, Name);
@@ -50,11 +55,11 @@ public class WardrobeGUI {
             WardrobePage1.setItem(i, Background);
         }
 
-        CreateGoBackAndCloseButton(WardrobePage1);
+        createGoBackAndCloseButton(WardrobePage1);
         Page1 = WardrobePage1;
-        CreateNextAndPreviousButton(WardrobePage1);
-        CreateBaseBackground(WardrobePage1);
-        CreateAvaiableSlotBackground(WardrobePage1, Name, p);
+        createNextAndPreviousButton(WardrobePage1);
+        createBaseBackground(WardrobePage1);
+        createAvailableSlotBackground(WardrobePage1, Name, p);
 
         String Path;
         for(i = 36; i <= 44; ++i) {
@@ -77,7 +82,7 @@ public class WardrobeGUI {
                 String CheckSlot3 = WardrobePage1.getItem(i - 18).getType().toString();
                 String CheckSlot4 = WardrobePage1.getItem(i - 9).getType().toString();
                 if (CheckSlot1.contains("STAINED_GLASS_PANE") && CheckSlot2.contains("STAINED_GLASS_PANE") && CheckSlot3.contains("STAINED_GLASS_PANE") && CheckSlot4.contains("STAINED_GLASS_PANE")) {
-                    WardrobePage1.setItem(i, CreateEmptyButton(i - 36, WardrobePage1, Name));
+                    WardrobePage1.setItem(i, createEmptyButton(i - 36, WardrobePage1, Name));
                 }
             }
         }
@@ -129,7 +134,12 @@ public class WardrobeGUI {
         p.openInventory(WardrobePage1);
     }
 
-    public static void CreateWardrobePage2(Player p) {
+    /**
+     * Creates and opens the second page of the wardrobe GUI for the specified player.
+     *
+     * @param p The player to create the wardrobe GUI for.
+     */
+    public static void createWardrobePage2(Player p) {
         FileConfiguration var10001 = Wardrobe.ConfigData.getConfig();
         String Name = ChatColor.translateAlternateColorCodes('&', var10001.getString("Title")) + " (2/2)";
         Inventory WardrobePage2 = Bukkit.createInventory(p, 54, Name);
@@ -156,11 +166,11 @@ public class WardrobeGUI {
             WardrobePage2.setItem(i, Background);
         }
 
-        CreateGoBackAndCloseButton(WardrobePage2);
+        createGoBackAndCloseButton(WardrobePage2);
         Page2 = WardrobePage2;
-        CreateNextAndPreviousButton(WardrobePage2);
-        CreateBaseBackground(WardrobePage2);
-        CreateAvaiableSlotBackground(WardrobePage2, Name, p);
+        createNextAndPreviousButton(WardrobePage2);
+        createBaseBackground(WardrobePage2);
+        createAvailableSlotBackground(WardrobePage2, Name, p);
 
         for(i = 36; i <= 44; ++i) {
             String ButtonCheck = "";
@@ -182,7 +192,7 @@ public class WardrobeGUI {
                 String CheckSlot3 = WardrobePage2.getItem(i - 18).getType().toString();
                 String CheckSlot4 = WardrobePage2.getItem(i - 9).getType().toString();
                 if (CheckSlot1.contains("STAINED_GLASS_PANE") && CheckSlot2.contains("STAINED_GLASS_PANE") && CheckSlot3.contains("STAINED_GLASS_PANE") && CheckSlot4.contains("STAINED_GLASS_PANE")) {
-                    WardrobePage2.setItem(i, CreateEmptyButton(i - 36, WardrobePage2, Name));
+                    WardrobePage2.setItem(i, createEmptyButton(i - 36, WardrobePage2, Name));
                 }
             }
         }
@@ -190,564 +200,224 @@ public class WardrobeGUI {
         p.openInventory(WardrobePage2);
     }
 
-    public static void CreateBaseBackground(Inventory inv) {
-        ItemStack Background;
-        ItemMeta BackgroundMeta;
-        String Mat;
-        ItemStack Button;
-        ItemMeta ButtonMeta;
-        String Name;
-        ArrayList ButtonLore;
-        Iterator var8;
-        String Lore;
-        int i;
-        ArrayList BackgroundLore;
-        Iterator var13;
+    /**
+     * Creates a base background for the inventory.
+     *
+     * @param inv The inventory to create the background for.
+     */
+    public static void createBaseBackground(Inventory inv) {
+        // Declare variables for background and button items
+        ItemStack background;
+        ItemMeta backgroundMeta;
+        String mat;
+        ItemStack button;
+        ItemMeta buttonMeta;
+        String name;
+        ArrayList<String> buttonLore;
+        String lore;
+        ArrayList<String> backgroundLore;
+
+        // Check if the inventory is for Page1
         if (inv == Page1) {
-            Background = new ItemStack(Material.DIRT);
-            BackgroundMeta = Background.getItemMeta();
+            // Set background material based on server version
+            background = new ItemStack(Material.DIRT);
+            backgroundMeta = background.getItemMeta();
+
+            // Check server version and set appropriate background material
             if (!Ver.contains("1.8") && !Ver.contains("1.9") && !Ver.contains("1.10") && !Ver.contains("1.11") && !Ver.contains("1.12")) {
-                if (Ver.contains("1.13") || Ver.contains("1.14") || Ver.contains("1.15") || Ver.contains("1.16") || Ver.contains("1.17") || Ver.contains("1.18") || Ver.contains("1.19") || Ver.contains("1.20")) {
-                    Mat = "BLACK_STAINED_GLASS_PANE";
-                    Background.setType(Material.valueOf(Mat));
-                }
+                // For newer versions, use BLACK_STAINED_GLASS_PANE
+                mat = "BLACK_STAINED_GLASS_PANE";
+                background.setType(Material.valueOf(mat));
             } else {
-                Mat = "STAINED_GLASS_PANE";
-                Background.setType(Material.valueOf(Mat));
-                Background.setDurability((short)15);
+                // For older versions, use STAINED_GLASS_PANE with durability
+                mat = "STAINED_GLASS_PANE";
+                background.setType(Material.valueOf(mat));
+                background.setDurability((short) 15);
             }
 
-            for(i = 0; i <= 44; ++i) {
+            // Loop through inventory slots to set display name and lore
+            for (int i = 0; i <= 44; ++i) {
                 if (i >= 0 && i <= 8) {
-                    Name = Wardrobe.ConfigData.getConfig().getString("Locked-Slot.Helmet-Slot.Name").replace("%Slot%", Integer.toString(i + 1));
-                    BackgroundMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Name));
-                    BackgroundLore = new ArrayList();
-
-                    for(var13 = Wardrobe.ConfigData.getConfig().getStringList("Locked-Slot.Helmet-Slot.Lore").iterator(); var13.hasNext(); BackgroundLore.add(ChatColor.translateAlternateColorCodes('&', Lore))) {
-                        Lore = (String)var13.next();
-                        if (i + 1 == 1) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-1.Require-Prefix"));
-                        }
-
-                        if (i + 1 == 2) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-2.Require-Prefix"));
-                        }
-
-                        if (i + 1 == 3) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-3.Require-Prefix"));
-                        }
-
-                        if (i + 1 == 4) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-4.Require-Prefix"));
-                        }
-
-                        if (i + 1 == 5) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-5.Require-Prefix"));
-                        }
-
-                        if (i + 1 == 6) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-6.Require-Prefix"));
-                        }
-
-                        if (i + 1 == 7) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-7.Require-Prefix"));
-                        }
-
-                        if (i + 1 == 8) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-8.Require-Prefix"));
-                        }
-
-                        if (i + 1 == 9) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-9.Require-Prefix"));
-                        }
+                    // Helmet slots
+                    name = Wardrobe.ConfigData.getConfig().getString("Locked-Slot.Helmet-Slot.Name").replace("%Slot%", Integer.toString(i + 1));
+                    backgroundMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
+                    backgroundLore = new ArrayList<>();
+                    for (String slotLore : Wardrobe.ConfigData.getConfig().getStringList("Locked-Slot.Helmet-Slot.Lore")) {
+                        lore = slotLore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-" + (i + 1) + ".Require-Prefix"));
+                        backgroundLore.add(ChatColor.translateAlternateColorCodes('&', lore));
                     }
-
-                    BackgroundMeta.setLore(BackgroundLore);
-                    Background.setItemMeta(BackgroundMeta);
-                    inv.setItem(i, Background);
+                    backgroundMeta.setLore(backgroundLore);
+                    background.setItemMeta(backgroundMeta);
+                    inv.setItem(i, background);
                 } else if (i >= 9 && i <= 17) {
-                    Name = Wardrobe.ConfigData.getConfig().getString("Locked-Slot.Chestplate-Slot.Name").replace("%Slot%", Integer.toString(i - 8));
-                    BackgroundMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Name));
-                    BackgroundLore = new ArrayList();
-
-                    for(var13 = Wardrobe.ConfigData.getConfig().getStringList("Locked-Slot.Chestplate-Slot.Lore").iterator(); var13.hasNext(); BackgroundLore.add(ChatColor.translateAlternateColorCodes('&', Lore))) {
-                        Lore = (String)var13.next();
-                        if (i - 8 == 1) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-1.Require-Prefix"));
-                        }
-
-                        if (i - 8 == 2) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-2.Require-Prefix"));
-                        }
-
-                        if (i - 8 == 3) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-3.Require-Prefix"));
-                        }
-
-                        if (i - 8 == 4) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-4.Require-Prefix"));
-                        }
-
-                        if (i - 8 == 5) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-5.Require-Prefix"));
-                        }
-
-                        if (i - 8 == 6) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-6.Require-Prefix"));
-                        }
-
-                        if (i - 8 == 7) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-7.Require-Prefix"));
-                        }
-
-                        if (i - 8 == 8) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-8.Require-Prefix"));
-                        }
-
-                        if (i - 8 == 9) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-9.Require-Prefix"));
-                        }
+                    // Chestplate slots
+                    name = Wardrobe.ConfigData.getConfig().getString("Locked-Slot.Chestplate-Slot.Name").replace("%Slot%", Integer.toString(i - 8));
+                    backgroundMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
+                    backgroundLore = new ArrayList<>();
+                    for (String slotLore : Wardrobe.ConfigData.getConfig().getStringList("Locked-Slot.Chestplate-Slot.Lore")) {
+                        lore = slotLore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-" + (i - 8) + ".Require-Prefix"));
+                        backgroundLore.add(ChatColor.translateAlternateColorCodes('&', lore));
                     }
-
-                    BackgroundMeta.setLore(BackgroundLore);
-                    Background.setItemMeta(BackgroundMeta);
-                    inv.setItem(i, Background);
+                    backgroundMeta.setLore(backgroundLore);
+                    background.setItemMeta(backgroundMeta);
+                    inv.setItem(i, background);
                 } else if (i >= 18 && i <= 26) {
-                    Name = Wardrobe.ConfigData.getConfig().getString("Locked-Slot.Leggings-Slot.Name").replace("%Slot%", Integer.toString(i - 17));
-                    BackgroundMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Name));
-                    BackgroundLore = new ArrayList();
-
-                    for(var13 = Wardrobe.ConfigData.getConfig().getStringList("Locked-Slot.Leggings-Slot.Lore").iterator(); var13.hasNext(); BackgroundLore.add(ChatColor.translateAlternateColorCodes('&', Lore))) {
-                        Lore = (String)var13.next();
-                        if (i - 17 == 1) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-1.Require-Prefix"));
-                        }
-
-                        if (i - 17 == 2) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-2.Require-Prefix"));
-                        }
-
-                        if (i - 17 == 3) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-3.Require-Prefix"));
-                        }
-
-                        if (i - 17 == 4) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-4.Require-Prefix"));
-                        }
-
-                        if (i - 17 == 5) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-5.Require-Prefix"));
-                        }
-
-                        if (i - 17 == 6) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-6.Require-Prefix"));
-                        }
-
-                        if (i - 17 == 7) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-7.Require-Prefix"));
-                        }
-
-                        if (i - 17 == 8) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-8.Require-Prefix"));
-                        }
-
-                        if (i - 17 == 9) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-9.Require-Prefix"));
-                        }
+                    // Leggings slots
+                    name = Wardrobe.ConfigData.getConfig().getString("Locked-Slot.Leggings-Slot.Name").replace("%Slot%", Integer.toString(i - 17));
+                    backgroundMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
+                    backgroundLore = new ArrayList<>();
+                    for (String slotLore : Wardrobe.ConfigData.getConfig().getStringList("Locked-Slot.Leggings-Slot.Lore")) {
+                        lore = slotLore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-" + (i - 17) + ".Require-Prefix"));
+                        backgroundLore.add(ChatColor.translateAlternateColorCodes('&', lore));
                     }
-
-                    BackgroundMeta.setLore(BackgroundLore);
-                    Background.setItemMeta(BackgroundMeta);
-                    inv.setItem(i, Background);
+                    backgroundMeta.setLore(backgroundLore);
+                    background.setItemMeta(backgroundMeta);
+                    inv.setItem(i, background);
                 } else if (i >= 27 && i <= 35) {
-                    Name = Wardrobe.ConfigData.getConfig().getString("Locked-Slot.Boots-Slot.Name").replace("%Slot%", Integer.toString(i - 26));
-                    BackgroundMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Name));
-                    BackgroundLore = new ArrayList();
-
-                    for(var13 = Wardrobe.ConfigData.getConfig().getStringList("Locked-Slot.Boots-Slot.Lore").iterator(); var13.hasNext(); BackgroundLore.add(ChatColor.translateAlternateColorCodes('&', Lore))) {
-                        Lore = (String)var13.next();
-                        if (i - 26 == 1) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-1.Require-Prefix"));
-                        }
-
-                        if (i - 26 == 2) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-2.Require-Prefix"));
-                        }
-
-                        if (i - 26 == 3) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-3.Require-Prefix"));
-                        }
-
-                        if (i - 26 == 4) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-4.Require-Prefix"));
-                        }
-
-                        if (i - 26 == 5) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-5.Require-Prefix"));
-                        }
-
-                        if (i - 26 == 6) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-6.Require-Prefix"));
-                        }
-
-                        if (i - 26 == 7) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-7.Require-Prefix"));
-                        }
-
-                        if (i - 26 == 8) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-8.Require-Prefix"));
-                        }
-
-                        if (i - 26 == 9) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-9.Require-Prefix"));
-                        }
+                    // Boots slots
+                    name = Wardrobe.ConfigData.getConfig().getString("Locked-Slot.Boots-Slot.Name").replace("%Slot%", Integer.toString(i - 26));
+                    backgroundMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
+                    backgroundLore = new ArrayList<>();
+                    for (String slotLore : Wardrobe.ConfigData.getConfig().getStringList("Locked-Slot.Boots-Slot.Lore")) {
+                        lore = slotLore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-" + (i - 26) + ".Require-Prefix"));
+                        backgroundLore.add(ChatColor.translateAlternateColorCodes('&', lore));
                     }
-
-                    BackgroundMeta.setLore(BackgroundLore);
-                    Background.setItemMeta(BackgroundMeta);
-                    inv.setItem(i, Background);
+                    backgroundMeta.setLore(backgroundLore);
+                    background.setItemMeta(backgroundMeta);
+                    inv.setItem(i, background);
                 } else if (i >= 36 && i <= 44) {
-                    Button = new ItemStack(Material.DIRT);
-                    ButtonMeta = Button.getItemMeta();
+                    // Locked button slots
+                    button = new ItemStack(Material.DIRT);
+                    buttonMeta = button.getItemMeta();
+
+                    // Set button type based on server version
                     if (Ver.contains("1.8") || Ver.contains("1.9") || Ver.contains("1.10") || Ver.contains("1.11") || Ver.contains("1.12")) {
-                        Name = "INK_SACK";
-                        Button.setType(Material.valueOf(Name));
-                        Button.setDurability((short)1);
+                        name = "INK_SACK";
+                        button.setType(Material.valueOf(name));
+                        button.setDurability((short) 1);
+                    } else if (Ver.contains("1.13")) {
+                        name = "ROSE_RED";
+                        button.setType(Material.valueOf(name));
+                    } else {
+                        name = "RED_DYE";
+                        button.setType(Material.valueOf(name));
                     }
 
-                    if (Ver.contains("1.13")) {
-                        Name = "ROSE_RED";
-                        Button.setType(Material.valueOf(Name));
+                    // Set button display name and lore
+                    name = Wardrobe.ConfigData.getConfig().getString("Locked-Slot.Locked-Button.Name").replace("%Slot%", Integer.toString(i - 26));
+                    buttonMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
+                    buttonLore = new ArrayList<>();
+                    for (String slotLore : Wardrobe.ConfigData.getConfig().getStringList("Locked-Slot.Locked-Button.Lore")) {
+                        lore = slotLore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-" + (i - 26) + ".Require-Prefix"));
+                        buttonLore.add(ChatColor.translateAlternateColorCodes('&', lore));
                     }
-
-                    if (Ver.contains("1.14") || Ver.contains("1.15") || Ver.contains("1.16") || Ver.contains("1.17") || Ver.contains("1.18") || Ver.contains("1.19") || Ver.contains("1.20")) {
-                        Name = "RED_DYE";
-                        Button.setType(Material.valueOf(Name));
-                    }
-
-                    Name = Wardrobe.ConfigData.getConfig().getString("Locked-Slot.Locked-Button.Name").replace("%Slot%", Integer.toString(i - 35));
-                    ButtonMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Name));
-                    ButtonLore = new ArrayList();
-
-                    for(var8 = Wardrobe.ConfigData.getConfig().getStringList("Locked-Slot.Locked-Button.Lore").iterator(); var8.hasNext(); ButtonLore.add(ChatColor.translateAlternateColorCodes('&', Lore))) {
-                        Lore = (String)var8.next();
-                        if (i - 35 == 1) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-1.Require-Prefix"));
-                        }
-
-                        if (i - 35 == 2) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-2.Require-Prefix"));
-                        }
-
-                        if (i - 35 == 3) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-3.Require-Prefix"));
-                        }
-
-                        if (i - 35 == 4) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-4.Require-Prefix"));
-                        }
-
-                        if (i - 35 == 5) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-5.Require-Prefix"));
-                        }
-
-                        if (i - 35 == 6) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-6.Require-Prefix"));
-                        }
-
-                        if (i - 35 == 7) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-7.Require-Prefix"));
-                        }
-
-                        if (i - 35 == 8) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-8.Require-Prefix"));
-                        }
-
-                        if (i - 35 == 9) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-9.Require-Prefix"));
-                        }
-                    }
-
-                    ButtonMeta.setLore(ButtonLore);
-                    Button.setItemMeta(ButtonMeta);
-                    inv.setItem(i, Button);
+                    buttonMeta.setLore(buttonLore);
+                    button.setItemMeta(buttonMeta);
+                    inv.setItem(i, button);
                 }
             }
         } else if (inv == Page2) {
-            Background = new ItemStack(Material.DIRT);
-            BackgroundMeta = Background.getItemMeta();
+            // Same logic as Page1 but different slot numbers
+
+            // Set background material based on server version
+            background = new ItemStack(Material.DIRT);
+            backgroundMeta = background.getItemMeta();
             if (!Ver.contains("1.8") && !Ver.contains("1.9") && !Ver.contains("1.10") && !Ver.contains("1.11") && !Ver.contains("1.12")) {
-                if (Ver.contains("1.13") || Ver.contains("1.14") || Ver.contains("1.15") || Ver.contains("1.16") || Ver.contains("1.17") || Ver.contains("1.18") || Ver.contains("1.19") || Ver.contains("1.20")) {
-                    Mat = "BLACK_STAINED_GLASS_PANE";
-                    Background.setType(Material.valueOf(Mat));
-                }
+                // For newer versions, use BLACK_STAINED_GLASS_PANE
+                mat = "BLACK_STAINED_GLASS_PANE";
+                background.setType(Material.valueOf(mat));
             } else {
-                Mat = "STAINED_GLASS_PANE";
-                Background.setType(Material.valueOf(Mat));
-                Background.setDurability((short)15);
+                // For older versions, use STAINED_GLASS_PANE with durability
+                mat = "STAINED_GLASS_PANE";
+                background.setType(Material.valueOf(mat));
+                background.setDurability((short) 15);
             }
 
-            for(i = 0; i <= 44; ++i) {
+            // Loop through inventory slots to set display name and lore
+            for (int i = 0; i <= 44; ++i) {
                 if (i >= 0 && i <= 8) {
-                    Name = Wardrobe.ConfigData.getConfig().getString("Locked-Slot.Helmet-Slot.Name").replace("%Slot%", Integer.toString(i + 10));
-                    BackgroundMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Name));
-                    BackgroundLore = new ArrayList();
-
-                    for(var13 = Wardrobe.ConfigData.getConfig().getStringList("Locked-Slot.Helmet-Slot.Lore").iterator(); var13.hasNext(); BackgroundLore.add(ChatColor.translateAlternateColorCodes('&', Lore))) {
-                        Lore = (String)var13.next();
-                        if (i + 10 == 10) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-10.Require-Prefix"));
-                        }
-
-                        if (i + 10 == 11) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-11.Require-Prefix"));
-                        }
-
-                        if (i + 10 == 12) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-12.Require-Prefix"));
-                        }
-
-                        if (i + 10 == 13) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-13.Require-Prefix"));
-                        }
-
-                        if (i + 10 == 14) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-14.Require-Prefix"));
-                        }
-
-                        if (i + 10 == 15) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-15.Require-Prefix"));
-                        }
-
-                        if (i + 10 == 16) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-16.Require-Prefix"));
-                        }
-
-                        if (i + 10 == 17) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-17.Require-Prefix"));
-                        }
-
-                        if (i + 10 == 18) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-18.Require-Prefix"));
-                        }
+                    // Helmet slots
+                    name = Wardrobe.ConfigData.getConfig().getString("Locked-Slot.Helmet-Slot.Name").replace("%Slot%", Integer.toString(i + 10));
+                    backgroundMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
+                    backgroundLore = new ArrayList<>();
+                    for (String slotLore : Wardrobe.ConfigData.getConfig().getStringList("Locked-Slot.Helmet-Slot.Lore")) {
+                        lore = slotLore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-" + (i + 10) + ".Require-Prefix"));
+                        backgroundLore.add(ChatColor.translateAlternateColorCodes('&', lore));
                     }
-
-                    BackgroundMeta.setLore(BackgroundLore);
-                    Background.setItemMeta(BackgroundMeta);
-                    inv.setItem(i, Background);
+                    backgroundMeta.setLore(backgroundLore);
+                    background.setItemMeta(backgroundMeta);
+                    inv.setItem(i, background);
                 } else if (i >= 9 && i <= 17) {
-                    Name = Wardrobe.ConfigData.getConfig().getString("Locked-Slot.Chestplate-Slot.Name").replace("%Slot%", Integer.toString(i + 1));
-                    BackgroundMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Name));
-                    BackgroundLore = new ArrayList();
-
-                    for(var13 = Wardrobe.ConfigData.getConfig().getStringList("Locked-Slot.Chestplate-Slot.Lore").iterator(); var13.hasNext(); BackgroundLore.add(ChatColor.translateAlternateColorCodes('&', Lore))) {
-                        Lore = (String)var13.next();
-                        if (i + 1 == 10) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-10.Require-Prefix"));
-                        }
-
-                        if (i + 1 == 11) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-11.Require-Prefix"));
-                        }
-
-                        if (i + 1 == 12) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-12.Require-Prefix"));
-                        }
-
-                        if (i + 1 == 13) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-13.Require-Prefix"));
-                        }
-
-                        if (i + 1 == 14) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-14.Require-Prefix"));
-                        }
-
-                        if (i + 1 == 15) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-15.Require-Prefix"));
-                        }
-
-                        if (i + 1 == 16) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-16.Require-Prefix"));
-                        }
-
-                        if (i + 1 == 17) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-17.Require-Prefix"));
-                        }
-
-                        if (i + 1 == 18) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-18.Require-Prefix"));
-                        }
+                    // Chestplate slots
+                    name = Wardrobe.ConfigData.getConfig().getString("Locked-Slot.Chestplate-Slot.Name").replace("%Slot%", Integer.toString(i + 1));
+                    backgroundMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
+                    backgroundLore = new ArrayList<>();
+                    for (String slotLore : Wardrobe.ConfigData.getConfig().getStringList("Locked-Slot.Chestplate-Slot.Lore")) {
+                        lore = slotLore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-" + (i + 1) + ".Require-Prefix"));
+                        backgroundLore.add(ChatColor.translateAlternateColorCodes('&', lore));
                     }
-
-                    BackgroundMeta.setLore(BackgroundLore);
-                    Background.setItemMeta(BackgroundMeta);
-                    inv.setItem(i, Background);
+                    backgroundMeta.setLore(backgroundLore);
+                    background.setItemMeta(backgroundMeta);
+                    inv.setItem(i, background);
                 } else if (i >= 18 && i <= 26) {
-                    Name = Wardrobe.ConfigData.getConfig().getString("Locked-Slot.Leggings-Slot.Name").replace("%Slot%", Integer.toString(i - 8));
-                    BackgroundMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Name));
-                    BackgroundLore = new ArrayList();
-
-                    for(var13 = Wardrobe.ConfigData.getConfig().getStringList("Locked-Slot.Leggings-Slot.Lore").iterator(); var13.hasNext(); BackgroundLore.add(ChatColor.translateAlternateColorCodes('&', Lore))) {
-                        Lore = (String)var13.next();
-                        if (i - 8 == 10) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-10.Require-Prefix"));
-                        }
-
-                        if (i - 8 == 11) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-11.Require-Prefix"));
-                        }
-
-                        if (i - 8 == 12) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-12.Require-Prefix"));
-                        }
-
-                        if (i - 8 == 13) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-13.Require-Prefix"));
-                        }
-
-                        if (i - 8 == 14) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-14.Require-Prefix"));
-                        }
-
-                        if (i - 8 == 15) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-15.Require-Prefix"));
-                        }
-
-                        if (i - 8 == 16) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-16.Require-Prefix"));
-                        }
-
-                        if (i - 8 == 17) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-17.Require-Prefix"));
-                        }
-
-                        if (i - 8 == 18) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-18.Require-Prefix"));
-                        }
+                    // Leggings slots
+                    name = Wardrobe.ConfigData.getConfig().getString("Locked-Slot.Leggings-Slot.Name").replace("%Slot%", Integer.toString(i - 8));
+                    backgroundMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
+                    backgroundLore = new ArrayList<>();
+                    for (String slotLore : Wardrobe.ConfigData.getConfig().getStringList("Locked-Slot.Leggings-Slot.Lore")) {
+                        lore = slotLore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-" + (i - 8) + ".Require-Prefix"));
+                        backgroundLore.add(ChatColor.translateAlternateColorCodes('&', lore));
                     }
-
-                    BackgroundMeta.setLore(BackgroundLore);
-                    Background.setItemMeta(BackgroundMeta);
-                    inv.setItem(i, Background);
+                    backgroundMeta.setLore(backgroundLore);
+                    background.setItemMeta(backgroundMeta);
+                    inv.setItem(i, background);
                 } else if (i >= 27 && i <= 35) {
-                    Name = Wardrobe.ConfigData.getConfig().getString("Locked-Slot.Boots-Slot.Name").replace("%Slot%", Integer.toString(i - 17));
-                    BackgroundMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Name));
-                    BackgroundLore = new ArrayList();
-
-                    for(var13 = Wardrobe.ConfigData.getConfig().getStringList("Locked-Slot.Boots-Slot.Lore").iterator(); var13.hasNext(); BackgroundLore.add(ChatColor.translateAlternateColorCodes('&', Lore))) {
-                        Lore = (String)var13.next();
-                        if (i - 17 == 10) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-10.Require-Prefix"));
-                        }
-
-                        if (i - 17 == 11) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-11.Require-Prefix"));
-                        }
-
-                        if (i - 17 == 12) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-12.Require-Prefix"));
-                        }
-
-                        if (i - 17 == 13) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-13.Require-Prefix"));
-                        }
-
-                        if (i - 17 == 14) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-14.Require-Prefix"));
-                        }
-
-                        if (i - 17 == 15) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-15.Require-Prefix"));
-                        }
-
-                        if (i - 17 == 16) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-16.Require-Prefix"));
-                        }
-
-                        if (i - 17 == 17) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-17.Require-Prefix"));
-                        }
-
-                        if (i - 17 == 18) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-18.Require-Prefix"));
-                        }
+                    // Boots slots
+                    name = Wardrobe.ConfigData.getConfig().getString("Locked-Slot.Boots-Slot.Name").replace("%Slot%", Integer.toString(i - 17));
+                    backgroundMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
+                    backgroundLore = new ArrayList<>();
+                    for (String slotLore : Wardrobe.ConfigData.getConfig().getStringList("Locked-Slot.Boots-Slot.Lore")) {
+                        lore = slotLore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-" + (i - 17) + ".Require-Prefix"));
+                        backgroundLore.add(ChatColor.translateAlternateColorCodes('&', lore));
                     }
-
-                    BackgroundMeta.setLore(BackgroundLore);
-                    Background.setItemMeta(BackgroundMeta);
-                    inv.setItem(i, Background);
+                    backgroundMeta.setLore(backgroundLore);
+                    background.setItemMeta(backgroundMeta);
+                    inv.setItem(i, background);
                 } else if (i >= 36 && i <= 44) {
-                    Button = new ItemStack(Material.DIRT);
-                    ButtonMeta = Button.getItemMeta();
+                    // Locked button slots
+                    button = new ItemStack(Material.DIRT);
+                    buttonMeta = button.getItemMeta();
+
+                    // Set button type based on server version
                     if (Ver.contains("1.8") || Ver.contains("1.9") || Ver.contains("1.10") || Ver.contains("1.11") || Ver.contains("1.12")) {
-                        Name = "INK_SACK";
-                        Button.setType(Material.valueOf(Name));
-                        Button.setDurability((short)1);
+                        name = "INK_SACK";
+                        button.setType(Material.valueOf(name));
+                        button.setDurability((short) 1);
+                    } else if (Ver.contains("1.13")) {
+                        name = "ROSE_RED";
+                        button.setType(Material.valueOf(name));
+                    } else {
+                        name = "RED_DYE";
+                        button.setType(Material.valueOf(name));
                     }
 
-                    if (Ver.contains("1.13")) {
-                        Name = "ROSE_RED";
-                        Button.setType(Material.valueOf(Name));
+                    // Set button display name and lore
+                    name = Wardrobe.ConfigData.getConfig().getString("Locked-Slot.Locked-Button.Name").replace("%Slot%", Integer.toString(i - 26));
+                    buttonMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
+                    buttonLore = new ArrayList<>();
+                    for (String slotLore : Wardrobe.ConfigData.getConfig().getStringList("Locked-Slot.Locked-Button.Lore")) {
+                        lore = slotLore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-" + (i - 26) + ".Require-Prefix"));
+                        buttonLore.add(ChatColor.translateAlternateColorCodes('&', lore));
                     }
-
-                    if (Ver.contains("1.14") || Ver.contains("1.15") || Ver.contains("1.16") || Ver.contains("1.17") || Ver.contains("1.18") || Ver.contains("1.19") || Ver.contains("1.20")) {
-                        Name = "RED_DYE";
-                        Button.setType(Material.valueOf(Name));
-                    }
-
-                    Name = Wardrobe.ConfigData.getConfig().getString("Locked-Slot.Locked-Button.Name").replace("%Slot%", Integer.toString(i - 26));
-                    ButtonMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Name));
-                    ButtonLore = new ArrayList();
-
-                    for(var8 = Wardrobe.ConfigData.getConfig().getStringList("Locked-Slot.Locked-Button.Lore").iterator(); var8.hasNext(); ButtonLore.add(ChatColor.translateAlternateColorCodes('&', Lore))) {
-                        Lore = (String)var8.next();
-                        if (i - 26 == 10) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-10.Require-Prefix"));
-                        }
-
-                        if (i - 26 == 11) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-11.Require-Prefix"));
-                        }
-
-                        if (i - 26 == 12) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-12.Require-Prefix"));
-                        }
-
-                        if (i - 26 == 13) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-13.Require-Prefix"));
-                        }
-
-                        if (i - 26 == 14) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-14.Require-Prefix"));
-                        }
-
-                        if (i - 26 == 15) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-15.Require-Prefix"));
-                        }
-
-                        if (i - 26 == 16) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-16.Require-Prefix"));
-                        }
-
-                        if (i - 26 == 17) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-17.Require-Prefix"));
-                        }
-
-                        if (i - 26 == 18) {
-                            Lore = Lore.replace("%Permission_Require_Prefix%", Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-18.Require-Prefix"));
-                        }
-                    }
-
-                    ButtonMeta.setLore(ButtonLore);
-                    Button.setItemMeta(ButtonMeta);
-                    inv.setItem(i, Button);
+                    buttonMeta.setLore(buttonLore);
+                    button.setItemMeta(buttonMeta);
+                    inv.setItem(i, button);
                 }
             }
         }
-
     }
 
-    public static void CreateAvaiableSlotBackground(Inventory inv, String Name, Player p) {
+    public static void createAvailableSlotBackground(Inventory inv, String Name, Player p) {
         FileConfiguration var10000;
         String var10001;
         FileConfiguration var10002;
@@ -762,7 +432,7 @@ public class WardrobeGUI {
                     var10000 = Wardrobe.Page_1.getConfig();
                     var10001 = p.getUniqueId().toString();
                     if (var10000.getItemStack(var10001 + ".Slot-" + (i + 1) + ".Helmet") == null) {
-                        inv.setItem(i, Background(i, Page1, Name));
+                        inv.setItem(i, background(i, Page1, Name));
                         ++CheckAmount;
                     } else {
                         var10002 = Wardrobe.Page_1.getConfig();
@@ -773,7 +443,7 @@ public class WardrobeGUI {
                     var10000 = Wardrobe.Page_1.getConfig();
                     var10001 = p.getUniqueId().toString();
                     if (var10000.getItemStack(var10001 + ".Slot-" + (i + 1) + ".Chestplate") == null) {
-                        inv.setItem(i + 9, Background(i + 9, Page1, Name));
+                        inv.setItem(i + 9, background(i + 9, Page1, Name));
                         ++CheckAmount;
                     } else {
                         var7 = i + 9;
@@ -785,7 +455,7 @@ public class WardrobeGUI {
                     var10000 = Wardrobe.Page_1.getConfig();
                     var10001 = p.getUniqueId().toString();
                     if (var10000.getItemStack(var10001 + ".Slot-" + (i + 1) + ".Leggings") == null) {
-                        inv.setItem(i + 18, Background(i + 18, Page1, Name));
+                        inv.setItem(i + 18, background(i + 18, Page1, Name));
                         ++CheckAmount;
                     } else {
                         var7 = i + 18;
@@ -797,7 +467,7 @@ public class WardrobeGUI {
                     var10000 = Wardrobe.Page_1.getConfig();
                     var10001 = p.getUniqueId().toString();
                     if (var10000.getItemStack(var10001 + ".Slot-" + (i + 1) + ".Boots") == null) {
-                        inv.setItem(i + 27, Background(i + 27, Page1, Name));
+                        inv.setItem(i + 27, background(i + 27, Page1, Name));
                         ++CheckAmount;
                     } else {
                         var7 = i + 27;
@@ -807,7 +477,7 @@ public class WardrobeGUI {
                     }
 
                     if (CheckAmount == 4) {
-                        inv.setItem(i + 36, CreateEmptyButton(i, Page1, Name));
+                        inv.setItem(i + 36, createEmptyButton(i, Page1, Name));
                     }
 
                     var10000 = Wardrobe.Page_1.getConfig();
@@ -816,7 +486,7 @@ public class WardrobeGUI {
                         var10000 = Wardrobe.Page_1.getConfig();
                         var10001 = p.getUniqueId().toString();
                         if (var10000.getString(var10001 + ".Slot-" + (i + 1) + ".Button").contains("Ready")) {
-                            inv.setItem(i + 36, CreateReadyButton(i, Page1, Name));
+                            inv.setItem(i + 36, createReadyButton(i, Page1, Name));
                             continue;
                         }
                     }
@@ -827,7 +497,7 @@ public class WardrobeGUI {
                         var10000 = Wardrobe.Page_1.getConfig();
                         var10001 = p.getUniqueId().toString();
                         if (var10000.getString(var10001 + ".Slot-" + (i + 1) + ".Button").contains("Equipped")) {
-                            inv.setItem(i + 36, CreateEquippedButton(i, Page1, Name));
+                            inv.setItem(i + 36, createEquippedButton(i, Page1, Name));
                         }
                     }
                 } else {
@@ -839,7 +509,7 @@ public class WardrobeGUI {
                                 var10000 = Wardrobe.Page_1.getConfig();
                                 var10001 = p.getUniqueId().toString();
                                 if (var10000.getItemStack(var10001 + ".Slot-" + (x + 1) + ".Helmet") == null) {
-                                    inv.setItem(x, Background(x, Page1, Name));
+                                    inv.setItem(x, background(x, Page1, Name));
                                     ++CheckAmount;
                                 } else {
                                     var10002 = Wardrobe.Page_1.getConfig();
@@ -850,7 +520,7 @@ public class WardrobeGUI {
                                 var10000 = Wardrobe.Page_1.getConfig();
                                 var10001 = p.getUniqueId().toString();
                                 if (var10000.getItemStack(var10001 + ".Slot-" + (x + 1) + ".Chestplate") == null) {
-                                    inv.setItem(x + 9, Background(x + 9, Page1, Name));
+                                    inv.setItem(x + 9, background(x + 9, Page1, Name));
                                     ++CheckAmount;
                                 } else {
                                     var7 = x + 9;
@@ -862,7 +532,7 @@ public class WardrobeGUI {
                                 var10000 = Wardrobe.Page_1.getConfig();
                                 var10001 = p.getUniqueId().toString();
                                 if (var10000.getItemStack(var10001 + ".Slot-" + (x + 1) + ".Leggings") == null) {
-                                    inv.setItem(x + 18, Background(x + 18, Page1, Name));
+                                    inv.setItem(x + 18, background(x + 18, Page1, Name));
                                     ++CheckAmount;
                                 } else {
                                     var7 = x + 18;
@@ -874,7 +544,7 @@ public class WardrobeGUI {
                                 var10000 = Wardrobe.Page_1.getConfig();
                                 var10001 = p.getUniqueId().toString();
                                 if (var10000.getItemStack(var10001 + ".Slot-" + (x + 1) + ".Boots") == null) {
-                                    inv.setItem(x + 27, Background(x + 27, Page1, Name));
+                                    inv.setItem(x + 27, background(x + 27, Page1, Name));
                                     ++CheckAmount;
                                 } else {
                                     var7 = x + 27;
@@ -884,7 +554,7 @@ public class WardrobeGUI {
                                 }
 
                                 if (CheckAmount == 4) {
-                                    inv.setItem(i + 36, CreateEmptyButton(i, Page1, Name));
+                                    inv.setItem(i + 36, createEmptyButton(i, Page1, Name));
                                 }
 
                                 var10000 = Wardrobe.Page_1.getConfig();
@@ -893,7 +563,7 @@ public class WardrobeGUI {
                                     var10000 = Wardrobe.Page_1.getConfig();
                                     var10001 = p.getUniqueId().toString();
                                     if (var10000.getString(var10001 + ".Slot-" + (i + 1) + ".Button").contains("Ready")) {
-                                        inv.setItem(i + 36, CreateReadyButton(i, Page1, Name));
+                                        inv.setItem(i + 36, createReadyButton(i, Page1, Name));
                                         continue;
                                     }
                                 }
@@ -904,7 +574,7 @@ public class WardrobeGUI {
                                     var10000 = Wardrobe.Page_1.getConfig();
                                     var10001 = p.getUniqueId().toString();
                                     if (var10000.getString(var10001 + ".Slot-" + (i + 1) + ".Button").contains("Equipped")) {
-                                        inv.setItem(i + 36, CreateEquippedButton(i, Page1, Name));
+                                        inv.setItem(i + 36, createEquippedButton(i, Page1, Name));
                                     }
                                 }
                             }
@@ -919,7 +589,7 @@ public class WardrobeGUI {
                             var10000 = Wardrobe.Page_1.getConfig();
                             var10001 = p.getUniqueId().toString();
                             if (var10000.getItemStack(var10001 + ".Slot-" + (i + 1) + ".Helmet") == null) {
-                                inv.setItem(i, Background(i, Page1, Name));
+                                inv.setItem(i, background(i, Page1, Name));
                                 ++CheckAmount;
                             } else {
                                 var10002 = Wardrobe.Page_1.getConfig();
@@ -930,7 +600,7 @@ public class WardrobeGUI {
                             var10000 = Wardrobe.Page_1.getConfig();
                             var10001 = p.getUniqueId().toString();
                             if (var10000.getItemStack(var10001 + ".Slot-" + (i + 1) + ".Chestplate") == null) {
-                                inv.setItem(i + 9, Background(i + 9, Page1, Name));
+                                inv.setItem(i + 9, background(i + 9, Page1, Name));
                                 ++CheckAmount;
                             } else {
                                 var7 = i + 9;
@@ -942,7 +612,7 @@ public class WardrobeGUI {
                             var10000 = Wardrobe.Page_1.getConfig();
                             var10001 = p.getUniqueId().toString();
                             if (var10000.getItemStack(var10001 + ".Slot-" + (i + 1) + ".Leggings") == null) {
-                                inv.setItem(i + 18, Background(i + 18, Page1, Name));
+                                inv.setItem(i + 18, background(i + 18, Page1, Name));
                                 ++CheckAmount;
                             } else {
                                 var7 = i + 18;
@@ -954,7 +624,7 @@ public class WardrobeGUI {
                             var10000 = Wardrobe.Page_1.getConfig();
                             var10001 = p.getUniqueId().toString();
                             if (var10000.getItemStack(var10001 + ".Slot-" + (i + 1) + ".Boots") == null) {
-                                inv.setItem(i + 27, Background(i + 27, Page1, Name));
+                                inv.setItem(i + 27, background(i + 27, Page1, Name));
                                 ++CheckAmount;
                             } else {
                                 var7 = i + 27;
@@ -964,7 +634,7 @@ public class WardrobeGUI {
                             }
 
                             if (CheckAmount == 4) {
-                                inv.setItem(i + 36, CreateEmptyButton(i, Page1, Name));
+                                inv.setItem(i + 36, createEmptyButton(i, Page1, Name));
                             }
 
                             var10000 = Wardrobe.Page_1.getConfig();
@@ -973,7 +643,7 @@ public class WardrobeGUI {
                                 var10000 = Wardrobe.Page_1.getConfig();
                                 var10001 = p.getUniqueId().toString();
                                 if (var10000.getString(var10001 + ".Slot-" + (i + 1) + ".Button").contains("Ready")) {
-                                    inv.setItem(i + 36, CreateReadyButton(i, Page1, Name));
+                                    inv.setItem(i + 36, createReadyButton(i, Page1, Name));
                                     continue;
                                 }
                             }
@@ -984,7 +654,7 @@ public class WardrobeGUI {
                                 var10000 = Wardrobe.Page_1.getConfig();
                                 var10001 = p.getUniqueId().toString();
                                 if (var10000.getString(var10001 + ".Slot-" + (i + 1) + ".Button").contains("Equipped")) {
-                                    inv.setItem(i + 36, CreateEquippedButton(i, Page1, Name));
+                                    inv.setItem(i + 36, createEquippedButton(i, Page1, Name));
                                 }
                             }
                         }
@@ -998,7 +668,7 @@ public class WardrobeGUI {
                     var10000 = Wardrobe.Page_2.getConfig();
                     var10001 = p.getUniqueId().toString();
                     if (var10000.getItemStack(var10001 + ".Slot-" + (i + 10) + ".Helmet") == null) {
-                        inv.setItem(i, Background(i, Page2, Name));
+                        inv.setItem(i, background(i, Page2, Name));
                         ++CheckAmount;
                     } else {
                         var10002 = Wardrobe.Page_2.getConfig();
@@ -1009,7 +679,7 @@ public class WardrobeGUI {
                     var10000 = Wardrobe.Page_2.getConfig();
                     var10001 = p.getUniqueId().toString();
                     if (var10000.getItemStack(var10001 + ".Slot-" + (i + 10) + ".Chestplate") == null) {
-                        inv.setItem(i + 9, Background(i + 9, Page2, Name));
+                        inv.setItem(i + 9, background(i + 9, Page2, Name));
                         ++CheckAmount;
                     } else {
                         var7 = i + 9;
@@ -1021,7 +691,7 @@ public class WardrobeGUI {
                     var10000 = Wardrobe.Page_2.getConfig();
                     var10001 = p.getUniqueId().toString();
                     if (var10000.getItemStack(var10001 + ".Slot-" + (i + 10) + ".Leggings") == null) {
-                        inv.setItem(i + 18, Background(i + 18, Page2, Name));
+                        inv.setItem(i + 18, background(i + 18, Page2, Name));
                         ++CheckAmount;
                     } else {
                         var7 = i + 18;
@@ -1033,7 +703,7 @@ public class WardrobeGUI {
                     var10000 = Wardrobe.Page_2.getConfig();
                     var10001 = p.getUniqueId().toString();
                     if (var10000.getItemStack(var10001 + ".Slot-" + (i + 10) + ".Boots") == null) {
-                        inv.setItem(i + 27, Background(i + 27, Page2, Name));
+                        inv.setItem(i + 27, background(i + 27, Page2, Name));
                         ++CheckAmount;
                     } else {
                         var7 = i + 27;
@@ -1043,7 +713,7 @@ public class WardrobeGUI {
                     }
 
                     if (CheckAmount == 4) {
-                        inv.setItem(i + 36, CreateEmptyButton(i, Page2, Name));
+                        inv.setItem(i + 36, createEmptyButton(i, Page2, Name));
                     }
 
                     var10000 = Wardrobe.Page_2.getConfig();
@@ -1052,7 +722,7 @@ public class WardrobeGUI {
                         var10000 = Wardrobe.Page_2.getConfig();
                         var10001 = p.getUniqueId().toString();
                         if (var10000.getString(var10001 + ".Slot-" + (i + 10) + ".Button").contains("Ready")) {
-                            inv.setItem(i + 36, CreateReadyButton(i, Page2, Name));
+                            inv.setItem(i + 36, createReadyButton(i, Page2, Name));
                             continue;
                         }
                     }
@@ -1063,7 +733,7 @@ public class WardrobeGUI {
                         var10000 = Wardrobe.Page_2.getConfig();
                         var10001 = p.getUniqueId().toString();
                         if (var10000.getString(var10001 + ".Slot-" + (i + 10) + ".Button").contains("Equipped")) {
-                            inv.setItem(i + 36, CreateEquippedButton(i, Page2, Name));
+                            inv.setItem(i + 36, createEquippedButton(i, Page2, Name));
                         }
                     }
                 } else {
@@ -1073,7 +743,7 @@ public class WardrobeGUI {
                             var10000 = Wardrobe.Page_2.getConfig();
                             var10001 = p.getUniqueId().toString();
                             if (var10000.getItemStack(var10001 + ".Slot-" + (i + 10) + ".Helmet") == null) {
-                                inv.setItem(i, Background(i, Page2, Name));
+                                inv.setItem(i, background(i, Page2, Name));
                                 ++CheckAmount;
                             } else {
                                 var10002 = Wardrobe.Page_2.getConfig();
@@ -1084,7 +754,7 @@ public class WardrobeGUI {
                             var10000 = Wardrobe.Page_2.getConfig();
                             var10001 = p.getUniqueId().toString();
                             if (var10000.getItemStack(var10001 + ".Slot-" + (i + 10) + ".Chestplate") == null) {
-                                inv.setItem(i + 9, Background(i + 9, Page2, Name));
+                                inv.setItem(i + 9, background(i + 9, Page2, Name));
                                 ++CheckAmount;
                             } else {
                                 var7 = i + 9;
@@ -1096,7 +766,7 @@ public class WardrobeGUI {
                             var10000 = Wardrobe.Page_2.getConfig();
                             var10001 = p.getUniqueId().toString();
                             if (var10000.getItemStack(var10001 + ".Slot-" + (i + 10) + ".Leggings") == null) {
-                                inv.setItem(i + 18, Background(i + 18, Page2, Name));
+                                inv.setItem(i + 18, background(i + 18, Page2, Name));
                                 ++CheckAmount;
                             } else {
                                 var7 = i + 18;
@@ -1108,7 +778,7 @@ public class WardrobeGUI {
                             var10000 = Wardrobe.Page_2.getConfig();
                             var10001 = p.getUniqueId().toString();
                             if (var10000.getItemStack(var10001 + ".Slot-" + (i + 10) + ".Boots") == null) {
-                                inv.setItem(i + 27, Background(i + 27, Page2, Name));
+                                inv.setItem(i + 27, background(i + 27, Page2, Name));
                                 ++CheckAmount;
                             } else {
                                 var7 = i + 27;
@@ -1118,7 +788,7 @@ public class WardrobeGUI {
                             }
 
                             if (CheckAmount == 4) {
-                                inv.setItem(i + 36, CreateEmptyButton(i, Page2, Name));
+                                inv.setItem(i + 36, createEmptyButton(i, Page2, Name));
                             }
 
                             var10000 = Wardrobe.Page_2.getConfig();
@@ -1127,7 +797,7 @@ public class WardrobeGUI {
                                 var10000 = Wardrobe.Page_2.getConfig();
                                 var10001 = p.getUniqueId().toString();
                                 if (var10000.getString(var10001 + ".Slot-" + (i + 10) + ".Button").contains("Ready")) {
-                                    inv.setItem(i + 36, CreateReadyButton(i, Page2, Name));
+                                    inv.setItem(i + 36, createReadyButton(i, Page2, Name));
                                     continue;
                                 }
                             }
@@ -1138,7 +808,7 @@ public class WardrobeGUI {
                                 var10000 = Wardrobe.Page_2.getConfig();
                                 var10001 = p.getUniqueId().toString();
                                 if (var10000.getString(var10001 + ".Slot-" + (i + 10) + ".Button").contains("Equipped")) {
-                                    inv.setItem(i + 36, CreateEquippedButton(i, Page2, Name));
+                                    inv.setItem(i + 36, createEquippedButton(i, Page2, Name));
                                 }
                             }
                         }
@@ -1149,7 +819,7 @@ public class WardrobeGUI {
 
     }
 
-    public static ItemStack Background(int Slot, Inventory inv, String Title) {
+    public static ItemStack background(int Slot, Inventory inv, String Title) {
         ItemStack AvailableBackground = new ItemStack(Material.DIRT);
         ItemMeta AvailableBackgroundMeta = AvailableBackground.getItemMeta();
         String Mat = "";
@@ -1339,7 +1009,7 @@ public class WardrobeGUI {
         return AvailableBackground;
     }
 
-    public static ItemStack CreateEmptyButton(int Slot, Inventory inv, String Title) {
+    public static ItemStack createEmptyButton(int Slot, Inventory inv, String Title) {
         ItemStack Button = new ItemStack(Material.DIRT);
         ItemMeta ButtonMeta = Button.getItemMeta();
         String Name;
@@ -1375,7 +1045,7 @@ public class WardrobeGUI {
         return Button;
     }
 
-    public static ItemStack CreateReadyButton(int Slot, Inventory inv, String Title) {
+    public static ItemStack createReadyButton(int Slot, Inventory inv, String Title) {
         ItemStack Button = new ItemStack(Material.DIRT);
         ItemMeta ButtonMeta = Button.getItemMeta();
         String Name;
@@ -1411,7 +1081,7 @@ public class WardrobeGUI {
         return Button;
     }
 
-    public static ItemStack CreateEquippedButton(int Slot, Inventory inv, String Title) {
+    public static ItemStack createEquippedButton(int Slot, Inventory inv, String Title) {
         ItemStack Button = new ItemStack(Material.DIRT);
         ItemMeta ButtonMeta = Button.getItemMeta();
         String Name;
@@ -1447,7 +1117,7 @@ public class WardrobeGUI {
         return Button;
     }
 
-    public static void CreateGoBackAndCloseButton(Inventory inv) {
+    public static void createGoBackAndCloseButton(Inventory inv) {
         ItemStack Close;
         ItemMeta CloseMeta;
         ArrayList CloseLore;
@@ -1491,7 +1161,7 @@ public class WardrobeGUI {
 
     }
 
-    public static void CreateNextAndPreviousButton(Inventory inv) {
+    public static void createNextAndPreviousButton(Inventory inv) {
         ItemStack NextPage;
         ItemMeta NextPageMeta;
         ArrayList NextPageLore;
