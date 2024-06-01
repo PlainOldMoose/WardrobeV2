@@ -10,17 +10,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class provides tab completion for wardrobe-related commands.
+ * Provides tab completion for wardrobe-related commands.
  */
 public class WardrobeTabCompleter implements TabCompleter {
 
-    private final List<String> baseCommands = List.of("reload", "open", "reset", "check", "allow");
+    // List of base wardrobe commands
+    private final List<String> baseCommands = List.of("reload", "open", "reset", "allow");
+    // List of reset sub-commands
     private final List<String> resetSubCommands = List.of("page", "all", "slot");
+    // List of armor types
     private final List<String> armorTypes = List.of("helmet", "chestplate", "leggings", "boots");
+    // List of page numbers
     private final List<String> pageNumbers = List.of("1", "2");
+    // List of slot numbers
     private final List<String> slotNumbers;
 
     public WardrobeTabCompleter() {
+        // Initialize slotNumbers list with slot numbers from 1 to 18
         slotNumbers = new ArrayList<>();
         for (int i = 1; i <= 18; i++) {
             slotNumbers.add(String.valueOf(i));
@@ -82,7 +88,7 @@ public class WardrobeTabCompleter implements TabCompleter {
         if (args.length == 1) {
             return getMatchingArguments(args[0], baseCommands);
         } else if (args.length == 2) {
-            if (args[0].equalsIgnoreCase("open") || args[0].equalsIgnoreCase("reset") || (isAdmin && args[0].equalsIgnoreCase("check"))) {
+            if (args[0].equalsIgnoreCase("open") || args[0].equalsIgnoreCase("reset")) {
                 return getMatchingArguments(args[1], getOnlinePlayerNames());
             }
             if (isAdmin && args[0].equalsIgnoreCase("allow")) {
