@@ -139,7 +139,9 @@ public class WardrobeCommand implements CommandExecutor {
     }
 
     private void reloadConfigs() {
-        Wardrobe.ConfigData.reloadConfig();
+        Wardrobe.ConfigData.ReloadConfig();
+        Wardrobe.Page_1.ReloadConfig();
+        Wardrobe.Page_2.ReloadConfig();
     }
 
     private boolean openWardrobe(String playerName) {
