@@ -1,0 +1,13 @@
+me\plainoldmoose\wardrobe\Listener\WardrobeListener.class
+me\plainoldmoose\wardrobe\DataManager\DataCreator.class
+me\plainoldmoose\wardrobe\DataManager\Page1Data.class
+me\plainoldmoose\wardrobe\GUI\CheckPlayerGUI.class
+me\plainoldmoose\wardrobe\Listener\CheckPlayerGUIListener.class
+me\plainoldmoose\wardrobe\GUI\WardrobeGUI.class
+me\plainoldmoose\wardrobe\Wardrobe.class
+me\plainoldmoose\wardrobe\Work\DataWork.class
+me\plainoldmoose\wardrobe\Work\GUIWork.class
+me\plainoldmoose\wardrobe\Command\WardrobeCommand.class
+me\plainoldmoose\wardrobe\Command\WardrobeTabCompleter.class
+me\plainoldmoose\wardrobe\DataManager\Page2Data.class
+me\plainoldmoose\wardrobe\DataManager\Config.class

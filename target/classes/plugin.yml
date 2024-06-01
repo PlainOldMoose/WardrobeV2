@@ -1,0 +1,8 @@
+name: Wardrobe
+version: 2.1.1
+main: me.plainoldmoose.wardrobe.Wardrobe
+api-version: 1.13
+
+commands:
+  wardrobe:
+  wb:
