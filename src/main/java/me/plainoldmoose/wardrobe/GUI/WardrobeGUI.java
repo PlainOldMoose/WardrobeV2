@@ -23,11 +23,6 @@ public class WardrobeGUI {
     public static String Page1Name = "";
     public static String Page2Name = "";
 
-    /**
-     * Creates and opens the first page of the wardrobe GUI for the specified player.
-     *
-     * @param p The player to create the wardrobe GUI for.
-     */
     public static void createWardrobePage1(Player p) {
         FileConfiguration var10001 = Wardrobe.ConfigData.getConfig();
         String Name = ChatColor.translateAlternateColorCodes('&', var10001.getString("Title")) + " (1/2)";
@@ -134,11 +129,6 @@ public class WardrobeGUI {
         p.openInventory(WardrobePage1);
     }
 
-    /**
-     * Creates and opens the second page of the wardrobe GUI for the specified player.
-     *
-     * @param p The player to create the wardrobe GUI for.
-     */
     public static void createWardrobePage2(Player p) {
         FileConfiguration var10001 = Wardrobe.ConfigData.getConfig();
         String Name = ChatColor.translateAlternateColorCodes('&', var10001.getString("Title")) + " (2/2)";
