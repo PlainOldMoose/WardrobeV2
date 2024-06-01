@@ -23,171 +23,155 @@ public class WardrobeGUI {
     public static String Page1Name = "";
     public static String Page2Name = "";
 
+    /**
+     * Creates the first page of the wardrobe inventory for the player.
+     * @param p The player for whom the wardrobe inventory is created.
+     */
     public static void createWardrobePage1(Player p) {
-        FileConfiguration var10001 = Wardrobe.ConfigData.getConfig();
-        String Name = ChatColor.translateAlternateColorCodes('&', var10001.getString("Title")) + " (1/2)";
-        Inventory WardrobePage1 = Bukkit.createInventory(p, 54, Name);
+        // Get configuration data for the wardrobe
+        FileConfiguration config = Wardrobe.ConfigData.getConfig();
+        String Name = ChatColor.translateAlternateColorCodes('&', config.getString("Title")) + " (1/2)";
+
+        // Create the inventory for the first page
+        Inventory wardrobePage1 = Bukkit.createInventory(p, 54, Name);
+
+        // Set the name of the first page
         Page1Name = Name;
-        ItemStack Background = new ItemStack(Material.DIRT);
-        ItemMeta BackgroundMeta = Background.getItemMeta();
-        String Mat;
+
+        // Create background item
+        ItemStack background = new ItemStack(Material.DIRT);
+        ItemMeta backgroundMeta = background.getItemMeta();
+        String mat;
+
+        // Determine appropriate material based on Minecraft version
         if (!Ver.contains("1.8") && !Ver.contains("1.9") && !Ver.contains("1.10") && !Ver.contains("1.11") && !Ver.contains("1.12")) {
             if (Ver.contains("1.13") || Ver.contains("1.14") || Ver.contains("1.15") || Ver.contains("1.16") || Ver.contains("1.17") || Ver.contains("1.18") || Ver.contains("1.19") || Ver.contains("1.20")) {
-                Mat = "BLACK_STAINED_GLASS_PANE";
-                Background.setType(Material.valueOf(Mat));
+                mat = "BLACK_STAINED_GLASS_PANE";
+                background.setType(Material.valueOf(mat));
             }
         } else {
-            Mat = "STAINED_GLASS_PANE";
-            Background.setType(Material.valueOf(Mat));
-            Background.setDurability((short)15);
+            mat = "STAINED_GLASS_PANE";
+            background.setType(Material.valueOf(mat));
+            background.setDurability((short) 15);
         }
 
-        BackgroundMeta.setDisplayName(" ");
-        Background.setItemMeta(BackgroundMeta);
+        // Set display name of the background item
+        backgroundMeta.setDisplayName(" ");
+        background.setItemMeta(backgroundMeta);
 
-        int i;
-        for(i = 45; i <= 53; ++i) {
-            WardrobePage1.setItem(i, Background);
+        // Fill the inventory with background items
+        for (int i = 45; i <= 53; ++i) {
+            wardrobePage1.setItem(i, background);
         }
 
-        createGoBackAndCloseButton(WardrobePage1);
-        Page1 = WardrobePage1;
-        createNextAndPreviousButton(WardrobePage1);
-        createBaseBackground(WardrobePage1);
-        createAvailableSlotBackground(WardrobePage1, Name, p);
+        // Add navigation buttons and background elements
+        createGoBackAndCloseButton(wardrobePage1);
+        Page1 = wardrobePage1;
+        createNextAndPreviousButton(wardrobePage1);
+        createBaseBackground(wardrobePage1);
+        createAvailableSlotBackground(wardrobePage1, Name, p);
 
-        String Path;
-        for(i = 36; i <= 44; ++i) {
-            Path = "";
+        // Check and update equipped items
+        for (int i = 36; i <= 44; ++i) {
+            String path = "";
             if (Ver.contains("1.8") || Ver.contains("1.9") || Ver.contains("1.10") || Ver.contains("1.11") || Ver.contains("1.12")) {
-                Path = WardrobePage1.getItem(i).getData().toString();
+                path = wardrobePage1.getItem(i).getData().toString();
             }
 
             if (Ver.contains("1.13") || Ver.contains("1.14") || Ver.contains("1.15") || Ver.contains("1.16") || Ver.contains("1.17") || Ver.contains("1.18") || Ver.contains("1.19") || Ver.contains("1.20")) {
-                Path = WardrobePage1.getItem(i).getType().toString();
+                path = wardrobePage1.getItem(i).getType().toString();
             }
 
-            if (!Path.contains("PINK_DYE") && !Path.contains("PINK DYE")) {
-                if (Path.contains("LIME_DYE") || Path.contains("LIME DYE")) {
-                    GUIWork.CheckArmor(p, WardrobePage1, i, Name);
+            if (path.contains("PINK_DYE") || path.contains("PINK DYE")) {
+                String checkSlot1 = wardrobePage1.getItem(i - 36).getType().toString();
+                String checkSlot2 = wardrobePage1.getItem(i - 27).getType().toString();
+                String checkSlot3 = wardrobePage1.getItem(i - 18).getType().toString();
+                String checkSlot4 = wardrobePage1.getItem(i - 9).getType().toString();
+                if (checkSlot1.contains("STAINED_GLASS_PANE") && checkSlot2.contains("STAINED_GLASS_PANE") && checkSlot3.contains("STAINED_GLASS_PANE") && checkSlot4.contains("STAINED_GLASS_PANE")) {
+                    wardrobePage1.setItem(i, createEmptyButton(i - 36, wardrobePage1, Name));
                 }
-            } else {
-                String CheckSlot1 = WardrobePage1.getItem(i - 36).getType().toString();
-                String CheckSlot2 = WardrobePage1.getItem(i - 27).getType().toString();
-                String CheckSlot3 = WardrobePage1.getItem(i - 18).getType().toString();
-                String CheckSlot4 = WardrobePage1.getItem(i - 9).getType().toString();
-                if (CheckSlot1.contains("STAINED_GLASS_PANE") && CheckSlot2.contains("STAINED_GLASS_PANE") && CheckSlot3.contains("STAINED_GLASS_PANE") && CheckSlot4.contains("STAINED_GLASS_PANE")) {
-                    WardrobePage1.setItem(i, createEmptyButton(i - 36, WardrobePage1, Name));
-                }
+            } else if (path.contains("LIME_DYE") || path.contains("LIME DYE")) {
+                GUIWork.CheckArmor(p, wardrobePage1, i, Name);
             }
         }
-
-        if (Wardrobe.Page_2.getConfig().getConfigurationSection(p.getUniqueId().toString()) != null) {
-            Iterator var12 = Wardrobe.Page_2.getConfig().getConfigurationSection(p.getUniqueId().toString()).getKeys(false).iterator();
-
-            while(var12.hasNext()) {
-                Path = (String)var12.next();
-                if (!Path.contains("name")) {
-                    FileConfiguration var10000 = Wardrobe.Page_2.getConfig();
-                    String var17 = p.getUniqueId().toString();
-                    if (var10000.getString(var17 + "." + Path + ".Button").contains("Equipped")) {
-                        ItemStack Helmet = p.getInventory().getHelmet();
-                        ItemStack Chestplate = p.getInventory().getChestplate();
-                        ItemStack Leggings = p.getInventory().getLeggings();
-                        ItemStack Boots = p.getInventory().getBoots();
-                        if (Helmet != null) {
-                            Wardrobe.Page_2.getConfig().set(p.getUniqueId().toString() + "." + Path + ".Helmet", Helmet);
-                        } else {
-                            Wardrobe.Page_2.getConfig().set(p.getUniqueId().toString() + "." + Path + ".Helmet", "none");
-                        }
-
-                        if (Chestplate != null) {
-                            Wardrobe.Page_2.getConfig().set(p.getUniqueId().toString() + "." + Path + ".Chestplate", Chestplate);
-                        } else {
-                            Wardrobe.Page_2.getConfig().set(p.getUniqueId().toString() + "." + Path + ".Chestplate", "none");
-                        }
-
-                        if (Leggings != null) {
-                            Wardrobe.Page_2.getConfig().set(p.getUniqueId().toString() + "." + Path + ".Leggings", Leggings);
-                        } else {
-                            Wardrobe.Page_2.getConfig().set(p.getUniqueId().toString() + "." + Path + ".Leggings", "none");
-                        }
-
-                        if (Boots != null) {
-                            Wardrobe.Page_2.getConfig().set(p.getUniqueId().toString() + "." + Path + ".Boots", Boots);
-                        } else {
-                            Wardrobe.Page_2.getConfig().set(p.getUniqueId().toString() + "." + Path + ".Boots", "none");
-                        }
-
-                        Wardrobe.Page_2.saveConfig();
-                        Wardrobe.Page_2.reloadConfig();
-                    }
-                }
-            }
-        }
-
-        p.openInventory(WardrobePage1);
+        // Open the inventory for the player
+        p.openInventory(wardrobePage1);
     }
 
+    /**
+     * Creates the second page of the wardrobe inventory for the player.
+     * @param p The player for whom the wardrobe inventory is created.
+     */
     public static void createWardrobePage2(Player p) {
-        FileConfiguration var10001 = Wardrobe.ConfigData.getConfig();
-        String Name = ChatColor.translateAlternateColorCodes('&', var10001.getString("Title")) + " (2/2)";
-        Inventory WardrobePage2 = Bukkit.createInventory(p, 54, Name);
+        // Get configuration data for the wardrobe
+        FileConfiguration config = Wardrobe.ConfigData.getConfig();
+        String Name = ChatColor.translateAlternateColorCodes('&', config.getString("Title")) + " (2/2)";
+
+        // Create the inventory for the second page
+        Inventory wardrobePage2 = Bukkit.createInventory(p, 54, Name);
+
+        // Set the name of the second page
         Page2Name = Name;
-        ItemStack Background = new ItemStack(Material.DIRT);
-        ItemMeta BackgroundMeta = Background.getItemMeta();
-        String Mat;
+
+        // Create background item
+        ItemStack background = new ItemStack(Material.DIRT);
+        ItemMeta backgroundMeta = background.getItemMeta();
+        String mat;
+
+        // Determine appropriate material based on Minecraft version
         if (!Ver.contains("1.8") && !Ver.contains("1.9") && !Ver.contains("1.10") && !Ver.contains("1.11") && !Ver.contains("1.12")) {
             if (Ver.contains("1.13") || Ver.contains("1.14") || Ver.contains("1.15") || Ver.contains("1.16") || Ver.contains("1.17") || Ver.contains("1.18") || Ver.contains("1.19") || Ver.contains("1.20")) {
-                Mat = "BLACK_STAINED_GLASS_PANE";
-                Background.setType(Material.valueOf(Mat));
+                mat = "BLACK_STAINED_GLASS_PANE";
+                background.setType(Material.valueOf(mat));
             }
         } else {
-            Mat = "STAINED_GLASS_PANE";
-            Background.setType(Material.valueOf(Mat));
-            Background.setDurability((short)15);
+            mat = "STAINED_GLASS_PANE";
+            background.setType(Material.valueOf(mat));
+            background.setDurability((short) 15);
         }
 
-        BackgroundMeta.setDisplayName(" ");
-        Background.setItemMeta(BackgroundMeta);
+        // Set display name of the background item
+        backgroundMeta.setDisplayName(" ");
+        background.setItemMeta(backgroundMeta);
 
-        int i;
-        for(i = 45; i <= 53; ++i) {
-            WardrobePage2.setItem(i, Background);
+        // Fill the inventory with background items
+        for (int i = 45; i <= 53; ++i) {
+            wardrobePage2.setItem(i, background);
         }
 
-        createGoBackAndCloseButton(WardrobePage2);
-        Page2 = WardrobePage2;
-        createNextAndPreviousButton(WardrobePage2);
-        createBaseBackground(WardrobePage2);
-        createAvailableSlotBackground(WardrobePage2, Name, p);
+        // Add navigation buttons and background elements
+        createGoBackAndCloseButton(wardrobePage2);
+        Page2 = wardrobePage2;
+        createNextAndPreviousButton(wardrobePage2);
+        createBaseBackground(wardrobePage2);
+        createAvailableSlotBackground(wardrobePage2, Name, p);
 
-        for(i = 36; i <= 44; ++i) {
-            String ButtonCheck = "";
+        // Check and update equipped items
+        for (int i = 36; i <= 44; ++i) {
+            String buttonCheck = "";
             if (Ver.contains("1.8") || Ver.contains("1.9") || Ver.contains("1.10") || Ver.contains("1.11") || Ver.contains("1.12")) {
-                ButtonCheck = WardrobePage2.getItem(i).getData().toString();
+                buttonCheck = wardrobePage2.getItem(i).getData().toString();
             }
 
-            if (Ver.contains("1.13") || Ver.contains("1.14") || Ver.contains("1.15") || Ver.contains("1.16") || Ver.contains("1.17") || Ver.contains("1.18") || Ver.contains("1.19") || Ver.contains("1.20")) {
-                ButtonCheck = WardrobePage2.getItem(i).getType().toString();
+            if (Ver.contains("1.13") || Ver.contains("1.14") || Ver.contains("1.13") || Ver.contains("1.14") || Ver.contains("1.15") || Ver.contains("1.16") || Ver.contains("1.17") || Ver.contains("1.18") || Ver.contains("1.19") || Ver.contains("1.20")) {
+                buttonCheck = wardrobePage2.getItem(i).getType().toString();
             }
 
-            if (!ButtonCheck.contains("PINK_DYE") && !ButtonCheck.contains("PINK DYE")) {
-                if (ButtonCheck.contains("LIME_DYE") || ButtonCheck.contains("LIME DYE")) {
-                    GUIWork.CheckArmor(p, WardrobePage2, i, Name);
+            if (buttonCheck.contains("PINK_DYE") || buttonCheck.contains("PINK DYE")) {
+                String checkSlot1 = wardrobePage2.getItem(i - 36).getType().toString();
+                String checkSlot2 = wardrobePage2.getItem(i - 27).getType().toString();
+                String checkSlot3 = wardrobePage2.getItem(i - 18).getType().toString();
+                String checkSlot4 = wardrobePage2.getItem(i - 9).getType().toString();
+                if (checkSlot1.contains("STAINED_GLASS_PANE") && checkSlot2.contains("STAINED_GLASS_PANE") && checkSlot3.contains("STAINED_GLASS_PANE") && checkSlot4.contains("STAINED_GLASS_PANE")) {
+                    wardrobePage2.setItem(i, createEmptyButton(i - 36, wardrobePage2, Name));
                 }
-            } else {
-                String CheckSlot1 = WardrobePage2.getItem(i - 36).getType().toString();
-                String CheckSlot2 = WardrobePage2.getItem(i - 27).getType().toString();
-                String CheckSlot3 = WardrobePage2.getItem(i - 18).getType().toString();
-                String CheckSlot4 = WardrobePage2.getItem(i - 9).getType().toString();
-                if (CheckSlot1.contains("STAINED_GLASS_PANE") && CheckSlot2.contains("STAINED_GLASS_PANE") && CheckSlot3.contains("STAINED_GLASS_PANE") && CheckSlot4.contains("STAINED_GLASS_PANE")) {
-                    WardrobePage2.setItem(i, createEmptyButton(i - 36, WardrobePage2, Name));
-                }
+            } else if (buttonCheck.contains("LIME_DYE") || buttonCheck.contains("LIME DYE")) {
+                GUIWork.CheckArmor(p, wardrobePage2, i, Name);
             }
         }
 
-        p.openInventory(WardrobePage2);
+        // Open the inventory for the player
+        p.openInventory(wardrobePage2);
     }
 
     /**
