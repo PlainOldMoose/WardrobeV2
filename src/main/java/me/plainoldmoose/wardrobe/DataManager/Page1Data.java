@@ -10,57 +10,75 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.logging.Level;
 
+/**
+ * Manages the data for wardrobe page 1.
+ */
 public class Page1Data {
-    private Wardrobe plugin;
+    private final Wardrobe plugin;
     private FileConfiguration dataPage1 = null;
     private File Page1 = null;
 
+    /**
+     * Constructor for the Page1Data class.
+     *
+     * @param plugin the Wardrobe plugin instance
+     */
     public Page1Data(Wardrobe plugin) {
         this.plugin = plugin;
         this.saveDefaultConfig();
     }
 
+    /**
+     * Reloads the configuration file for page 1.
+     */
     public void reloadConfig() {
-        if (this.Page1 == null) {
-            this.Page1 = new File("plugins/Wardrobe/Page1.yml");
+        if (Page1 == null) {
+            Page1 = new File("plugins/Wardrobe/Page1.yml");
         }
 
-        this.dataPage1 = YamlConfiguration.loadConfiguration(this.Page1);
-        InputStream defaultStream = this.plugin.getResource("Wardrobe/Page1.yml");
+        dataPage1 = YamlConfiguration.loadConfiguration(Page1);
+        InputStream defaultStream = plugin.getResource("Wardrobe/Page1.yml");
         if (defaultStream != null) {
-            YamlConfiguration defaultCongfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defaultStream));
-            this.dataPage1.setDefaults(defaultCongfig);
+            YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defaultStream));
+            dataPage1.setDefaults(defaultConfig);
         }
-
     }
 
+    /**
+     * Gets the configuration object for page 1.
+     *
+     * @return the FileConfiguration object for page 1
+     */
     public FileConfiguration getConfig() {
-        if (this.dataPage1 == null) {
-            this.reloadConfig();
+        if (dataPage1 == null) {
+            reloadConfig();
         }
-
-        return this.dataPage1;
+        return dataPage1;
     }
 
+    /**
+     * Saves the configuration file for page 1.
+     */
     public void saveConfig() {
-        if (this.dataPage1 != null && this.Page1 != null) {
+        if (dataPage1 != null && Page1 != null) {
             try {
-                this.getConfig().save(this.Page1);
-            } catch (IOException var2) {
-                this.plugin.getLogger().log(Level.SEVERE, "Could not save Data to " + this.Page1, var2);
+                getConfig().save(Page1);
+            } catch (IOException e) {
+                plugin.getLogger().log(Level.SEVERE, "Could not save Data to " + Page1, e);
             }
-
         }
     }
 
+    /**
+     * Saves the default configuration file for page 1 if it doesn't exist.
+     */
     public void saveDefaultConfig() {
-        if (this.dataPage1 == null) {
-            this.Page1 = new File("plugins/Wardrobe/Page1.yml");
+        if (dataPage1 == null) {
+            Page1 = new File("plugins/Wardrobe/Page1.yml");
         }
 
-        if (!this.Page1.exists()) {
-            this.plugin.saveResource("Wardrobe/Page1.yml", false);
+        if (!Page1.exists()) {
+            plugin.saveResource("Wardrobe/Page1.yml", false);
         }
-
     }
 }
