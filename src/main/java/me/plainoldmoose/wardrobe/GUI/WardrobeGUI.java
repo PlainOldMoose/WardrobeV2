@@ -12,9 +12,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class WardrobeGUI {
     public static String Ver = Bukkit.getServer().getVersion();
@@ -391,596 +389,172 @@ public class WardrobeGUI {
         }
     }
 
-    public static void createAvailableSlotBackground(Inventory inv, String Name, Player p) {
-        FileConfiguration var10000;
-        String var10001;
-        FileConfiguration var10002;
-        int i;
-        String var10003;
-        int CheckAmount;
-        int var7;
+    /**
+     * Populates the given inventory with available slot backgrounds and buttons for the specified player.
+     *
+     * @param inv  The inventory to populate.
+     * @param name The name associated with the inventory.
+     * @param p    The player for whom the inventory is being populated.
+     */
+    public static void createAvailableSlotBackground(Inventory inv, String name, Player p) {
+        FileConfiguration playerConfig;
+        String playerId;
+        int pageOffset;
+
+        // Determine the offset based on the inventory type
         if (inv == Page1) {
-            for(i = 0; i <= 8; ++i) {
-                if (p.hasPermission(Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-" + Integer.toString(i + 1) + ".Permission"))) {
-                    CheckAmount = 0;
-                    var10000 = Wardrobe.Page_1.getConfig();
-                    var10001 = p.getUniqueId().toString();
-                    if (var10000.getItemStack(var10001 + ".Slot-" + (i + 1) + ".Helmet") == null) {
-                        inv.setItem(i, background(i, Page1, Name));
-                        ++CheckAmount;
-                    } else {
-                        var10002 = Wardrobe.Page_1.getConfig();
-                        var10003 = p.getUniqueId().toString();
-                        inv.setItem(i, var10002.getItemStack(var10003 + ".Slot-" + (i + 1) + ".Helmet"));
-                    }
-
-                    var10000 = Wardrobe.Page_1.getConfig();
-                    var10001 = p.getUniqueId().toString();
-                    if (var10000.getItemStack(var10001 + ".Slot-" + (i + 1) + ".Chestplate") == null) {
-                        inv.setItem(i + 9, background(i + 9, Page1, Name));
-                        ++CheckAmount;
-                    } else {
-                        var7 = i + 9;
-                        var10002 = Wardrobe.Page_1.getConfig();
-                        var10003 = p.getUniqueId().toString();
-                        inv.setItem(var7, var10002.getItemStack(var10003 + ".Slot-" + (i + 1) + ".Chestplate"));
-                    }
-
-                    var10000 = Wardrobe.Page_1.getConfig();
-                    var10001 = p.getUniqueId().toString();
-                    if (var10000.getItemStack(var10001 + ".Slot-" + (i + 1) + ".Leggings") == null) {
-                        inv.setItem(i + 18, background(i + 18, Page1, Name));
-                        ++CheckAmount;
-                    } else {
-                        var7 = i + 18;
-                        var10002 = Wardrobe.Page_1.getConfig();
-                        var10003 = p.getUniqueId().toString();
-                        inv.setItem(var7, var10002.getItemStack(var10003 + ".Slot-" + (i + 1) + ".Leggings"));
-                    }
-
-                    var10000 = Wardrobe.Page_1.getConfig();
-                    var10001 = p.getUniqueId().toString();
-                    if (var10000.getItemStack(var10001 + ".Slot-" + (i + 1) + ".Boots") == null) {
-                        inv.setItem(i + 27, background(i + 27, Page1, Name));
-                        ++CheckAmount;
-                    } else {
-                        var7 = i + 27;
-                        var10002 = Wardrobe.Page_1.getConfig();
-                        var10003 = p.getUniqueId().toString();
-                        inv.setItem(var7, var10002.getItemStack(var10003 + ".Slot-" + (i + 1) + ".Boots"));
-                    }
-
-                    if (CheckAmount == 4) {
-                        inv.setItem(i + 36, createEmptyButton(i, Page1, Name));
-                    }
-
-                    var10000 = Wardrobe.Page_1.getConfig();
-                    var10001 = p.getUniqueId().toString();
-                    if (var10000.getString(var10001 + ".Slot-" + (i + 1) + ".Button") != null) {
-                        var10000 = Wardrobe.Page_1.getConfig();
-                        var10001 = p.getUniqueId().toString();
-                        if (var10000.getString(var10001 + ".Slot-" + (i + 1) + ".Button").contains("Ready")) {
-                            inv.setItem(i + 36, createReadyButton(i, Page1, Name));
-                            continue;
-                        }
-                    }
-
-                    var10000 = Wardrobe.Page_1.getConfig();
-                    var10001 = p.getUniqueId().toString();
-                    if (var10000.getString(var10001 + ".Slot-" + (i + 1) + ".Button") != null) {
-                        var10000 = Wardrobe.Page_1.getConfig();
-                        var10001 = p.getUniqueId().toString();
-                        if (var10000.getString(var10001 + ".Slot-" + (i + 1) + ".Button").contains("Equipped")) {
-                            inv.setItem(i + 36, createEquippedButton(i, Page1, Name));
-                        }
-                    }
-                } else {
-                    for(CheckAmount = i + 11; CheckAmount <= 18; ++CheckAmount) {
-                        if (p.hasPermission(Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-" + CheckAmount + ".Permission"))) {
-                            CheckAmount = 0;
-
-                            for(int x = i; x <= 8; ++x) {
-                                var10000 = Wardrobe.Page_1.getConfig();
-                                var10001 = p.getUniqueId().toString();
-                                if (var10000.getItemStack(var10001 + ".Slot-" + (x + 1) + ".Helmet") == null) {
-                                    inv.setItem(x, background(x, Page1, Name));
-                                    ++CheckAmount;
-                                } else {
-                                    var10002 = Wardrobe.Page_1.getConfig();
-                                    var10003 = p.getUniqueId().toString();
-                                    inv.setItem(x, var10002.getItemStack(var10003 + ".Slot-" + (x + 1) + ".Helmet"));
-                                }
-
-                                var10000 = Wardrobe.Page_1.getConfig();
-                                var10001 = p.getUniqueId().toString();
-                                if (var10000.getItemStack(var10001 + ".Slot-" + (x + 1) + ".Chestplate") == null) {
-                                    inv.setItem(x + 9, background(x + 9, Page1, Name));
-                                    ++CheckAmount;
-                                } else {
-                                    var7 = x + 9;
-                                    var10002 = Wardrobe.Page_1.getConfig();
-                                    var10003 = p.getUniqueId().toString();
-                                    inv.setItem(var7, var10002.getItemStack(var10003 + ".Slot-" + (x + 1) + ".Chestplate"));
-                                }
-
-                                var10000 = Wardrobe.Page_1.getConfig();
-                                var10001 = p.getUniqueId().toString();
-                                if (var10000.getItemStack(var10001 + ".Slot-" + (x + 1) + ".Leggings") == null) {
-                                    inv.setItem(x + 18, background(x + 18, Page1, Name));
-                                    ++CheckAmount;
-                                } else {
-                                    var7 = x + 18;
-                                    var10002 = Wardrobe.Page_1.getConfig();
-                                    var10003 = p.getUniqueId().toString();
-                                    inv.setItem(var7, var10002.getItemStack(var10003 + ".Slot-" + (x + 1) + ".Leggings"));
-                                }
-
-                                var10000 = Wardrobe.Page_1.getConfig();
-                                var10001 = p.getUniqueId().toString();
-                                if (var10000.getItemStack(var10001 + ".Slot-" + (x + 1) + ".Boots") == null) {
-                                    inv.setItem(x + 27, background(x + 27, Page1, Name));
-                                    ++CheckAmount;
-                                } else {
-                                    var7 = x + 27;
-                                    var10002 = Wardrobe.Page_1.getConfig();
-                                    var10003 = p.getUniqueId().toString();
-                                    inv.setItem(var7, var10002.getItemStack(var10003 + ".Slot-" + (x + 1) + ".Boots"));
-                                }
-
-                                if (CheckAmount == 4) {
-                                    inv.setItem(i + 36, createEmptyButton(i, Page1, Name));
-                                }
-
-                                var10000 = Wardrobe.Page_1.getConfig();
-                                var10001 = p.getUniqueId().toString();
-                                if (var10000.getString(var10001 + ".Slot-" + (i + 1) + ".Button") != null) {
-                                    var10000 = Wardrobe.Page_1.getConfig();
-                                    var10001 = p.getUniqueId().toString();
-                                    if (var10000.getString(var10001 + ".Slot-" + (i + 1) + ".Button").contains("Ready")) {
-                                        inv.setItem(i + 36, createReadyButton(i, Page1, Name));
-                                        continue;
-                                    }
-                                }
-
-                                var10000 = Wardrobe.Page_1.getConfig();
-                                var10001 = p.getUniqueId().toString();
-                                if (var10000.getString(var10001 + ".Slot-" + (i + 1) + ".Button") != null) {
-                                    var10000 = Wardrobe.Page_1.getConfig();
-                                    var10001 = p.getUniqueId().toString();
-                                    if (var10000.getString(var10001 + ".Slot-" + (i + 1) + ".Button").contains("Equipped")) {
-                                        inv.setItem(i + 36, createEquippedButton(i, Page1, Name));
-                                    }
-                                }
-                            }
-
-                            return;
-                        }
-                    }
-
-                    for(CheckAmount = i + 1; CheckAmount <= 9; ++CheckAmount) {
-                        if (p.hasPermission(Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-" + Integer.toString(CheckAmount) + ".Permission"))) {
-                            CheckAmount = 0;
-                            var10000 = Wardrobe.Page_1.getConfig();
-                            var10001 = p.getUniqueId().toString();
-                            if (var10000.getItemStack(var10001 + ".Slot-" + (i + 1) + ".Helmet") == null) {
-                                inv.setItem(i, background(i, Page1, Name));
-                                ++CheckAmount;
-                            } else {
-                                var10002 = Wardrobe.Page_1.getConfig();
-                                var10003 = p.getUniqueId().toString();
-                                inv.setItem(i, var10002.getItemStack(var10003 + ".Slot-" + (i + 1) + ".Helmet"));
-                            }
-
-                            var10000 = Wardrobe.Page_1.getConfig();
-                            var10001 = p.getUniqueId().toString();
-                            if (var10000.getItemStack(var10001 + ".Slot-" + (i + 1) + ".Chestplate") == null) {
-                                inv.setItem(i + 9, background(i + 9, Page1, Name));
-                                ++CheckAmount;
-                            } else {
-                                var7 = i + 9;
-                                var10002 = Wardrobe.Page_1.getConfig();
-                                var10003 = p.getUniqueId().toString();
-                                inv.setItem(var7, var10002.getItemStack(var10003 + ".Slot-" + (i + 1) + ".Chestplate"));
-                            }
-
-                            var10000 = Wardrobe.Page_1.getConfig();
-                            var10001 = p.getUniqueId().toString();
-                            if (var10000.getItemStack(var10001 + ".Slot-" + (i + 1) + ".Leggings") == null) {
-                                inv.setItem(i + 18, background(i + 18, Page1, Name));
-                                ++CheckAmount;
-                            } else {
-                                var7 = i + 18;
-                                var10002 = Wardrobe.Page_1.getConfig();
-                                var10003 = p.getUniqueId().toString();
-                                inv.setItem(var7, var10002.getItemStack(var10003 + ".Slot-" + (i + 1) + ".Leggings"));
-                            }
-
-                            var10000 = Wardrobe.Page_1.getConfig();
-                            var10001 = p.getUniqueId().toString();
-                            if (var10000.getItemStack(var10001 + ".Slot-" + (i + 1) + ".Boots") == null) {
-                                inv.setItem(i + 27, background(i + 27, Page1, Name));
-                                ++CheckAmount;
-                            } else {
-                                var7 = i + 27;
-                                var10002 = Wardrobe.Page_1.getConfig();
-                                var10003 = p.getUniqueId().toString();
-                                inv.setItem(var7, var10002.getItemStack(var10003 + ".Slot-" + (i + 1) + ".Boots"));
-                            }
-
-                            if (CheckAmount == 4) {
-                                inv.setItem(i + 36, createEmptyButton(i, Page1, Name));
-                            }
-
-                            var10000 = Wardrobe.Page_1.getConfig();
-                            var10001 = p.getUniqueId().toString();
-                            if (var10000.getString(var10001 + ".Slot-" + (i + 1) + ".Button") != null) {
-                                var10000 = Wardrobe.Page_1.getConfig();
-                                var10001 = p.getUniqueId().toString();
-                                if (var10000.getString(var10001 + ".Slot-" + (i + 1) + ".Button").contains("Ready")) {
-                                    inv.setItem(i + 36, createReadyButton(i, Page1, Name));
-                                    continue;
-                                }
-                            }
-
-                            var10000 = Wardrobe.Page_1.getConfig();
-                            var10001 = p.getUniqueId().toString();
-                            if (var10000.getString(var10001 + ".Slot-" + (i + 1) + ".Button") != null) {
-                                var10000 = Wardrobe.Page_1.getConfig();
-                                var10001 = p.getUniqueId().toString();
-                                if (var10000.getString(var10001 + ".Slot-" + (i + 1) + ".Button").contains("Equipped")) {
-                                    inv.setItem(i + 36, createEquippedButton(i, Page1, Name));
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            pageOffset = 0; // Page 1 starts at slot 0
         } else if (inv == Page2) {
-            for(i = 0; i <= 8; ++i) {
-                if (p.hasPermission(Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-" + (i + 10) + ".Permission"))) {
-                    CheckAmount = 0;
-                    var10000 = Wardrobe.Page_2.getConfig();
-                    var10001 = p.getUniqueId().toString();
-                    if (var10000.getItemStack(var10001 + ".Slot-" + (i + 10) + ".Helmet") == null) {
-                        inv.setItem(i, background(i, Page2, Name));
-                        ++CheckAmount;
-                    } else {
-                        var10002 = Wardrobe.Page_2.getConfig();
-                        var10003 = p.getUniqueId().toString();
-                        inv.setItem(i, var10002.getItemStack(var10003 + ".Slot-" + (i + 10) + ".Helmet"));
-                    }
+            pageOffset = 9; // Page 2 starts at slot 9
+        } else {
+            return; // Unknown page, exit method
+        }
 
-                    var10000 = Wardrobe.Page_2.getConfig();
-                    var10001 = p.getUniqueId().toString();
-                    if (var10000.getItemStack(var10001 + ".Slot-" + (i + 10) + ".Chestplate") == null) {
-                        inv.setItem(i + 9, background(i + 9, Page2, Name));
-                        ++CheckAmount;
-                    } else {
-                        var7 = i + 9;
-                        var10002 = Wardrobe.Page_2.getConfig();
-                        var10003 = p.getUniqueId().toString();
-                        inv.setItem(var7, var10002.getItemStack(var10003 + ".Slot-" + (i + 10) + ".Chestplate"));
-                    }
+        // Loop through slots in the inventory
+        for (int i = 0; i <= 8; ++i) {
+            // Calculate the actual slot number to check based on page offset
+            int slotToCheck = i + 1 + pageOffset;
 
-                    var10000 = Wardrobe.Page_2.getConfig();
-                    var10001 = p.getUniqueId().toString();
-                    if (var10000.getItemStack(var10001 + ".Slot-" + (i + 10) + ".Leggings") == null) {
-                        inv.setItem(i + 18, background(i + 18, Page2, Name));
-                        ++CheckAmount;
-                    } else {
-                        var7 = i + 18;
-                        var10002 = Wardrobe.Page_2.getConfig();
-                        var10003 = p.getUniqueId().toString();
-                        inv.setItem(var7, var10002.getItemStack(var10003 + ".Slot-" + (i + 10) + ".Leggings"));
-                    }
+            // Check if player has permission for the slot
+            if (p.hasPermission(Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-" + slotToCheck + ".Permission"))) {
+                playerConfig = inv == Page1 ? Wardrobe.Page_1.getConfig() : Wardrobe.Page_2.getConfig(); // Get appropriate player configuration
+                playerId = p.getUniqueId().toString(); // Get player's UUID
 
-                    var10000 = Wardrobe.Page_2.getConfig();
-                    var10001 = p.getUniqueId().toString();
-                    if (var10000.getItemStack(var10001 + ".Slot-" + (i + 10) + ".Boots") == null) {
-                        inv.setItem(i + 27, background(i + 27, Page2, Name));
-                        ++CheckAmount;
-                    } else {
-                        var7 = i + 27;
-                        var10002 = Wardrobe.Page_2.getConfig();
-                        var10003 = p.getUniqueId().toString();
-                        inv.setItem(var7, var10002.getItemStack(var10003 + ".Slot-" + (i + 10) + ".Boots"));
-                    }
-
-                    if (CheckAmount == 4) {
-                        inv.setItem(i + 36, createEmptyButton(i, Page2, Name));
-                    }
-
-                    var10000 = Wardrobe.Page_2.getConfig();
-                    var10001 = p.getUniqueId().toString();
-                    if (var10000.getString(var10001 + ".Slot-" + (i + 10) + ".Button") != null) {
-                        var10000 = Wardrobe.Page_2.getConfig();
-                        var10001 = p.getUniqueId().toString();
-                        if (var10000.getString(var10001 + ".Slot-" + (i + 10) + ".Button").contains("Ready")) {
-                            inv.setItem(i + 36, createReadyButton(i, Page2, Name));
-                            continue;
-                        }
-                    }
-
-                    var10000 = Wardrobe.Page_2.getConfig();
-                    var10001 = p.getUniqueId().toString();
-                    if (var10000.getString(var10001 + ".Slot-" + (i + 10) + ".Button") != null) {
-                        var10000 = Wardrobe.Page_2.getConfig();
-                        var10001 = p.getUniqueId().toString();
-                        if (var10000.getString(var10001 + ".Slot-" + (i + 10) + ".Button").contains("Equipped")) {
-                            inv.setItem(i + 36, createEquippedButton(i, Page2, Name));
-                        }
-                    }
+                // Check and set helmet item
+                if (playerConfig.getItemStack(playerId + ".Slot-" + slotToCheck + ".Helmet") == null) {
+                    inv.setItem(i, background(i, inv, name)); // Set background if helmet is null
                 } else {
-                    for(CheckAmount = i + 11; CheckAmount <= 18; ++CheckAmount) {
-                        if (p.hasPermission(Wardrobe.ConfigData.getConfig().getString("Slot-Permission.Slot-" + CheckAmount + ".Permission"))) {
-                            CheckAmount = 0;
-                            var10000 = Wardrobe.Page_2.getConfig();
-                            var10001 = p.getUniqueId().toString();
-                            if (var10000.getItemStack(var10001 + ".Slot-" + (i + 10) + ".Helmet") == null) {
-                                inv.setItem(i, background(i, Page2, Name));
-                                ++CheckAmount;
-                            } else {
-                                var10002 = Wardrobe.Page_2.getConfig();
-                                var10003 = p.getUniqueId().toString();
-                                inv.setItem(i, var10002.getItemStack(var10003 + ".Slot-" + (i + 10) + ".Helmet"));
-                            }
+                    inv.setItem(i, playerConfig.getItemStack(playerId + ".Slot-" + slotToCheck + ".Helmet")); // Set helmet item
+                }
 
-                            var10000 = Wardrobe.Page_2.getConfig();
-                            var10001 = p.getUniqueId().toString();
-                            if (var10000.getItemStack(var10001 + ".Slot-" + (i + 10) + ".Chestplate") == null) {
-                                inv.setItem(i + 9, background(i + 9, Page2, Name));
-                                ++CheckAmount;
-                            } else {
-                                var7 = i + 9;
-                                var10002 = Wardrobe.Page_2.getConfig();
-                                var10003 = p.getUniqueId().toString();
-                                inv.setItem(var7, var10002.getItemStack(var10003 + ".Slot-" + (i + 10) + ".Chestplate"));
-                            }
+                // Check and set chestplate item
+                if (playerConfig.getItemStack(playerId + ".Slot-" + slotToCheck + ".Chestplate") == null) {
+                    inv.setItem(i + 9, background(i + 9, inv, name)); // Set background if chestplate is null
+                } else {
+                    inv.setItem(i + 9, playerConfig.getItemStack(playerId + ".Slot-" + slotToCheck + ".Chestplate")); // Set chestplate item
+                }
 
-                            var10000 = Wardrobe.Page_2.getConfig();
-                            var10001 = p.getUniqueId().toString();
-                            if (var10000.getItemStack(var10001 + ".Slot-" + (i + 10) + ".Leggings") == null) {
-                                inv.setItem(i + 18, background(i + 18, Page2, Name));
-                                ++CheckAmount;
-                            } else {
-                                var7 = i + 18;
-                                var10002 = Wardrobe.Page_2.getConfig();
-                                var10003 = p.getUniqueId().toString();
-                                inv.setItem(var7, var10002.getItemStack(var10003 + ".Slot-" + (i + 10) + ".Leggings"));
-                            }
+                // Check and set leggings item
+                if (playerConfig.getItemStack(playerId + ".Slot-" + slotToCheck + ".Leggings") == null) {
+                    inv.setItem(i + 18, background(i + 18, inv, name)); // Set background if leggings is null
+                } else {
+                    inv.setItem(i + 18, playerConfig.getItemStack(playerId + ".Slot-" + slotToCheck + ".Leggings")); // Set leggings item
+                }
 
-                            var10000 = Wardrobe.Page_2.getConfig();
-                            var10001 = p.getUniqueId().toString();
-                            if (var10000.getItemStack(var10001 + ".Slot-" + (i + 10) + ".Boots") == null) {
-                                inv.setItem(i + 27, background(i + 27, Page2, Name));
-                                ++CheckAmount;
-                            } else {
-                                var7 = i + 27;
-                                var10002 = Wardrobe.Page_2.getConfig();
-                                var10003 = p.getUniqueId().toString();
-                                inv.setItem(var7, var10002.getItemStack(var10003 + ".Slot-" + (i + 10) + ".Boots"));
-                            }
+                // Check and set boots item
+                if (playerConfig.getItemStack(playerId + ".Slot-" + slotToCheck + ".Boots") == null) {
+                    inv.setItem(i + 27, background(i + 27, inv, name)); // Set background if boots is null
+                } else {
+                    inv.setItem(i + 27, playerConfig.getItemStack(playerId + ".Slot-" + slotToCheck + ".Boots")); // Set boots item
+                }
 
-                            if (CheckAmount == 4) {
-                                inv.setItem(i + 36, createEmptyButton(i, Page2, Name));
-                            }
+                // Check if all slots are empty and set empty button
+                if (playerConfig.getItemStack(playerId + ".Slot-" + slotToCheck + ".Helmet") == null &&
+                        playerConfig.getItemStack(playerId + ".Slot-" + slotToCheck + ".Chestplate") == null &&
+                        playerConfig.getItemStack(playerId + ".Slot-" + slotToCheck + ".Leggings") == null &&
+                        playerConfig.getItemStack(playerId + ".Slot-" + slotToCheck + ".Boots") == null) {
+                    inv.setItem(i + 36, createEmptyButton(i, inv, name)); // Set empty button
+                }
 
-                            var10000 = Wardrobe.Page_2.getConfig();
-                            var10001 = p.getUniqueId().toString();
-                            if (var10000.getString(var10001 + ".Slot-" + (i + 10) + ".Button") != null) {
-                                var10000 = Wardrobe.Page_2.getConfig();
-                                var10001 = p.getUniqueId().toString();
-                                if (var10000.getString(var10001 + ".Slot-" + (i + 10) + ".Button").contains("Ready")) {
-                                    inv.setItem(i + 36, createReadyButton(i, Page2, Name));
-                                    continue;
-                                }
-                            }
-
-                            var10000 = Wardrobe.Page_2.getConfig();
-                            var10001 = p.getUniqueId().toString();
-                            if (var10000.getString(var10001 + ".Slot-" + (i + 10) + ".Button") != null) {
-                                var10000 = Wardrobe.Page_2.getConfig();
-                                var10001 = p.getUniqueId().toString();
-                                if (var10000.getString(var10001 + ".Slot-" + (i + 10) + ".Button").contains("Equipped")) {
-                                    inv.setItem(i + 36, createEquippedButton(i, Page2, Name));
-                                }
-                            }
-                        }
+                // Check and set appropriate button based on configuration
+                String buttonType = playerConfig.getString(playerId + ".Slot-" + slotToCheck + ".Button");
+                if (buttonType != null) {
+                    if (buttonType.contains("Ready")) {
+                        inv.setItem(i + 36, createReadyButton(i, inv, name)); // Set ready button
+                    } else if (buttonType.contains("Equipped")) {
+                        inv.setItem(i + 36, createEquippedButton(i, inv, name)); // Set equipped button
                     }
                 }
             }
         }
-
     }
 
+    /**
+     * Generates a background item stack based on the slot, inventory, and title.
+     *
+     * @param Slot  The slot index.
+     * @param inv   The inventory.
+     * @param Title The title of the inventory.
+     * @return The background item stack.
+     */
     public static ItemStack background(int Slot, Inventory inv, String Title) {
+        // Initialize default background item
         ItemStack AvailableBackground = new ItemStack(Material.DIRT);
         ItemMeta AvailableBackgroundMeta = AvailableBackground.getItemMeta();
         String Mat = "";
-        if (Slot != 0 && Slot - 9 != 0 && Slot - 18 != 0 && Slot - 27 != 0) {
-            if (Slot != 1 && Slot - 9 != 1 && Slot - 18 != 1 && Slot - 27 != 1) {
-                if (Slot != 2 && Slot - 9 != 2 && Slot - 18 != 2 && Slot - 27 != 2) {
-                    if (Slot != 3 && Slot - 9 != 3 && Slot - 18 != 3 && Slot - 27 != 3) {
-                        if (Slot != 4 && Slot - 9 != 4 && Slot - 18 != 4 && Slot - 27 != 4) {
-                            if (Slot != 5 && Slot - 9 != 5 && Slot - 18 != 5 && Slot - 27 != 5) {
-                                if (Slot != 6 && Slot - 9 != 6 && Slot - 18 != 6 && Slot - 27 != 6) {
-                                    if (Slot != 7 && Slot - 9 != 7 && Slot - 18 != 7 && Slot - 27 != 7) {
-                                        if (Slot == 8 || Slot - 9 == 8 || Slot - 18 == 8 || Slot - 27 == 8) {
-                                            if (Ver.contains("1.8") || Ver.contains("1.9") || Ver.contains("1.10") || Ver.contains("1.11") || Ver.contains("1.12")) {
-                                                Mat = "STAINED_GLASS_PANE";
-                                                AvailableBackground.setType(Material.valueOf(Mat));
-                                                AvailableBackground.setDurability((short)10);
-                                            }
 
-                                            if (Ver.contains("1.13") || Ver.contains("1.14") || Ver.contains("1.15") || Ver.contains("1.16") || Ver.contains("1.17") || Ver.contains("1.18") || Ver.contains("1.19") || Ver.contains("1.20")) {
-                                                Mat = "PURPLE_STAINED_GLASS_PANE";
-                                                AvailableBackground.setType(Material.valueOf(Mat));
-                                            }
-                                        }
-                                    } else {
-                                        if (Ver.contains("1.8") || Ver.contains("1.9") || Ver.contains("1.10") || Ver.contains("1.11") || Ver.contains("1.12")) {
-                                            Mat = "STAINED_GLASS_PANE";
-                                            AvailableBackground.setType(Material.valueOf(Mat));
-                                            AvailableBackground.setDurability((short)2);
-                                        }
+// Replace the color mappings
+        Map<Integer, Material> materialMap = new HashMap<>();
+        materialMap.put(0, Material.ORANGE_STAINED_GLASS_PANE);
+        materialMap.put(1, Material.YELLOW_STAINED_GLASS_PANE);
+        materialMap.put(2, Material.LIME_STAINED_GLASS_PANE);
+        materialMap.put(3, Material.GREEN_STAINED_GLASS_PANE);
+        materialMap.put(4, Material.LIGHT_BLUE_STAINED_GLASS_PANE);
+        materialMap.put(5, Material.CYAN_STAINED_GLASS_PANE);
+        materialMap.put(6, Material.BLUE_STAINED_GLASS_PANE);
+        materialMap.put(7, Material.PURPLE_STAINED_GLASS_PANE);
+        materialMap.put(8, Material.MAGENTA_STAINED_GLASS_PANE);
 
-                                        if (Ver.contains("1.13") || Ver.contains("1.14") || Ver.contains("1.15") || Ver.contains("1.16") || Ver.contains("1.17") || Ver.contains("1.18") || Ver.contains("1.19") || Ver.contains("1.20")) {
-                                            Mat = "MAGENTA_STAINED_GLASS_PANE";
-                                            AvailableBackground.setType(Material.valueOf(Mat));
-                                        }
-                                    }
-                                } else {
-                                    if (Ver.contains("1.8") || Ver.contains("1.9") || Ver.contains("1.10") || Ver.contains("1.11") || Ver.contains("1.12")) {
-                                        Mat = "STAINED_GLASS_PANE";
-                                        AvailableBackground.setType(Material.valueOf(Mat));
-                                        AvailableBackground.setDurability((short)11);
-                                    }
-
-                                    if (Ver.contains("1.13") || Ver.contains("1.14") || Ver.contains("1.15") || Ver.contains("1.16") || Ver.contains("1.17") || Ver.contains("1.18") || Ver.contains("1.19") || Ver.contains("1.20")) {
-                                        Mat = "BLUE_STAINED_GLASS_PANE";
-                                        AvailableBackground.setType(Material.valueOf(Mat));
-                                    }
-                                }
-                            } else {
-                                if (Ver.contains("1.8") || Ver.contains("1.9") || Ver.contains("1.10") || Ver.contains("1.11") || Ver.contains("1.12")) {
-                                    Mat = "STAINED_GLASS_PANE";
-                                    AvailableBackground.setType(Material.valueOf(Mat));
-                                    AvailableBackground.setDurability((short)4);
-                                }
-
-                                if (Ver.contains("1.13") || Ver.contains("1.14") || Ver.contains("1.15") || Ver.contains("1.16") || Ver.contains("1.17") || Ver.contains("1.18") || Ver.contains("1.19") || Ver.contains("1.20")) {
-                                    Mat = "LIGHT_BLUE_STAINED_GLASS_PANE";
-                                    AvailableBackground.setType(Material.valueOf(Mat));
-                                }
-                            }
-                        } else {
-                            if (Ver.contains("1.8") || Ver.contains("1.9") || Ver.contains("1.10") || Ver.contains("1.11") || Ver.contains("1.12")) {
-                                Mat = "STAINED_GLASS_PANE";
-                                AvailableBackground.setType(Material.valueOf(Mat));
-                                AvailableBackground.setDurability((short)13);
-                            }
-
-                            if (Ver.contains("1.13") || Ver.contains("1.14") || Ver.contains("1.15") || Ver.contains("1.16") || Ver.contains("1.17") || Ver.contains("1.18") || Ver.contains("1.19") || Ver.contains("1.20")) {
-                                Mat = "GREEN_STAINED_GLASS_PANE";
-                                AvailableBackground.setType(Material.valueOf(Mat));
-                            }
-                        }
-                    } else {
-                        if (Ver.contains("1.8") || Ver.contains("1.9") || Ver.contains("1.10") || Ver.contains("1.11") || Ver.contains("1.12")) {
-                            Mat = "STAINED_GLASS_PANE";
-                            AvailableBackground.setType(Material.valueOf(Mat));
-                            AvailableBackground.setDurability((short)5);
-                        }
-
-                        if (Ver.contains("1.13") || Ver.contains("1.14") || Ver.contains("1.15") || Ver.contains("1.16") || Ver.contains("1.17") || Ver.contains("1.18") || Ver.contains("1.19") || Ver.contains("1.20")) {
-                            Mat = "LIME_STAINED_GLASS_PANE";
-                            AvailableBackground.setType(Material.valueOf(Mat));
-                        }
-                    }
-                } else {
-                    if (Ver.contains("1.8") || Ver.contains("1.9") || Ver.contains("1.10") || Ver.contains("1.11") || Ver.contains("1.12")) {
-                        Mat = "STAINED_GLASS_PANE";
-                        AvailableBackground.setType(Material.valueOf(Mat));
-                        AvailableBackground.setDurability((short)4);
-                    }
-
-                    if (Ver.contains("1.13") || Ver.contains("1.14") || Ver.contains("1.15") || Ver.contains("1.16") || Ver.contains("1.17") || Ver.contains("1.18") || Ver.contains("1.19") || Ver.contains("1.20")) {
-                        Mat = "YELLOW_STAINED_GLASS_PANE";
-                        AvailableBackground.setType(Material.valueOf(Mat));
-                    }
-                }
-            } else {
-                if (Ver.contains("1.8") || Ver.contains("1.9") || Ver.contains("1.10") || Ver.contains("1.11") || Ver.contains("1.12")) {
-                    Mat = "STAINED_GLASS_PANE";
-                    AvailableBackground.setType(Material.valueOf(Mat));
-                    AvailableBackground.setDurability((short)1);
-                }
-
-                if (Ver.contains("1.13") || Ver.contains("1.14") || Ver.contains("1.15") || Ver.contains("1.16") || Ver.contains("1.17") || Ver.contains("1.18") || Ver.contains("1.19") || Ver.contains("1.20")) {
-                    Mat = "ORANGE_STAINED_GLASS_PANE";
-                    AvailableBackground.setType(Material.valueOf(Mat));
-                }
-            }
-        } else if (!Ver.contains("1.8") && !Ver.contains("1.9") && !Ver.contains("1.10") && !Ver.contains("1.11") && !Ver.contains("1.12")) {
-            if (Ver.contains("1.13") || Ver.contains("1.14") || Ver.contains("1.15") || Ver.contains("1.16") || Ver.contains("1.17") || Ver.contains("1.18") || Ver.contains("1.19") || Ver.contains("1.20")) {
-                Mat = "RED_STAINED_GLASS_PANE";
-                AvailableBackground.setType(Material.valueOf(Mat));
-            }
+// Update setting the background color
+        if (materialMap.containsKey(Slot % 9)) {
+            Material material = materialMap.get(Slot % 9);
+            AvailableBackground.setType(material);
         } else {
-            Mat = "STAINED_GLASS_PANE";
-            AvailableBackground.setType(Material.valueOf(Mat));
-            AvailableBackground.setDurability((short)14);
+            // For non-colored panes, use default glass pane
+            AvailableBackground.setType(Material.GLASS_PANE);
         }
 
-        List<String> AvailableBackgroundLore = new ArrayList();
-        String Name;
-        Iterator var8;
-        String Lore;
+
+
+
+        // Create lore list
+        List<String> AvailableBackgroundLore = new ArrayList<>();
+        String Name = "";
+
+        // Check slot range and assign appropriate lore
         if (Slot >= 0 && Slot <= 8) {
-            Name = "";
-            if (Title.equals(Page1Name)) {
-                Name = Wardrobe.ConfigData.getConfig().getString("Availabel-Slot.Helmet-Slot.Name").replace("%Slot%", Integer.toString(Slot + 1));
-            } else if (Title.equals(Page2Name)) {
-                Name = Wardrobe.ConfigData.getConfig().getString("Availabel-Slot.Helmet-Slot.Name").replace("%Slot%", Integer.toString(Slot + 10));
-            }
-
-            AvailableBackgroundMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Name));
-            var8 = Wardrobe.ConfigData.getConfig().getStringList("Availabel-Slot.Helmet-Slot.Lore").iterator();
-
-            while(var8.hasNext()) {
-                Lore = (String)var8.next();
-                AvailableBackgroundLore.add(ChatColor.translateAlternateColorCodes('&', Lore));
-            }
+            Name = Title.equals(Page1Name) ?
+                    Wardrobe.ConfigData.getConfig().getString("Availabel-Slot.Helmet-Slot.Name").replace("%Slot%", Integer.toString(Slot + 1)) :
+                    Wardrobe.ConfigData.getConfig().getString("Availabel-Slot.Helmet-Slot.Name").replace("%Slot%", Integer.toString(Slot + 10));
         } else if (Slot >= 9 && Slot <= 17) {
-            Name = "";
-            if (Title.equals(Page1Name)) {
-                Name = Wardrobe.ConfigData.getConfig().getString("Availabel-Slot.Chestplate-Slot.Name").replace("%Slot%", Integer.toString(Slot - 8));
-            } else if (Title.equals(Page2Name)) {
-                Name = Wardrobe.ConfigData.getConfig().getString("Availabel-Slot.Chestplate-Slot.Name").replace("%Slot%", Integer.toString(Slot + 1));
-            }
-
-            AvailableBackgroundMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Name));
-            var8 = Wardrobe.ConfigData.getConfig().getStringList("Availabel-Slot.Chestplate-Slot.Lore").iterator();
-
-            while(var8.hasNext()) {
-                Lore = (String)var8.next();
-                AvailableBackgroundLore.add(ChatColor.translateAlternateColorCodes('&', Lore));
-            }
+            Name = Title.equals(Page1Name) ?
+                    Wardrobe.ConfigData.getConfig().getString("Availabel-Slot.Chestplate-Slot.Name").replace("%Slot%", Integer.toString(Slot - 8)) :
+                    Wardrobe.ConfigData.getConfig().getString("Availabel-Slot.Chestplate-Slot.Name").replace("%Slot%", Integer.toString(Slot + 1));
         } else if (Slot >= 18 && Slot <= 26) {
-            Name = "";
-            if (Title.equals(Page1Name)) {
-                Name = Wardrobe.ConfigData.getConfig().getString("Availabel-Slot.Leggings-Slot.Name").replace("%Slot%", Integer.toString(Slot - 17));
-            } else if (Title.equals(Page2Name)) {
-                Name = Wardrobe.ConfigData.getConfig().getString("Availabel-Slot.Leggings-Slot.Name").replace("%Slot%", Integer.toString(Slot - 8));
-            }
-
-            AvailableBackgroundMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Name));
-            var8 = Wardrobe.ConfigData.getConfig().getStringList("Availabel-Slot.Leggings-Slot.Lore").iterator();
-
-            while(var8.hasNext()) {
-                Lore = (String)var8.next();
-                AvailableBackgroundLore.add(ChatColor.translateAlternateColorCodes('&', Lore));
-            }
+            Name = Title.equals(Page1Name) ?
+                    Wardrobe.ConfigData.getConfig().getString("Availabel-Slot.Leggings-Slot.Name").replace("%Slot%", Integer.toString(Slot - 17)) :
+                    Wardrobe.ConfigData.getConfig().getString("Availabel-Slot.Leggings-Slot.Name").replace("%Slot%", Integer.toString(Slot - 8));
         } else if (Slot >= 27 && Slot <= 35) {
-            Name = "";
-            if (Title.equals(Page1Name)) {
-                Name = Wardrobe.ConfigData.getConfig().getString("Availabel-Slot.Boots-Slot.Name").replace("%Slot%", Integer.toString(Slot - 26));
-            } else if (Title.equals(Page2Name)) {
-                Name = Wardrobe.ConfigData.getConfig().getString("Availabel-Slot.Boots-Slot.Name").replace("%Slot%", Integer.toString(Slot - 17));
-            }
-
-            AvailableBackgroundMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Name));
-            var8 = Wardrobe.ConfigData.getConfig().getStringList("Availabel-Slot.Boots-Slot.Lore").iterator();
-
-            while(var8.hasNext()) {
-                Lore = (String)var8.next();
-                AvailableBackgroundLore.add(ChatColor.translateAlternateColorCodes('&', Lore));
-            }
+            Name = Title.equals(Page1Name) ?
+                    Wardrobe.ConfigData.getConfig().getString("Availabel-Slot.Boots-Slot.Name").replace("%Slot%", Integer.toString(Slot - 26)) :
+                    Wardrobe.ConfigData.getConfig().getString("Availabel-Slot.Boots-Slot.Name").replace("%Slot%", Integer.toString(Slot - 17));
         }
 
+        // Set display name and add lore
+        AvailableBackgroundMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Name));
+        List<String> loreList = Wardrobe.ConfigData.getConfig().getStringList(String.format("Availabel-Slot.%s.Lore", getSlotName(Slot, Title)));
+        for (String lore : loreList) {
+            AvailableBackgroundLore.add(ChatColor.translateAlternateColorCodes('&', lore));
+        }
+
+        // Set lore and metadata for the background item stack
         AvailableBackgroundMeta.setLore(AvailableBackgroundLore);
         AvailableBackground.setItemMeta(AvailableBackgroundMeta);
         return AvailableBackground;
+    }
+
+    // Utility method to get slot name based on page and slot index
+    private static String getSlotName(int slot, String title) {
+        String prefix;
+        if (title.equals(Page1Name)) {
+            prefix = "Helmet-Slot";
+        } else {
+            prefix = (slot >= 0 && slot <= 8) ? "Helmet-Slot" :
+                    (slot >= 9 && slot <= 17) ? "Chestplate-Slot" :
+                            (slot >= 18 && slot <= 26) ? "Leggings-Slot" :
+                                    "Boots-Slot";
+        }
+        return prefix;
     }
 
     public static ItemStack createEmptyButton(int Slot, Inventory inv, String Title) {
