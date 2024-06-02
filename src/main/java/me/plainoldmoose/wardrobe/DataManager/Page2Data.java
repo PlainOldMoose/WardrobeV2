@@ -49,11 +49,15 @@ public class Page2Data {
      *
      * @return the FileConfiguration object for page 2
      */
-    public FileConfiguration getConfig() {
+    public FileConfiguration getFileConfig() {
         if (dataPage2 == null) {
             reloadConfig();
         }
         return dataPage2;
+    }
+
+    public File getConfig() {
+        return this.Page2;
     }
 
     /**
@@ -62,7 +66,7 @@ public class Page2Data {
     public void saveConfig() {
         if (dataPage2 != null && Page2 != null) {
             try {
-                getConfig().save(Page2);
+                getFileConfig().save(Page2);
             } catch (IOException e) {
                 plugin.getLogger().log(Level.SEVERE, "Could not save Data to " + Page2, e);
             }

@@ -33,8 +33,8 @@ public class Wardrobe extends JavaPlugin {
     @Override
     public void onEnable() {
         // Initialize page data
-        DataCreator.CreatePage1();
-        DataCreator.CreatePage2();
+        DataCreator.createPage1();
+        DataCreator.createPage2();
 
         // Set plugin instance
         plugin = this;
@@ -42,7 +42,7 @@ public class Wardrobe extends JavaPlugin {
         // Initialize configuration data
         ConfigData = new Config(this);
         ConfigData.saveDefaultConfig();
-        ConfigData.ReloadConfig();
+        ConfigData.reloadConfig();
 
         // Initialize page 1 data
         Page_1 = new Page1Data(this);

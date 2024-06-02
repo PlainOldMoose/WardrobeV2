@@ -1,11 +1,11 @@
 #-------------------------------------------------
 #                 Wardrobe Config
-#                     By Kiwi
+#                     By PlainOldMoose
 #-------------------------------------------------
 
-Admin-Permission: Wardrobe.Admin
+Admin-Permission: wardrobe.admin
 
-Title: " Kiwi´s Wardrobe"
+Title: "Wardrobe"
 #------------Slot-Permission--------------
 Slot-Permission:
   Slot-1:
@@ -140,12 +140,6 @@ Availabel-Slot:
       - ""
       - "&eClick to unequip this armor set!"
 #------------Button--------------
-Go-Back-Button:
-  Enable: true
-  Command: sbmenu
-  Slot: 48
-  Name: "&aGo Back"
-  Lore: ""
 Close-Button:
   Enable: true
   Slot: 49

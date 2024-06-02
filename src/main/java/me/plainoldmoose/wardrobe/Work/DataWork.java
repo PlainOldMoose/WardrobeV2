@@ -16,8 +16,8 @@ public class DataWork {
      */
     public static boolean resetAllPlayerWardrobe(Player p) {
         // Remove player's wardrobe data from both pages
-        Wardrobe.Page_1.getConfig().set(p.getUniqueId().toString(), null);
-        Wardrobe.Page_2.getConfig().set(p.getUniqueId().toString(), null);
+        Wardrobe.Page_1.getFileConfig().set(p.getUniqueId().toString(), null);
+        Wardrobe.Page_2.getFileConfig().set(p.getUniqueId().toString(), null);
 
         // Save and reload configurations
         Wardrobe.Page_1.saveConfig();
@@ -26,8 +26,8 @@ public class DataWork {
         Wardrobe.Page_2.reloadConfig();
 
         // Check if both configurations are now empty
-        return Wardrobe.Page_1.getConfig().getConfigurationSection(p.getUniqueId().toString()) == null &&
-                Wardrobe.Page_2.getConfig().getConfigurationSection(p.getUniqueId().toString()) == null;
+        return Wardrobe.Page_1.getFileConfig().getConfigurationSection(p.getUniqueId().toString()) == null &&
+                Wardrobe.Page_2.getFileConfig().getConfigurationSection(p.getUniqueId().toString()) == null;
     }
 
     /**
@@ -41,18 +41,18 @@ public class DataWork {
         // Check which page to reset
         if (Page.equalsIgnoreCase("1")) {
             // Reset data on Page 1
-            Wardrobe.Page_1.getConfig().set(p.getUniqueId().toString(), null);
+            Wardrobe.Page_1.getFileConfig().set(p.getUniqueId().toString(), null);
             Wardrobe.Page_1.saveConfig();
             Wardrobe.Page_1.reloadConfig();
             // Check if the configuration section is now empty
-            return Wardrobe.Page_1.getConfig().getConfigurationSection(p.getUniqueId().toString()) == null;
+            return Wardrobe.Page_1.getFileConfig().getConfigurationSection(p.getUniqueId().toString()) == null;
         } else if (Page.equalsIgnoreCase("2")) {
             // Reset data on Page 2
-            Wardrobe.Page_2.getConfig().set(p.getUniqueId().toString(), null);
+            Wardrobe.Page_2.getFileConfig().set(p.getUniqueId().toString(), null);
             Wardrobe.Page_2.saveConfig();
             Wardrobe.Page_2.reloadConfig();
             // Check if the configuration section is now empty
-            return Wardrobe.Page_2.getConfig().getConfigurationSection(p.getUniqueId().toString()) == null;
+            return Wardrobe.Page_2.getFileConfig().getConfigurationSection(p.getUniqueId().toString()) == null;
         } else {
             return false;
         }
@@ -70,23 +70,23 @@ public class DataWork {
         // Check if the slot number is valid
         if (Integer.valueOf(Slot) >= 1 && Integer.valueOf(Slot) <= 9) {
             // Reset data on Page 1 for the specified slot
-            Wardrobe.Page_1.getConfig().set(p.getUniqueId().toString() + ".name", p.getName());
-            Wardrobe.Page_1.getConfig().set(p.getUniqueId().toString() + "." + SlotPath + ".Helmet", "none");
-            Wardrobe.Page_1.getConfig().set(p.getUniqueId().toString() + "." + SlotPath + ".Chestplate", "none");
-            Wardrobe.Page_1.getConfig().set(p.getUniqueId().toString() + "." + SlotPath + ".Leggings", "none");
-            Wardrobe.Page_1.getConfig().set(p.getUniqueId().toString() + "." + SlotPath + ".Boots", "none");
-            Wardrobe.Page_1.getConfig().set(p.getUniqueId().toString() + "." + SlotPath + ".Button", "Locked");
+            Wardrobe.Page_1.getFileConfig().set(p.getUniqueId().toString() + ".name", p.getName());
+            Wardrobe.Page_1.getFileConfig().set(p.getUniqueId().toString() + "." + SlotPath + ".Helmet", "none");
+            Wardrobe.Page_1.getFileConfig().set(p.getUniqueId().toString() + "." + SlotPath + ".Chestplate", "none");
+            Wardrobe.Page_1.getFileConfig().set(p.getUniqueId().toString() + "." + SlotPath + ".Leggings", "none");
+            Wardrobe.Page_1.getFileConfig().set(p.getUniqueId().toString() + "." + SlotPath + ".Boots", "none");
+            Wardrobe.Page_1.getFileConfig().set(p.getUniqueId().toString() + "." + SlotPath + ".Button", "Locked");
             Wardrobe.Page_1.saveConfig();
             Wardrobe.Page_1.reloadConfig();
             return true;
         } else if (Integer.valueOf(Slot) >= 10 && Integer.valueOf(Slot) <= 18) {
             // Reset data on Page 2 for the specified slot
-            Wardrobe.Page_2.getConfig().set(p.getUniqueId().toString() + ".name", p.getName());
-            Wardrobe.Page_2.getConfig().set(p.getUniqueId().toString() + "." + SlotPath + ".Helmet", "none");
-            Wardrobe.Page_2.getConfig().set(p.getUniqueId().toString() + "." + SlotPath + ".Chestplate", "none");
-            Wardrobe.Page_2.getConfig().set(p.getUniqueId().toString() + "." + SlotPath + ".Leggings", "none");
-            Wardrobe.Page_2.getConfig().set(p.getUniqueId().toString() + "." + SlotPath + ".Boots", "none");
-            Wardrobe.Page_2.getConfig().set(p.getUniqueId().toString() + "." + SlotPath + ".Button", "Locked");
+            Wardrobe.Page_2.getFileConfig().set(p.getUniqueId().toString() + ".name", p.getName());
+            Wardrobe.Page_2.getFileConfig().set(p.getUniqueId().toString() + "." + SlotPath + ".Helmet", "none");
+            Wardrobe.Page_2.getFileConfig().set(p.getUniqueId().toString() + "." + SlotPath + ".Chestplate", "none");
+            Wardrobe.Page_2.getFileConfig().set(p.getUniqueId().toString() + "." + SlotPath + ".Leggings", "none");
+            Wardrobe.Page_2.getFileConfig().set(p.getUniqueId().toString() + "." + SlotPath + ".Boots", "none");
+            Wardrobe.Page_2.getFileConfig().set(p.getUniqueId().toString() + "." + SlotPath + ".Button", "Locked");
             Wardrobe.Page_2.saveConfig();
             Wardrobe.Page_2.reloadConfig();
             return true;

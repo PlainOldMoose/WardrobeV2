@@ -49,11 +49,24 @@ public class Config {
      *
      * @return the FileConfiguration object
      */
-    public FileConfiguration getConfig() {
+    public FileConfiguration getFileConfig() {
         if (dataConfig == null) {
             reloadConfig();
         }
         return dataConfig;
+    }
+
+    public File getConfig() {
+        return this.configFile;
+    }
+
+    /**
+     * Sets the configuration object.
+     *
+     * @return the FileConfiguration object
+     */
+    public void setConfig(FileConfiguration config) {
+        this.dataConfig = config;
     }
 
     /**
@@ -62,7 +75,7 @@ public class Config {
     public void saveConfig() {
         if (dataConfig != null && configFile != null) {
             try {
-                getConfig().save(configFile);
+                getFileConfig().save(configFile);
             } catch (IOException e) {
                 plugin.getLogger().log(Level.SEVERE, "Could not save data to " + configFile, e);
             }

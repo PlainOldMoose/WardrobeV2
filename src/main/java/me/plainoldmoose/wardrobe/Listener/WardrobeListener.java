@@ -55,34 +55,34 @@ public class WardrobeListener implements Listener {
 
             p = (Player)e.getWhoClicked();
             e.setCancelled(true);
-            if (e.getSlot() == Wardrobe.ConfigData.getConfig().getInt("Next-Page-Button.Slot") && Wardrobe.ConfigData.getConfig().getBoolean("Next-Page-Button.Enable") && !e.getInventory().getItem(e.getSlot()).getType().toString().contains("STAINED_GLASS_PANE")) {
+            if (e.getSlot() == Wardrobe.ConfigData.getFileConfig().getInt("Next-Page-Button.Slot") && Wardrobe.ConfigData.getFileConfig().getBoolean("Next-Page-Button.Enable") && !e.getInventory().getItem(e.getSlot()).getType().toString().contains("STAINED_GLASS_PANE")) {
                 if (e.getWhoClicked().getItemOnCursor() != null) {
                     e.getWhoClicked().getInventory().addItem(new ItemStack[]{e.getWhoClicked().getItemOnCursor().clone()});
                     e.getWhoClicked().setItemOnCursor((ItemStack)null);
                 }
 
-                WardrobeGUI.CreateWardrobePage2(p);
+                WardrobeGUI.createWardrobePage2(p);
             }
 
-            if (e.getSlot() == Wardrobe.ConfigData.getConfig().getInt("Previous-Page-Button.Slot") && Wardrobe.ConfigData.getConfig().getBoolean("Previous-Page-Button.Enable") && !e.getInventory().getItem(e.getSlot()).getType().toString().contains("STAINED_GLASS_PANE")) {
+            if (e.getSlot() == Wardrobe.ConfigData.getFileConfig().getInt("Previous-Page-Button.Slot") && Wardrobe.ConfigData.getFileConfig().getBoolean("Previous-Page-Button.Enable") && !e.getInventory().getItem(e.getSlot()).getType().toString().contains("STAINED_GLASS_PANE")) {
                 if (e.getWhoClicked().getItemOnCursor() != null) {
                     e.getWhoClicked().getInventory().addItem(new ItemStack[]{e.getWhoClicked().getItemOnCursor().clone()});
                     e.getWhoClicked().setItemOnCursor((ItemStack)null);
                 }
 
-                WardrobeGUI.CreateWardrobePage1(p);
+                WardrobeGUI.createWardrobePage1(p);
             }
 
-            if (e.getSlot() == Wardrobe.ConfigData.getConfig().getInt("Go-Back-Button.Slot") && Wardrobe.ConfigData.getConfig().getBoolean("Go-Back-Button.Enable") && !e.getInventory().getItem(e.getSlot()).getType().toString().contains("STAINED_GLASS_PANE")) {
+            if (e.getSlot() == Wardrobe.ConfigData.getFileConfig().getInt("Go-Back-Button.Slot") && Wardrobe.ConfigData.getFileConfig().getBoolean("Go-Back-Button.Enable") && !e.getInventory().getItem(e.getSlot()).getType().toString().contains("STAINED_GLASS_PANE")) {
                 if (e.getWhoClicked().getItemOnCursor() != null) {
                     e.getWhoClicked().getInventory().addItem(new ItemStack[]{e.getWhoClicked().getItemOnCursor().clone()});
                     e.getWhoClicked().setItemOnCursor((ItemStack)null);
                 }
 
-                p.performCommand(Wardrobe.ConfigData.getConfig().getString("Go-Back-Button.Command"));
+                p.performCommand(Wardrobe.ConfigData.getFileConfig().getString("Go-Back-Button.Command"));
             }
 
-            if (e.getSlot() == Wardrobe.ConfigData.getConfig().getInt("Close-Button.Slot") && Wardrobe.ConfigData.getConfig().getBoolean("Close-Button.Enable") && !e.getInventory().getItem(e.getSlot()).getType().toString().contains("STAINED_GLASS_PANE")) {
+            if (e.getSlot() == Wardrobe.ConfigData.getFileConfig().getInt("Close-Button.Slot") && Wardrobe.ConfigData.getFileConfig().getBoolean("Close-Button.Enable") && !e.getInventory().getItem(e.getSlot()).getType().toString().contains("STAINED_GLASS_PANE")) {
                 if (e.getWhoClicked().getItemOnCursor() != null) {
                     e.getWhoClicked().getInventory().addItem(new ItemStack[]{e.getWhoClicked().getItemOnCursor().clone()});
                     e.getWhoClicked().setItemOnCursor((ItemStack)null);
@@ -118,7 +118,7 @@ public class WardrobeListener implements Listener {
 
                 if (ButtonCheck.contains("LIME_DYE") || ButtonCheck.contains("LIME DYE")) {
                     var10001 = ChatColor.RED;
-                    p.sendMessage(var10001 + ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getConfig().getString("Wardrobe_Message.Modify_Armor_Denied")));
+                    p.sendMessage(var10001 + ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getFileConfig().getString("Wardrobe_Message.Modify_Armor_Denied")));
                     sound = "";
                     if (this.Ver.contains("1.8")) {
                         sound = "VILLAGER_NO";
@@ -159,7 +159,7 @@ public class WardrobeListener implements Listener {
 
                 if (ButtonCheck.contains("LIME_DYE") || ButtonCheck.contains("LIME DYE")) {
                     var10001 = ChatColor.RED;
-                    p.sendMessage(var10001 + ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getConfig().getString("Wardrobe_Message.Modify_Armor_Denied")));
+                    p.sendMessage(var10001 + ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getFileConfig().getString("Wardrobe_Message.Modify_Armor_Denied")));
                     sound = "";
                     if (this.Ver.contains("1.8")) {
                         sound = "VILLAGER_NO";
@@ -185,31 +185,31 @@ public class WardrobeListener implements Listener {
             int i;
             String ButtonCheck;
             if (e.getView().getTitle().equals(WardrobeGUI.Page1Name)) {
-                Wardrobe.Page_1.getConfig().set(e.getPlayer().getUniqueId().toString() + ".name", e.getPlayer().getName());
+                Wardrobe.Page_1.getFileConfig().set(e.getPlayer().getUniqueId().toString() + ".name", e.getPlayer().getName());
 
                 for(i = 0; i <= 8; ++i) {
                     if (e.getInventory().getItem(i).getType().toString().contains("STAINED_GLASS_PANE")) {
-                        Wardrobe.Page_1.getConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 1) + ".Helmet", "none");
+                        Wardrobe.Page_1.getFileConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 1) + ".Helmet", "none");
                     } else {
-                        Wardrobe.Page_1.getConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 1) + ".Helmet", e.getInventory().getItem(i));
+                        Wardrobe.Page_1.getFileConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 1) + ".Helmet", e.getInventory().getItem(i));
                     }
 
                     if (e.getInventory().getItem(i + 9).getType().toString().contains("STAINED_GLASS_PANE")) {
-                        Wardrobe.Page_1.getConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 1) + ".Chestplate", "none");
+                        Wardrobe.Page_1.getFileConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 1) + ".Chestplate", "none");
                     } else {
-                        Wardrobe.Page_1.getConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 1) + ".Chestplate", e.getInventory().getItem(i + 9));
+                        Wardrobe.Page_1.getFileConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 1) + ".Chestplate", e.getInventory().getItem(i + 9));
                     }
 
                     if (e.getInventory().getItem(i + 18).getType().toString().contains("STAINED_GLASS_PANE")) {
-                        Wardrobe.Page_1.getConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 1) + ".Leggings", "none");
+                        Wardrobe.Page_1.getFileConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 1) + ".Leggings", "none");
                     } else {
-                        Wardrobe.Page_1.getConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 1) + ".Leggings", e.getInventory().getItem(i + 18));
+                        Wardrobe.Page_1.getFileConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 1) + ".Leggings", e.getInventory().getItem(i + 18));
                     }
 
                     if (e.getInventory().getItem(i + 27).getType().toString().contains("STAINED_GLASS_PANE")) {
-                        Wardrobe.Page_1.getConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 1) + ".Boots", "none");
+                        Wardrobe.Page_1.getFileConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 1) + ".Boots", "none");
                     } else {
-                        Wardrobe.Page_1.getConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 1) + ".Boots", e.getInventory().getItem(i + 27));
+                        Wardrobe.Page_1.getFileConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 1) + ".Boots", e.getInventory().getItem(i + 27));
                     }
 
                     ButtonCheck = "";
@@ -224,46 +224,46 @@ public class WardrobeListener implements Listener {
                     if (!ButtonCheck.contains("LIME_DYE") && !ButtonCheck.contains("LIME DYE")) {
                         if (!ButtonCheck.contains("GRAY_DYE") && !ButtonCheck.contains("GRAY DYE")) {
                             if (!ButtonCheck.contains("PINK_DYE") && !ButtonCheck.contains("PINK DYE")) {
-                                Wardrobe.Page_1.getConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 1) + ".Button", "Locked");
+                                Wardrobe.Page_1.getFileConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 1) + ".Button", "Locked");
                             } else {
-                                Wardrobe.Page_1.getConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 1) + ".Button", "Ready");
+                                Wardrobe.Page_1.getFileConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 1) + ".Button", "Ready");
                             }
                         } else {
-                            Wardrobe.Page_1.getConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 1) + ".Button", "Empty");
+                            Wardrobe.Page_1.getFileConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 1) + ".Button", "Empty");
                         }
                     } else {
-                        Wardrobe.Page_1.getConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 1) + ".Button", "Equipped");
+                        Wardrobe.Page_1.getFileConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 1) + ".Button", "Equipped");
                     }
                 }
 
                 Wardrobe.Page_1.saveConfig();
                 Wardrobe.Page_1.reloadConfig();
             } else if (e.getView().getTitle().equals(WardrobeGUI.Page2Name)) {
-                Wardrobe.Page_2.getConfig().set(e.getPlayer().getUniqueId().toString() + ".name", e.getPlayer().getName());
+                Wardrobe.Page_2.getFileConfig().set(e.getPlayer().getUniqueId().toString() + ".name", e.getPlayer().getName());
 
                 for(i = 0; i <= 8; ++i) {
                     if (e.getInventory().getItem(i).getType().toString().contains("STAINED_GLASS_PANE")) {
-                        Wardrobe.Page_2.getConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 10) + ".Helmet", "none");
+                        Wardrobe.Page_2.getFileConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 10) + ".Helmet", "none");
                     } else {
-                        Wardrobe.Page_2.getConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 10) + ".Helmet", e.getInventory().getItem(i));
+                        Wardrobe.Page_2.getFileConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 10) + ".Helmet", e.getInventory().getItem(i));
                     }
 
                     if (e.getInventory().getItem(i + 9).getType().toString().contains("STAINED_GLASS_PANE")) {
-                        Wardrobe.Page_2.getConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 10) + ".Chestplate", "none");
+                        Wardrobe.Page_2.getFileConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 10) + ".Chestplate", "none");
                     } else {
-                        Wardrobe.Page_2.getConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 10) + ".Chestplate", e.getInventory().getItem(i + 9));
+                        Wardrobe.Page_2.getFileConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 10) + ".Chestplate", e.getInventory().getItem(i + 9));
                     }
 
                     if (e.getInventory().getItem(i + 18).getType().toString().contains("STAINED_GLASS_PANE")) {
-                        Wardrobe.Page_2.getConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 10) + ".Leggings", "none");
+                        Wardrobe.Page_2.getFileConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 10) + ".Leggings", "none");
                     } else {
-                        Wardrobe.Page_2.getConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 10) + ".Leggings", e.getInventory().getItem(i + 18));
+                        Wardrobe.Page_2.getFileConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 10) + ".Leggings", e.getInventory().getItem(i + 18));
                     }
 
                     if (e.getInventory().getItem(i + 27).getType().toString().contains("STAINED_GLASS_PANE")) {
-                        Wardrobe.Page_2.getConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 10) + ".Boots", "none");
+                        Wardrobe.Page_2.getFileConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 10) + ".Boots", "none");
                     } else {
-                        Wardrobe.Page_2.getConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 10) + ".Boots", e.getInventory().getItem(i + 27));
+                        Wardrobe.Page_2.getFileConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 10) + ".Boots", e.getInventory().getItem(i + 27));
                     }
 
                     ButtonCheck = "";
@@ -278,15 +278,15 @@ public class WardrobeListener implements Listener {
                     if (!ButtonCheck.contains("LIME_DYE") && !ButtonCheck.contains("LIME DYE")) {
                         if (!ButtonCheck.contains("GRAY_DYE") && !ButtonCheck.contains("GRAY DYE")) {
                             if (!ButtonCheck.contains("PINK_DYE") && !ButtonCheck.contains("PINK DYE")) {
-                                Wardrobe.Page_2.getConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 10) + ".Button", "Locked");
+                                Wardrobe.Page_2.getFileConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 10) + ".Button", "Locked");
                             } else {
-                                Wardrobe.Page_2.getConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 10) + ".Button", "Ready");
+                                Wardrobe.Page_2.getFileConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 10) + ".Button", "Ready");
                             }
                         } else {
-                            Wardrobe.Page_2.getConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 10) + ".Button", "Empty");
+                            Wardrobe.Page_2.getFileConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 10) + ".Button", "Empty");
                         }
                     } else {
-                        Wardrobe.Page_2.getConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 10) + ".Button", "Equipped");
+                        Wardrobe.Page_2.getFileConfig().set(e.getPlayer().getUniqueId().toString() + ".Slot-" + (i + 10) + ".Button", "Equipped");
                     }
                 }
 

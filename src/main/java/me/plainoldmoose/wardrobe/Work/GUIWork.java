@@ -90,34 +90,34 @@ public class GUIWork {
                 if (i >= 0 && i <= 8) {
                     if (ClickedItemType.contains("_HELMET")) {
                         inv.setItem(i, ClickedItem);
-                        inv.setItem(i + 36, WardrobeGUI.CreateReadyButton(i, inv, Title));
+                        inv.setItem(i + 36, WardrobeGUI.createReadyButton(i, inv, Title));
                         return true;
                     }
 
-                    if (!Wardrobe.ConfigData.getConfig().getString("Allow-Item.Helmet-Slot.Specific-Check-Lore").equalsIgnoreCase("none") && ClickedItemLore != null) {
+                    if (!Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Helmet-Slot.Specific-Check-Lore").equalsIgnoreCase("none") && ClickedItemLore != null) {
                         for(CheckAmount = 0; CheckAmount < ((List)ClickedItemLore).size(); ++CheckAmount) {
-                            if (((String)((List)ClickedItemLore).get(CheckAmount)).contains(Wardrobe.ConfigData.getConfig().getString("Allow-Item.Helmet-Slot.Specific-Check-Lore"))) {
+                            if (((String)((List)ClickedItemLore).get(CheckAmount)).contains(Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Helmet-Slot.Specific-Check-Lore"))) {
                                 inv.setItem(i, ClickedItem);
-                                inv.setItem(i + 36, WardrobeGUI.CreateReadyButton(i, inv, Title));
+                                inv.setItem(i + 36, WardrobeGUI.createReadyButton(i, inv, Title));
                                 return true;
                             }
                         }
                     }
 
-                    if (!Wardrobe.ConfigData.getConfig().getString("Allow-Item.Helmet-Slot.Name").equalsIgnoreCase("none") || !Wardrobe.ConfigData.getConfig().getString("Allow-Item.Helmet-Slot.Type").equalsIgnoreCase("none") || !Wardrobe.ConfigData.getConfig().getString("Allow-Item.Helmet-Slot.Lore").equalsIgnoreCase("none")) {
+                    if (!Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Helmet-Slot.Name").equalsIgnoreCase("none") || !Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Helmet-Slot.Type").equalsIgnoreCase("none") || !Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Helmet-Slot.Lore").equalsIgnoreCase("none")) {
                         CheckAmount = 0;
-                        if (!Wardrobe.ConfigData.getConfig().getString("Allow-Item.Helmet-Slot.Name").equalsIgnoreCase("none")) {
-                            if (ClickedItem.getItemMeta().getDisplayName().contains(ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getConfig().getString("Allow-Item.Helmet-Slot.Name")))) {
+                        if (!Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Helmet-Slot.Name").equalsIgnoreCase("none")) {
+                            if (ClickedItem.getItemMeta().getDisplayName().contains(ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Helmet-Slot.Name")))) {
                                 ++CheckAmount;
                             }
                         } else {
                             ++CheckAmount;
                         }
 
-                        if (!Wardrobe.ConfigData.getConfig().getString("Allow-Item.Helmet-Slot.Lore").equalsIgnoreCase("none")) {
+                        if (!Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Helmet-Slot.Lore").equalsIgnoreCase("none")) {
                             if (ClickedItemLore != null) {
                                 for(j = 0; j < ((List)ClickedItemLore).size(); ++j) {
-                                    if (((String)((List)ClickedItemLore).get(j)).contains(Wardrobe.ConfigData.getConfig().getString("Allow-Item.Helmet-Slot.Lore"))) {
+                                    if (((String)((List)ClickedItemLore).get(j)).contains(Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Helmet-Slot.Lore"))) {
                                         ++CheckAmount;
                                     }
                                 }
@@ -126,8 +126,8 @@ public class GUIWork {
                             ++CheckAmount;
                         }
 
-                        if (!Wardrobe.ConfigData.getConfig().getString("Allow-Item.Helmet-Slot.Type").equalsIgnoreCase("none")) {
-                            if (Wardrobe.ConfigData.getConfig().getString("Allow-Item.Helmet-Slot.Type").contains(ClickedItemType)) {
+                        if (!Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Helmet-Slot.Type").equalsIgnoreCase("none")) {
+                            if (Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Helmet-Slot.Type").contains(ClickedItemType)) {
                                 ++CheckAmount;
                             }
                         } else {
@@ -136,41 +136,41 @@ public class GUIWork {
 
                         if (CheckAmount == 3) {
                             inv.setItem(i, ClickedItem);
-                            inv.setItem(i + 36, WardrobeGUI.CreateReadyButton(i, inv, Title));
+                            inv.setItem(i + 36, WardrobeGUI.createReadyButton(i, inv, Title));
                             return true;
                         }
                     }
                 } else if (i >= 9 && i <= 17) {
                     if (ClickedItemType.contains("_CHESTPLATE")) {
                         inv.setItem(i, ClickedItem);
-                        inv.setItem(i + 27, WardrobeGUI.CreateReadyButton(i - 9, inv, Title));
+                        inv.setItem(i + 27, WardrobeGUI.createReadyButton(i - 9, inv, Title));
                         return true;
                     }
 
-                    if (!Wardrobe.ConfigData.getConfig().getString("Allow-Item.Chestplate-Slot.Specific-Check-Lore").equalsIgnoreCase("none") && ClickedItemLore != null) {
+                    if (!Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Chestplate-Slot.Specific-Check-Lore").equalsIgnoreCase("none") && ClickedItemLore != null) {
                         for(CheckAmount = 0; CheckAmount < ((List)ClickedItemLore).size(); ++CheckAmount) {
-                            if (((String)((List)ClickedItemLore).get(CheckAmount)).contains(Wardrobe.ConfigData.getConfig().getString("Allow-Item.Chestplate-Slot.Specific-Check-Lore"))) {
+                            if (((String)((List)ClickedItemLore).get(CheckAmount)).contains(Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Chestplate-Slot.Specific-Check-Lore"))) {
                                 inv.setItem(i, ClickedItem);
-                                inv.setItem(i + 27, WardrobeGUI.CreateReadyButton(i - 9, inv, Title));
+                                inv.setItem(i + 27, WardrobeGUI.createReadyButton(i - 9, inv, Title));
                                 return true;
                             }
                         }
                     }
 
-                    if (!Wardrobe.ConfigData.getConfig().getString("Allow-Item.Chestplate-Slot.Name").equalsIgnoreCase("none") || !Wardrobe.ConfigData.getConfig().getString("Allow-Item.Chestplate-Slot.Type").equalsIgnoreCase("none") || !Wardrobe.ConfigData.getConfig().getString("Allow-Item.Chestplate-Slot.Lore").equalsIgnoreCase("none")) {
+                    if (!Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Chestplate-Slot.Name").equalsIgnoreCase("none") || !Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Chestplate-Slot.Type").equalsIgnoreCase("none") || !Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Chestplate-Slot.Lore").equalsIgnoreCase("none")) {
                         CheckAmount = 0;
-                        if (!Wardrobe.ConfigData.getConfig().getString("Allow-Item.Chestplate-Slot.Name").equalsIgnoreCase("none")) {
-                            if (ClickedItem.getItemMeta().getDisplayName().contains(ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getConfig().getString("Allow-Item.Chestplate-Slot.Name")))) {
+                        if (!Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Chestplate-Slot.Name").equalsIgnoreCase("none")) {
+                            if (ClickedItem.getItemMeta().getDisplayName().contains(ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Chestplate-Slot.Name")))) {
                                 ++CheckAmount;
                             }
                         } else {
                             ++CheckAmount;
                         }
 
-                        if (!Wardrobe.ConfigData.getConfig().getString("Allow-Item.Chestplate-Slot.Lore").equalsIgnoreCase("none")) {
+                        if (!Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Chestplate-Slot.Lore").equalsIgnoreCase("none")) {
                             if (ClickedItemLore != null) {
                                 for(j = 0; j < ((List)ClickedItemLore).size(); ++j) {
-                                    if (((String)((List)ClickedItemLore).get(j)).contains(Wardrobe.ConfigData.getConfig().getString("Allow-Item.Chestplate-Slot.Lore"))) {
+                                    if (((String)((List)ClickedItemLore).get(j)).contains(Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Chestplate-Slot.Lore"))) {
                                         ++CheckAmount;
                                     }
                                 }
@@ -179,8 +179,8 @@ public class GUIWork {
                             ++CheckAmount;
                         }
 
-                        if (!Wardrobe.ConfigData.getConfig().getString("Allow-Item.Chestplate-Slot.Type").equalsIgnoreCase("none")) {
-                            if (Wardrobe.ConfigData.getConfig().getString("Allow-Item.Chestplate-Slot.Type").contains(ClickedItemType)) {
+                        if (!Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Chestplate-Slot.Type").equalsIgnoreCase("none")) {
+                            if (Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Chestplate-Slot.Type").contains(ClickedItemType)) {
                                 ++CheckAmount;
                             }
                         } else {
@@ -189,41 +189,41 @@ public class GUIWork {
 
                         if (CheckAmount == 3) {
                             inv.setItem(i, ClickedItem);
-                            inv.setItem(i + 27, WardrobeGUI.CreateReadyButton(i - 9, inv, Title));
+                            inv.setItem(i + 27, WardrobeGUI.createReadyButton(i - 9, inv, Title));
                             return true;
                         }
                     }
                 } else if (i >= 18 && i <= 26) {
                     if (ClickedItemType.contains("_LEGGINGS")) {
                         inv.setItem(i, ClickedItem);
-                        inv.setItem(i + 18, WardrobeGUI.CreateReadyButton(i - 18, inv, Title));
+                        inv.setItem(i + 18, WardrobeGUI.createReadyButton(i - 18, inv, Title));
                         return true;
                     }
 
-                    if (!Wardrobe.ConfigData.getConfig().getString("Allow-Item.Leggings-Slot.Specific-Check-Lore").equalsIgnoreCase("none") && ClickedItemLore != null) {
+                    if (!Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Leggings-Slot.Specific-Check-Lore").equalsIgnoreCase("none") && ClickedItemLore != null) {
                         for(CheckAmount = 0; CheckAmount < ((List)ClickedItemLore).size(); ++CheckAmount) {
-                            if (((String)((List)ClickedItemLore).get(CheckAmount)).contains(Wardrobe.ConfigData.getConfig().getString("Allow-Item.Leggings-Slot.Specific-Check-Lore"))) {
+                            if (((String)((List)ClickedItemLore).get(CheckAmount)).contains(Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Leggings-Slot.Specific-Check-Lore"))) {
                                 inv.setItem(i, ClickedItem);
-                                inv.setItem(i + 18, WardrobeGUI.CreateReadyButton(i - 18, inv, Title));
+                                inv.setItem(i + 18, WardrobeGUI.createReadyButton(i - 18, inv, Title));
                                 return true;
                             }
                         }
                     }
 
-                    if (!Wardrobe.ConfigData.getConfig().getString("Allow-Item.Leggings-Slot.Name").equalsIgnoreCase("none") || !Wardrobe.ConfigData.getConfig().getString("Allow-Item.Leggings-Slot.Type").equalsIgnoreCase("none") || !Wardrobe.ConfigData.getConfig().getString("Allow-Item.Leggings-Slot.Lore").equalsIgnoreCase("none")) {
+                    if (!Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Leggings-Slot.Name").equalsIgnoreCase("none") || !Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Leggings-Slot.Type").equalsIgnoreCase("none") || !Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Leggings-Slot.Lore").equalsIgnoreCase("none")) {
                         CheckAmount = 0;
-                        if (!Wardrobe.ConfigData.getConfig().getString("Allow-Item.Leggings-Slot.Name").equalsIgnoreCase("none")) {
-                            if (ClickedItem.getItemMeta().getDisplayName().contains(ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getConfig().getString("Allow-Item.Leggings-Slot.Name")))) {
+                        if (!Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Leggings-Slot.Name").equalsIgnoreCase("none")) {
+                            if (ClickedItem.getItemMeta().getDisplayName().contains(ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Leggings-Slot.Name")))) {
                                 ++CheckAmount;
                             }
                         } else {
                             ++CheckAmount;
                         }
 
-                        if (!Wardrobe.ConfigData.getConfig().getString("Allow-Item.Leggings-Slot.Lore").equalsIgnoreCase("none")) {
+                        if (!Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Leggings-Slot.Lore").equalsIgnoreCase("none")) {
                             if (ClickedItemLore != null) {
                                 for(j = 0; j < ((List)ClickedItemLore).size(); ++j) {
-                                    if (((String)((List)ClickedItemLore).get(j)).contains(Wardrobe.ConfigData.getConfig().getString("Allow-Item.Leggings-Slot.Lore"))) {
+                                    if (((String)((List)ClickedItemLore).get(j)).contains(Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Leggings-Slot.Lore"))) {
                                         ++CheckAmount;
                                     }
                                 }
@@ -232,8 +232,8 @@ public class GUIWork {
                             ++CheckAmount;
                         }
 
-                        if (!Wardrobe.ConfigData.getConfig().getString("Allow-Item.Leggings-Slot.Type").equalsIgnoreCase("none")) {
-                            if (Wardrobe.ConfigData.getConfig().getString("Allow-Item.Leggings-Slot.Type").contains(ClickedItemType)) {
+                        if (!Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Leggings-Slot.Type").equalsIgnoreCase("none")) {
+                            if (Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Leggings-Slot.Type").contains(ClickedItemType)) {
                                 ++CheckAmount;
                             }
                         } else {
@@ -242,41 +242,41 @@ public class GUIWork {
 
                         if (CheckAmount == 3) {
                             inv.setItem(i, ClickedItem);
-                            inv.setItem(i + 18, WardrobeGUI.CreateReadyButton(i - 18, inv, Title));
+                            inv.setItem(i + 18, WardrobeGUI.createReadyButton(i - 18, inv, Title));
                             return true;
                         }
                     }
                 } else if (i >= 27 && i <= 35) {
                     if (ClickedItemType.contains("_BOOTS")) {
                         inv.setItem(i, ClickedItem);
-                        inv.setItem(i + 9, WardrobeGUI.CreateReadyButton(i - 27, inv, Title));
+                        inv.setItem(i + 9, WardrobeGUI.createReadyButton(i - 27, inv, Title));
                         return true;
                     }
 
-                    if (!Wardrobe.ConfigData.getConfig().getString("Allow-Item.Boots-Slot.Specific-Check-Lore").equalsIgnoreCase("none") && ClickedItemLore != null) {
+                    if (!Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Boots-Slot.Specific-Check-Lore").equalsIgnoreCase("none") && ClickedItemLore != null) {
                         for(CheckAmount = 0; CheckAmount < ((List)ClickedItemLore).size(); ++CheckAmount) {
-                            if (((String)((List)ClickedItemLore).get(CheckAmount)).contains(Wardrobe.ConfigData.getConfig().getString("Allow-Item.Boots-Slot.Specific-Check-Lore"))) {
+                            if (((String)((List)ClickedItemLore).get(CheckAmount)).contains(Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Boots-Slot.Specific-Check-Lore"))) {
                                 inv.setItem(i, ClickedItem);
-                                inv.setItem(i + 9, WardrobeGUI.CreateReadyButton(i - 27, inv, Title));
+                                inv.setItem(i + 9, WardrobeGUI.createReadyButton(i - 27, inv, Title));
                                 return true;
                             }
                         }
                     }
 
-                    if (!Wardrobe.ConfigData.getConfig().getString("Allow-Item.Boots-Slot.Name").equalsIgnoreCase("none") || !Wardrobe.ConfigData.getConfig().getString("Allow-Item.Boots-Slot.Type").equalsIgnoreCase("none") || !Wardrobe.ConfigData.getConfig().getString("Allow-Item.Boots-Slot.Lore").equalsIgnoreCase("none")) {
+                    if (!Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Boots-Slot.Name").equalsIgnoreCase("none") || !Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Boots-Slot.Type").equalsIgnoreCase("none") || !Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Boots-Slot.Lore").equalsIgnoreCase("none")) {
                         CheckAmount = 0;
-                        if (!Wardrobe.ConfigData.getConfig().getString("Allow-Item.Boots-Slot.Name").equalsIgnoreCase("none")) {
-                            if (ClickedItem.getItemMeta().getDisplayName().contains(ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getConfig().getString("Allow-Item.Boots-Slot.Name")))) {
+                        if (!Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Boots-Slot.Name").equalsIgnoreCase("none")) {
+                            if (ClickedItem.getItemMeta().getDisplayName().contains(ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Boots-Slot.Name")))) {
                                 ++CheckAmount;
                             }
                         } else {
                             ++CheckAmount;
                         }
 
-                        if (!Wardrobe.ConfigData.getConfig().getString("Allow-Item.Boots-Slot.Lore").equalsIgnoreCase("none")) {
+                        if (!Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Boots-Slot.Lore").equalsIgnoreCase("none")) {
                             if (ClickedItemLore != null) {
                                 for(j = 0; j < ((List)ClickedItemLore).size(); ++j) {
-                                    if (((String)((List)ClickedItemLore).get(j)).contains(Wardrobe.ConfigData.getConfig().getString("Allow-Item.Boots-Slot.Lore"))) {
+                                    if (((String)((List)ClickedItemLore).get(j)).contains(Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Boots-Slot.Lore"))) {
                                         ++CheckAmount;
                                     }
                                 }
@@ -285,8 +285,8 @@ public class GUIWork {
                             ++CheckAmount;
                         }
 
-                        if (!Wardrobe.ConfigData.getConfig().getString("Allow-Item.Boots-Slot.Type").equalsIgnoreCase("none")) {
-                            if (Wardrobe.ConfigData.getConfig().getString("Allow-Item.Boots-Slot.Type").contains(ClickedItemType)) {
+                        if (!Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Boots-Slot.Type").equalsIgnoreCase("none")) {
+                            if (Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Boots-Slot.Type").contains(ClickedItemType)) {
                                 ++CheckAmount;
                             }
                         } else {
@@ -295,7 +295,7 @@ public class GUIWork {
 
                         if (CheckAmount == 3) {
                             inv.setItem(i, ClickedItem);
-                            inv.setItem(i + 9, WardrobeGUI.CreateReadyButton(i - 27, inv, Title));
+                            inv.setItem(i + 9, WardrobeGUI.createReadyButton(i - 27, inv, Title));
                             return true;
                         }
                     }
@@ -341,7 +341,7 @@ public class GUIWork {
 
                 if (CheckSlot1.contains("LIME_DYE") || CheckSlot1.contains("LIME DYE")) {
                     var22 = ChatColor.RED;
-                    p.sendMessage(var22 + ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getConfig().getString("Wardrobe_Message.Modify_Armor_Denied")));
+                    p.sendMessage(var22 + ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getFileConfig().getString("Wardrobe_Message.Modify_Armor_Denied")));
                     Path = "";
                     if (Ver.contains("1.8")) {
                         Path = "VILLAGER_NO";
@@ -363,13 +363,13 @@ public class GUIWork {
 
                 if (ItemOnCursorType == "AIR") {
                     p.setItemOnCursor(ClickedItem);
-                    inv.setItem(ClickedSlot, WardrobeGUI.Background(ClickedSlot, inv, Title));
+                    inv.setItem(ClickedSlot, WardrobeGUI.background(ClickedSlot, inv, Title));
                     Path = inv.getItem(ClickedSlot).getType().toString();
                     ButtonCheck2 = inv.getItem(ClickedSlot + 9).getType().toString();
                     CheckSlot1 = inv.getItem(ClickedSlot + 18).getType().toString();
                     CheckSlot2 = inv.getItem(ClickedSlot + 27).getType().toString();
                     if (Path.contains("STAINED_GLASS_PANE") && ButtonCheck2.contains("STAINED_GLASS_PANE") && CheckSlot1.contains("STAINED_GLASS_PANE") && CheckSlot2.contains("STAINED_GLASS_PANE")) {
-                        inv.setItem(ClickedSlot + 36, WardrobeGUI.CreateEmptyButton(ClickedSlot, inv, Title));
+                        inv.setItem(ClickedSlot + 36, WardrobeGUI.createEmptyButton(ClickedSlot, inv, Title));
                     }
 
                     return;
@@ -399,7 +399,7 @@ public class GUIWork {
 
                 if (CheckSlot1.contains("LIME_DYE") || CheckSlot1.contains("LIME DYE")) {
                     var22 = ChatColor.RED;
-                    p.sendMessage(var22 + ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getConfig().getString("Wardrobe_Message.Modify_Armor_Denied")));
+                    p.sendMessage(var22 + ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getFileConfig().getString("Wardrobe_Message.Modify_Armor_Denied")));
                     Path = "";
                     if (Ver.contains("1.8")) {
                         Path = "VILLAGER_NO";
@@ -421,13 +421,13 @@ public class GUIWork {
 
                 if (ItemOnCursorType == "AIR") {
                     p.setItemOnCursor(ClickedItem);
-                    inv.setItem(ClickedSlot, WardrobeGUI.Background(ClickedSlot, inv, Title));
+                    inv.setItem(ClickedSlot, WardrobeGUI.background(ClickedSlot, inv, Title));
                     Path = inv.getItem(ClickedSlot - 9).getType().toString();
                     ButtonCheck2 = inv.getItem(ClickedSlot).getType().toString();
                     CheckSlot1 = inv.getItem(ClickedSlot + 9).getType().toString();
                     CheckSlot2 = inv.getItem(ClickedSlot + 18).getType().toString();
                     if (Path.contains("STAINED_GLASS_PANE") && ButtonCheck2.contains("STAINED_GLASS_PANE") && CheckSlot1.contains("STAINED_GLASS_PANE") && CheckSlot2.contains("STAINED_GLASS_PANE")) {
-                        inv.setItem(ClickedSlot + 27, WardrobeGUI.CreateEmptyButton(ClickedSlot - 9, inv, Title));
+                        inv.setItem(ClickedSlot + 27, WardrobeGUI.createEmptyButton(ClickedSlot - 9, inv, Title));
                     }
 
                     return;
@@ -457,7 +457,7 @@ public class GUIWork {
 
                 if (CheckSlot1.contains("LIME_DYE") || CheckSlot1.contains("LIME DYE")) {
                     var22 = ChatColor.RED;
-                    p.sendMessage(var22 + ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getConfig().getString("Wardrobe_Message.Modify_Armor_Denied")));
+                    p.sendMessage(var22 + ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getFileConfig().getString("Wardrobe_Message.Modify_Armor_Denied")));
                     Path = "";
                     if (Ver.contains("1.8")) {
                         Path = "VILLAGER_NO";
@@ -479,13 +479,13 @@ public class GUIWork {
 
                 if (ItemOnCursorType == "AIR") {
                     p.setItemOnCursor(ClickedItem);
-                    inv.setItem(ClickedSlot, WardrobeGUI.Background(ClickedSlot, inv, Title));
+                    inv.setItem(ClickedSlot, WardrobeGUI.background(ClickedSlot, inv, Title));
                     Path = inv.getItem(ClickedSlot - 18).getType().toString();
                     ButtonCheck2 = inv.getItem(ClickedSlot - 9).getType().toString();
                     CheckSlot1 = inv.getItem(ClickedSlot).getType().toString();
                     CheckSlot2 = inv.getItem(ClickedSlot + 9).getType().toString();
                     if (Path.contains("STAINED_GLASS_PANE") && ButtonCheck2.contains("STAINED_GLASS_PANE") && CheckSlot1.contains("STAINED_GLASS_PANE") && CheckSlot2.contains("STAINED_GLASS_PANE")) {
-                        inv.setItem(ClickedSlot + 18, WardrobeGUI.CreateEmptyButton(ClickedSlot - 18, inv, Title));
+                        inv.setItem(ClickedSlot + 18, WardrobeGUI.createEmptyButton(ClickedSlot - 18, inv, Title));
                     }
 
                     return;
@@ -515,7 +515,7 @@ public class GUIWork {
 
                 if (CheckSlot1.contains("LIME_DYE") || CheckSlot1.contains("LIME DYE")) {
                     var22 = ChatColor.RED;
-                    p.sendMessage(var22 + ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getConfig().getString("Wardrobe_Message.Modify_Armor_Denied")));
+                    p.sendMessage(var22 + ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getFileConfig().getString("Wardrobe_Message.Modify_Armor_Denied")));
                     Path = "";
                     if (Ver.contains("1.8")) {
                         Path = "VILLAGER_NO";
@@ -537,13 +537,13 @@ public class GUIWork {
 
                 if (ItemOnCursorType == "AIR") {
                     p.setItemOnCursor(ClickedItem);
-                    inv.setItem(ClickedSlot, WardrobeGUI.Background(ClickedSlot, inv, Title));
+                    inv.setItem(ClickedSlot, WardrobeGUI.background(ClickedSlot, inv, Title));
                     Path = inv.getItem(ClickedSlot - 27).getType().toString();
                     ButtonCheck2 = inv.getItem(ClickedSlot - 18).getType().toString();
                     CheckSlot1 = inv.getItem(ClickedSlot - 9).getType().toString();
                     CheckSlot2 = inv.getItem(ClickedSlot).getType().toString();
                     if (Path.contains("STAINED_GLASS_PANE") && ButtonCheck2.contains("STAINED_GLASS_PANE") && CheckSlot1.contains("STAINED_GLASS_PANE") && CheckSlot2.contains("STAINED_GLASS_PANE")) {
-                        inv.setItem(ClickedSlot + 9, WardrobeGUI.CreateEmptyButton(ClickedSlot - 27, inv, Title));
+                        inv.setItem(ClickedSlot + 9, WardrobeGUI.createEmptyButton(ClickedSlot - 27, inv, Title));
                     }
 
                     return;
@@ -567,11 +567,11 @@ public class GUIWork {
                     ButtonCheck2 = inv.getItem(ClickedSlot - 18).getType().toString();
                     CheckSlot1 = inv.getItem(ClickedSlot - 9).getType().toString();
                     if (CheckSlot1.contains("STAINED_GLASS_PANE") && Path.contains("STAINED_GLASS_PANE") && ButtonCheck2.contains("STAINED_GLASS_PANE") && CheckSlot1.contains("STAINED_GLASS_PANE")) {
-                        inv.setItem(ClickedSlot, WardrobeGUI.CreateEmptyButton(ClickedSlot - 36, inv, Title));
+                        inv.setItem(ClickedSlot, WardrobeGUI.createEmptyButton(ClickedSlot - 36, inv, Title));
                         return;
                     }
 
-                    inv.setItem(ClickedSlot, WardrobeGUI.CreateReadyButton(ClickedSlot - 36, inv, Title));
+                    inv.setItem(ClickedSlot, WardrobeGUI.createReadyButton(ClickedSlot - 36, inv, Title));
                     return;
                 }
             } else {
@@ -587,19 +587,19 @@ public class GUIWork {
 
                     while(true) {
                         if (i > 44) {
-                            if (Wardrobe.Page_2.getConfig().getConfigurationSection(p.getUniqueId().toString()) != null) {
-                                var19 = Wardrobe.Page_2.getConfig().getConfigurationSection(p.getUniqueId().toString()).getKeys(false).iterator();
+                            if (Wardrobe.Page_2.getFileConfig().getConfigurationSection(p.getUniqueId().toString()) != null) {
+                                var19 = Wardrobe.Page_2.getFileConfig().getConfigurationSection(p.getUniqueId().toString()).getKeys(false).iterator();
 
                                 while(var19.hasNext()) {
                                     Path = (String)var19.next();
                                     if (!Path.contains("name")) {
-                                        var10000 = Wardrobe.Page_2.getConfig();
+                                        var10000 = Wardrobe.Page_2.getFileConfig();
                                         var10001 = String.valueOf(p.getUniqueId().toString());
                                         if (var10000.getString(var10001 + "." + Path + ".Button").contains("Equipped")) {
                                             ClearPlayerArmor(p);
                                             EquipArmorForPlayer(p, inv, ClickedSlot);
-                                            inv.setItem(ClickedSlot, WardrobeGUI.CreateEquippedButton(ClickedSlot - 36, inv, Title));
-                                            Wardrobe.Page_2.getConfig().set(String.valueOf(p.getUniqueId().toString()) + "." + Path + ".Button", "Ready");
+                                            inv.setItem(ClickedSlot, WardrobeGUI.createEquippedButton(ClickedSlot - 36, inv, Title));
+                                            Wardrobe.Page_2.getFileConfig().set(String.valueOf(p.getUniqueId().toString()) + "." + Path + ".Button", "Ready");
                                             Wardrobe.Page_2.saveConfig();
                                             Wardrobe.Page_2.reloadConfig();
                                             return;
@@ -610,7 +610,7 @@ public class GUIWork {
 
                             if (GivePlayerEquippedArmor(p)) {
                                 EquipArmorForPlayer(p, inv, ClickedSlot);
-                                inv.setItem(ClickedSlot, WardrobeGUI.CreateEquippedButton(ClickedSlot - 36, inv, Title));
+                                inv.setItem(ClickedSlot, WardrobeGUI.createEquippedButton(ClickedSlot - 36, inv, Title));
                                 return;
                             }
                             break;
@@ -635,12 +635,12 @@ public class GUIWork {
                                 CheckSlot3 = inv.getItem(i - 18).getType().toString();
                                 CheckSlot4 = inv.getItem(i - 9).getType().toString();
                                 if (CheckSlot1.contains("STAINED_GLASS_PANE") && CheckSlot2.contains("STAINED_GLASS_PANE") && CheckSlot3.contains("STAINED_GLASS_PANE") && CheckSlot4.contains("STAINED_GLASS_PANE")) {
-                                    inv.setItem(i, WardrobeGUI.CreateEmptyButton(i - 36, inv, Title));
+                                    inv.setItem(i, WardrobeGUI.createEmptyButton(i - 36, inv, Title));
                                 } else {
-                                    inv.setItem(i, WardrobeGUI.CreateReadyButton(i - 36, inv, Title));
+                                    inv.setItem(i, WardrobeGUI.createReadyButton(i - 36, inv, Title));
                                 }
 
-                                inv.setItem(ClickedSlot, WardrobeGUI.CreateEquippedButton(ClickedSlot - 36, inv, Title));
+                                inv.setItem(ClickedSlot, WardrobeGUI.createEquippedButton(ClickedSlot - 36, inv, Title));
                                 return;
                             }
                         }
@@ -652,19 +652,19 @@ public class GUIWork {
 
                     while(true) {
                         if (i > 44) {
-                            if (Wardrobe.Page_1.getConfig().getConfigurationSection(p.getUniqueId().toString()) != null) {
-                                var19 = Wardrobe.Page_1.getConfig().getConfigurationSection(p.getUniqueId().toString()).getKeys(false).iterator();
+                            if (Wardrobe.Page_1.getFileConfig().getConfigurationSection(p.getUniqueId().toString()) != null) {
+                                var19 = Wardrobe.Page_1.getFileConfig().getConfigurationSection(p.getUniqueId().toString()).getKeys(false).iterator();
 
                                 while(var19.hasNext()) {
                                     Path = (String)var19.next();
                                     if (!Path.contains("name")) {
-                                        var10000 = Wardrobe.Page_1.getConfig();
+                                        var10000 = Wardrobe.Page_1.getFileConfig();
                                         var10001 = String.valueOf(p.getUniqueId().toString());
                                         if (var10000.getString(var10001 + "." + Path + ".Button").contains("Equipped")) {
                                             ClearPlayerArmor(p);
                                             EquipArmorForPlayer(p, inv, ClickedSlot);
-                                            inv.setItem(ClickedSlot, WardrobeGUI.CreateEquippedButton(ClickedSlot - 36, inv, Title));
-                                            Wardrobe.Page_1.getConfig().set(String.valueOf(p.getUniqueId().toString()) + "." + Path + ".Button", "Ready");
+                                            inv.setItem(ClickedSlot, WardrobeGUI.createEquippedButton(ClickedSlot - 36, inv, Title));
+                                            Wardrobe.Page_1.getFileConfig().set(String.valueOf(p.getUniqueId().toString()) + "." + Path + ".Button", "Ready");
                                             Wardrobe.Page_1.saveConfig();
                                             Wardrobe.Page_1.reloadConfig();
                                             return;
@@ -675,7 +675,7 @@ public class GUIWork {
 
                             if (GivePlayerEquippedArmor(p)) {
                                 EquipArmorForPlayer(p, inv, ClickedSlot);
-                                inv.setItem(ClickedSlot, WardrobeGUI.CreateEquippedButton(ClickedSlot - 36, inv, Title));
+                                inv.setItem(ClickedSlot, WardrobeGUI.createEquippedButton(ClickedSlot - 36, inv, Title));
                                 return;
                             }
                             break;
@@ -700,12 +700,12 @@ public class GUIWork {
                                 CheckSlot3 = inv.getItem(i - 18).getType().toString();
                                 CheckSlot4 = inv.getItem(i - 9).getType().toString();
                                 if (CheckSlot1.contains("STAINED_GLASS_PANE") && CheckSlot2.contains("STAINED_GLASS_PANE") && CheckSlot3.contains("STAINED_GLASS_PANE") && CheckSlot4.contains("STAINED_GLASS_PANE")) {
-                                    inv.setItem(i, WardrobeGUI.CreateEmptyButton(i - 36, inv, Title));
+                                    inv.setItem(i, WardrobeGUI.createEmptyButton(i - 36, inv, Title));
                                 } else {
-                                    inv.setItem(i, WardrobeGUI.CreateReadyButton(i - 36, inv, Title));
+                                    inv.setItem(i, WardrobeGUI.createReadyButton(i - 36, inv, Title));
                                 }
 
-                                inv.setItem(ClickedSlot, WardrobeGUI.CreateEquippedButton(ClickedSlot - 36, inv, Title));
+                                inv.setItem(ClickedSlot, WardrobeGUI.createEquippedButton(ClickedSlot - 36, inv, Title));
                                 return;
                             }
                         }
@@ -826,7 +826,7 @@ public class GUIWork {
             }
         }
 
-        p.sendMessage(ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getConfig().getString("Wardrobe_Message.No_Space")));
+        p.sendMessage(ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getFileConfig().getString("Wardrobe_Message.No_Space")));
         String sound = "";
         if (Ver.contains("1.8")) {
             sound = "VILLAGER_NO";
@@ -849,46 +849,46 @@ public class GUIWork {
             String CheckSlot4;
             if (ClickedSlot >= 0 && ClickedSlot <= 8) {
                 p.getInventory().addItem(new ItemStack[]{ClickedItem});
-                inv.setItem(ClickedSlot, WardrobeGUI.Background(ClickedSlot, inv, Title));
+                inv.setItem(ClickedSlot, WardrobeGUI.background(ClickedSlot, inv, Title));
                 CheckSlot1 = inv.getItem(ClickedSlot).getType().toString();
                 CheckSlot2 = inv.getItem(ClickedSlot + 9).getType().toString();
                 CheckSlot3 = inv.getItem(ClickedSlot + 18).getType().toString();
                 CheckSlot4 = inv.getItem(ClickedSlot + 27).getType().toString();
                 if (CheckSlot1.contains("STAINED_GLASS_PANE") && CheckSlot2.contains("STAINED_GLASS_PANE") && CheckSlot3.contains("STAINED_GLASS_PANE") && CheckSlot4.contains("STAINED_GLASS_PANE")) {
-                    inv.setItem(ClickedSlot + 36, WardrobeGUI.CreateEmptyButton(ClickedSlot, inv, Title));
+                    inv.setItem(ClickedSlot + 36, WardrobeGUI.createEmptyButton(ClickedSlot, inv, Title));
                 }
 
             } else if (ClickedSlot >= 9 && ClickedSlot <= 17) {
                 p.getInventory().addItem(new ItemStack[]{ClickedItem});
-                inv.setItem(ClickedSlot, WardrobeGUI.Background(ClickedSlot, inv, Title));
+                inv.setItem(ClickedSlot, WardrobeGUI.background(ClickedSlot, inv, Title));
                 CheckSlot1 = inv.getItem(ClickedSlot - 9).getType().toString();
                 CheckSlot2 = inv.getItem(ClickedSlot).getType().toString();
                 CheckSlot3 = inv.getItem(ClickedSlot + 9).getType().toString();
                 CheckSlot4 = inv.getItem(ClickedSlot + 18).getType().toString();
                 if (CheckSlot1.contains("STAINED_GLASS_PANE") && CheckSlot2.contains("STAINED_GLASS_PANE") && CheckSlot3.contains("STAINED_GLASS_PANE") && CheckSlot4.contains("STAINED_GLASS_PANE")) {
-                    inv.setItem(ClickedSlot + 27, WardrobeGUI.CreateEmptyButton(ClickedSlot - 9, inv, Title));
+                    inv.setItem(ClickedSlot + 27, WardrobeGUI.createEmptyButton(ClickedSlot - 9, inv, Title));
                 }
 
             } else if (ClickedSlot >= 18 && ClickedSlot <= 26) {
                 p.getInventory().addItem(new ItemStack[]{ClickedItem});
-                inv.setItem(ClickedSlot, WardrobeGUI.Background(ClickedSlot, inv, Title));
+                inv.setItem(ClickedSlot, WardrobeGUI.background(ClickedSlot, inv, Title));
                 CheckSlot1 = inv.getItem(ClickedSlot - 18).getType().toString();
                 CheckSlot2 = inv.getItem(ClickedSlot - 9).getType().toString();
                 CheckSlot3 = inv.getItem(ClickedSlot).getType().toString();
                 CheckSlot4 = inv.getItem(ClickedSlot + 9).getType().toString();
                 if (CheckSlot1.contains("STAINED_GLASS_PANE") && CheckSlot2.contains("STAINED_GLASS_PANE") && CheckSlot3.contains("STAINED_GLASS_PANE") && CheckSlot4.contains("STAINED_GLASS_PANE")) {
-                    inv.setItem(ClickedSlot + 18, WardrobeGUI.CreateEmptyButton(ClickedSlot - 18, inv, Title));
+                    inv.setItem(ClickedSlot + 18, WardrobeGUI.createEmptyButton(ClickedSlot - 18, inv, Title));
                 }
 
             } else if (ClickedSlot >= 27 && ClickedSlot <= 35) {
                 p.getInventory().addItem(new ItemStack[]{ClickedItem});
-                inv.setItem(ClickedSlot, WardrobeGUI.Background(ClickedSlot, inv, Title));
+                inv.setItem(ClickedSlot, WardrobeGUI.background(ClickedSlot, inv, Title));
                 CheckSlot1 = inv.getItem(ClickedSlot - 27).getType().toString();
                 CheckSlot2 = inv.getItem(ClickedSlot - 18).getType().toString();
                 CheckSlot3 = inv.getItem(ClickedSlot - 9).getType().toString();
                 CheckSlot4 = inv.getItem(ClickedSlot).getType().toString();
                 if (CheckSlot1.contains("STAINED_GLASS_PANE") && CheckSlot2.contains("STAINED_GLASS_PANE") && CheckSlot3.contains("STAINED_GLASS_PANE") && CheckSlot4.contains("STAINED_GLASS_PANE")) {
-                    inv.setItem(ClickedSlot + 9, WardrobeGUI.CreateEmptyButton(ClickedSlot - 27, inv, Title));
+                    inv.setItem(ClickedSlot + 9, WardrobeGUI.createEmptyButton(ClickedSlot - 27, inv, Title));
                 }
 
             }
@@ -900,27 +900,27 @@ public class GUIWork {
             if (ItemOnCursorType.contains("_HELMET")) {
                 inv.setItem(ClickedSlot, ItemOnCursor);
                 p.setItemOnCursor((ItemStack)null);
-                inv.setItem(ClickedSlot + 36, WardrobeGUI.CreateReadyButton(ClickedSlot, inv, Title));
+                inv.setItem(ClickedSlot + 36, WardrobeGUI.createReadyButton(ClickedSlot, inv, Title));
                 return true;
             } else {
                 int CheckAmount;
-                if (!Wardrobe.ConfigData.getConfig().getString("Allow-Item.Helmet-Slot.Specific-Check-Lore").equalsIgnoreCase("none") && ItemOnCursorLore != null) {
+                if (!Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Helmet-Slot.Specific-Check-Lore").equalsIgnoreCase("none") && ItemOnCursorLore != null) {
                     for(CheckAmount = 0; CheckAmount < ItemOnCursorLore.size(); ++CheckAmount) {
-                        if (((String)ItemOnCursorLore.get(CheckAmount)).contains(Wardrobe.ConfigData.getConfig().getString("Allow-Item.Helmet-Slot.Specific-Check-Lore"))) {
+                        if (((String)ItemOnCursorLore.get(CheckAmount)).contains(Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Helmet-Slot.Specific-Check-Lore"))) {
                             inv.setItem(ClickedSlot, ItemOnCursor);
                             p.setItemOnCursor((ItemStack)null);
-                            inv.setItem(ClickedSlot + 36, WardrobeGUI.CreateReadyButton(ClickedSlot, inv, Title));
+                            inv.setItem(ClickedSlot + 36, WardrobeGUI.createReadyButton(ClickedSlot, inv, Title));
                             return true;
                         }
                     }
                 }
 
-                if (Wardrobe.ConfigData.getConfig().getString("Allow-Item.Helmet-Slot.Name").equalsIgnoreCase("none") && Wardrobe.ConfigData.getConfig().getString("Allow-Item.Helmet-Slot.Type").equalsIgnoreCase("none") && Wardrobe.ConfigData.getConfig().getString("Allow-Item.Helmet-Slot.Lore").equalsIgnoreCase("none")) {
+                if (Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Helmet-Slot.Name").equalsIgnoreCase("none") && Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Helmet-Slot.Type").equalsIgnoreCase("none") && Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Helmet-Slot.Lore").equalsIgnoreCase("none")) {
                     return false;
                 } else {
                     CheckAmount = 0;
-                    if (!Wardrobe.ConfigData.getConfig().getString("Allow-Item.Helmet-Slot.Name").equalsIgnoreCase("none")) {
-                        if (!ItemOnCursor.getItemMeta().getDisplayName().contains(ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getConfig().getString("Allow-Item.Helmet-Slot.Name")))) {
+                    if (!Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Helmet-Slot.Name").equalsIgnoreCase("none")) {
+                        if (!ItemOnCursor.getItemMeta().getDisplayName().contains(ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Helmet-Slot.Name")))) {
                             return false;
                         }
 
@@ -929,13 +929,13 @@ public class GUIWork {
                         CheckAmount = CheckAmount + 1;
                     }
 
-                    if (!Wardrobe.ConfigData.getConfig().getString("Allow-Item.Helmet-Slot.Lore").equalsIgnoreCase("none")) {
+                    if (!Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Helmet-Slot.Lore").equalsIgnoreCase("none")) {
                         if (ItemOnCursorLore == null) {
                             return false;
                         }
 
                         for(int i = 0; i < ItemOnCursorLore.size(); ++i) {
-                            if (((String)ItemOnCursorLore.get(i)).contains(Wardrobe.ConfigData.getConfig().getString("Allow-Item.Helmet-Slot.Lore"))) {
+                            if (((String)ItemOnCursorLore.get(i)).contains(Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Helmet-Slot.Lore"))) {
                                 ++CheckAmount;
                             }
                         }
@@ -943,8 +943,8 @@ public class GUIWork {
                         ++CheckAmount;
                     }
 
-                    if (!Wardrobe.ConfigData.getConfig().getString("Allow-Item.Helmet-Slot.Type").equalsIgnoreCase("none")) {
-                        if (!Wardrobe.ConfigData.getConfig().getString("Allow-Item.Helmet-Slot.Type").contains(ItemOnCursorType)) {
+                    if (!Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Helmet-Slot.Type").equalsIgnoreCase("none")) {
+                        if (!Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Helmet-Slot.Type").contains(ItemOnCursorType)) {
                             return false;
                         }
 
@@ -956,7 +956,7 @@ public class GUIWork {
                     if (CheckAmount == 3) {
                         inv.setItem(ClickedSlot, ItemOnCursor);
                         p.setItemOnCursor((ItemStack)null);
-                        inv.setItem(ClickedSlot + 36, WardrobeGUI.CreateReadyButton(ClickedSlot, inv, Title));
+                        inv.setItem(ClickedSlot + 36, WardrobeGUI.createReadyButton(ClickedSlot, inv, Title));
                         return true;
                     } else {
                         return false;
@@ -972,27 +972,27 @@ public class GUIWork {
         if (ItemOnCursorType.contains("_CHESTPLATE")) {
             inv.setItem(ClickedSlot, ItemOnCursor);
             p.setItemOnCursor((ItemStack)null);
-            inv.setItem(ClickedSlot + 27, WardrobeGUI.CreateReadyButton(ClickedSlot - 9, inv, Title));
+            inv.setItem(ClickedSlot + 27, WardrobeGUI.createReadyButton(ClickedSlot - 9, inv, Title));
             return true;
         } else {
             int CheckAmount;
-            if (!Wardrobe.ConfigData.getConfig().getString("Allow-Item.Chestplate-Slot.Specific-Check-Lore").equalsIgnoreCase("none") && ItemOnCursorLore != null) {
+            if (!Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Chestplate-Slot.Specific-Check-Lore").equalsIgnoreCase("none") && ItemOnCursorLore != null) {
                 for(CheckAmount = 0; CheckAmount < ItemOnCursorLore.size(); ++CheckAmount) {
-                    if (((String)ItemOnCursorLore.get(CheckAmount)).contains(Wardrobe.ConfigData.getConfig().getString("Allow-Item.Chestplate-Slot.Specific-Check-Lore"))) {
+                    if (((String)ItemOnCursorLore.get(CheckAmount)).contains(Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Chestplate-Slot.Specific-Check-Lore"))) {
                         inv.setItem(ClickedSlot, ItemOnCursor);
                         p.setItemOnCursor((ItemStack)null);
-                        inv.setItem(ClickedSlot + 27, WardrobeGUI.CreateReadyButton(ClickedSlot - 9, inv, Title));
+                        inv.setItem(ClickedSlot + 27, WardrobeGUI.createReadyButton(ClickedSlot - 9, inv, Title));
                         return true;
                     }
                 }
             }
 
-            if (Wardrobe.ConfigData.getConfig().getString("Allow-Item.Chestplate-Slot.Name").equalsIgnoreCase("none") && Wardrobe.ConfigData.getConfig().getString("Allow-Item.Chestplate-Slot.Type").equalsIgnoreCase("none") && Wardrobe.ConfigData.getConfig().getString("Allow-Item.Chestplate-Slot.Lore").equalsIgnoreCase("none")) {
+            if (Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Chestplate-Slot.Name").equalsIgnoreCase("none") && Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Chestplate-Slot.Type").equalsIgnoreCase("none") && Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Chestplate-Slot.Lore").equalsIgnoreCase("none")) {
                 return false;
             } else {
                 CheckAmount = 0;
-                if (!Wardrobe.ConfigData.getConfig().getString("Allow-Item.Chestplate-Slot.Name").equalsIgnoreCase("none")) {
-                    if (!ItemOnCursor.getItemMeta().getDisplayName().contains(ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getConfig().getString("Allow-Item.Chestplate-Slot.Name")))) {
+                if (!Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Chestplate-Slot.Name").equalsIgnoreCase("none")) {
+                    if (!ItemOnCursor.getItemMeta().getDisplayName().contains(ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Chestplate-Slot.Name")))) {
                         return false;
                     }
 
@@ -1001,13 +1001,13 @@ public class GUIWork {
                     CheckAmount = CheckAmount + 1;
                 }
 
-                if (!Wardrobe.ConfigData.getConfig().getString("Allow-Item.Chestplate-Slot.Lore").equalsIgnoreCase("none")) {
+                if (!Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Chestplate-Slot.Lore").equalsIgnoreCase("none")) {
                     if (ItemOnCursorLore == null) {
                         return false;
                     }
 
                     for(int i = 0; i < ItemOnCursorLore.size(); ++i) {
-                        if (((String)ItemOnCursorLore.get(i)).contains(Wardrobe.ConfigData.getConfig().getString("Allow-Item.Chestplate-Slot.Lore"))) {
+                        if (((String)ItemOnCursorLore.get(i)).contains(Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Chestplate-Slot.Lore"))) {
                             ++CheckAmount;
                         }
                     }
@@ -1015,8 +1015,8 @@ public class GUIWork {
                     ++CheckAmount;
                 }
 
-                if (!Wardrobe.ConfigData.getConfig().getString("Allow-Item.Chestplate-Slot.Type").equalsIgnoreCase("none")) {
-                    if (!Wardrobe.ConfigData.getConfig().getString("Allow-Item.Chestplate-Slot.Type").contains(ItemOnCursorType)) {
+                if (!Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Chestplate-Slot.Type").equalsIgnoreCase("none")) {
+                    if (!Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Chestplate-Slot.Type").contains(ItemOnCursorType)) {
                         return false;
                     }
 
@@ -1028,7 +1028,7 @@ public class GUIWork {
                 if (CheckAmount == 3) {
                     inv.setItem(ClickedSlot, ItemOnCursor);
                     p.setItemOnCursor((ItemStack)null);
-                    inv.setItem(ClickedSlot + 27, WardrobeGUI.CreateReadyButton(ClickedSlot - 9, inv, Title));
+                    inv.setItem(ClickedSlot + 27, WardrobeGUI.createReadyButton(ClickedSlot - 9, inv, Title));
                     return true;
                 } else {
                     return false;
@@ -1041,27 +1041,27 @@ public class GUIWork {
         if (ItemOnCursorType.contains("_LEGGINGS")) {
             inv.setItem(ClickedSlot, ItemOnCursor);
             p.setItemOnCursor((ItemStack)null);
-            inv.setItem(ClickedSlot + 18, WardrobeGUI.CreateReadyButton(ClickedSlot - 18, inv, Title));
+            inv.setItem(ClickedSlot + 18, WardrobeGUI.createReadyButton(ClickedSlot - 18, inv, Title));
             return true;
         } else {
             int CheckAmount;
-            if (!Wardrobe.ConfigData.getConfig().getString("Allow-Item.Leggings-Slot.Specific-Check-Lore").equalsIgnoreCase("none") && ItemOnCursorLore != null) {
+            if (!Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Leggings-Slot.Specific-Check-Lore").equalsIgnoreCase("none") && ItemOnCursorLore != null) {
                 for(CheckAmount = 0; CheckAmount < ItemOnCursorLore.size(); ++CheckAmount) {
-                    if (((String)ItemOnCursorLore.get(CheckAmount)).contains(Wardrobe.ConfigData.getConfig().getString("Allow-Item.Leggings-Slot.Specific-Check-Lore"))) {
+                    if (((String)ItemOnCursorLore.get(CheckAmount)).contains(Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Leggings-Slot.Specific-Check-Lore"))) {
                         inv.setItem(ClickedSlot, ItemOnCursor);
                         p.setItemOnCursor((ItemStack)null);
-                        inv.setItem(ClickedSlot + 18, WardrobeGUI.CreateReadyButton(ClickedSlot - 18, inv, Title));
+                        inv.setItem(ClickedSlot + 18, WardrobeGUI.createReadyButton(ClickedSlot - 18, inv, Title));
                         return true;
                     }
                 }
             }
 
-            if (Wardrobe.ConfigData.getConfig().getString("Allow-Item.Leggings-Slot.Name").equalsIgnoreCase("none") && Wardrobe.ConfigData.getConfig().getString("Allow-Item.Leggings-Slot.Type").equalsIgnoreCase("none") && Wardrobe.ConfigData.getConfig().getString("Allow-Item.Leggings-Slot.Lore").equalsIgnoreCase("none")) {
+            if (Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Leggings-Slot.Name").equalsIgnoreCase("none") && Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Leggings-Slot.Type").equalsIgnoreCase("none") && Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Leggings-Slot.Lore").equalsIgnoreCase("none")) {
                 return false;
             } else {
                 CheckAmount = 0;
-                if (!Wardrobe.ConfigData.getConfig().getString("Allow-Item.Leggings-Slot.Name").equalsIgnoreCase("none")) {
-                    if (!ItemOnCursor.getItemMeta().getDisplayName().contains(ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getConfig().getString("Allow-Item.Leggings-Slot.Name")))) {
+                if (!Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Leggings-Slot.Name").equalsIgnoreCase("none")) {
+                    if (!ItemOnCursor.getItemMeta().getDisplayName().contains(ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Leggings-Slot.Name")))) {
                         return false;
                     }
 
@@ -1070,13 +1070,13 @@ public class GUIWork {
                     CheckAmount = CheckAmount + 1;
                 }
 
-                if (!Wardrobe.ConfigData.getConfig().getString("Allow-Item.Leggings-Slot.Lore").equalsIgnoreCase("none")) {
+                if (!Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Leggings-Slot.Lore").equalsIgnoreCase("none")) {
                     if (ItemOnCursorLore == null) {
                         return false;
                     }
 
                     for(int i = 0; i < ItemOnCursorLore.size(); ++i) {
-                        if (((String)ItemOnCursorLore.get(i)).contains(Wardrobe.ConfigData.getConfig().getString("Allow-Item.Leggings-Slot.Lore"))) {
+                        if (((String)ItemOnCursorLore.get(i)).contains(Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Leggings-Slot.Lore"))) {
                             ++CheckAmount;
                         }
                     }
@@ -1084,8 +1084,8 @@ public class GUIWork {
                     ++CheckAmount;
                 }
 
-                if (!Wardrobe.ConfigData.getConfig().getString("Allow-Item.Leggings-Slot.Type").equalsIgnoreCase("none")) {
-                    if (!Wardrobe.ConfigData.getConfig().getString("Allow-Item.Leggings-Slot.Type").contains(ItemOnCursorType)) {
+                if (!Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Leggings-Slot.Type").equalsIgnoreCase("none")) {
+                    if (!Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Leggings-Slot.Type").contains(ItemOnCursorType)) {
                         return false;
                     }
 
@@ -1097,7 +1097,7 @@ public class GUIWork {
                 if (CheckAmount == 3) {
                     inv.setItem(ClickedSlot, ItemOnCursor);
                     p.setItemOnCursor((ItemStack)null);
-                    inv.setItem(ClickedSlot + 18, WardrobeGUI.CreateReadyButton(ClickedSlot - 18, inv, Title));
+                    inv.setItem(ClickedSlot + 18, WardrobeGUI.createReadyButton(ClickedSlot - 18, inv, Title));
                     return true;
                 } else {
                     return false;
@@ -1110,27 +1110,27 @@ public class GUIWork {
         if (ItemOnCursorType.contains("_BOOTS")) {
             inv.setItem(ClickedSlot, ItemOnCursor);
             p.setItemOnCursor((ItemStack)null);
-            inv.setItem(ClickedSlot + 9, WardrobeGUI.CreateReadyButton(ClickedSlot - 27, inv, Title));
+            inv.setItem(ClickedSlot + 9, WardrobeGUI.createReadyButton(ClickedSlot - 27, inv, Title));
             return true;
         } else {
             int CheckAmount;
-            if (!Wardrobe.ConfigData.getConfig().getString("Allow-Item.Boots-Slot.Specific-Check-Lore").equalsIgnoreCase("none") && ItemOnCursorLore != null) {
+            if (!Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Boots-Slot.Specific-Check-Lore").equalsIgnoreCase("none") && ItemOnCursorLore != null) {
                 for(CheckAmount = 0; CheckAmount < ItemOnCursorLore.size(); ++CheckAmount) {
-                    if (((String)ItemOnCursorLore.get(CheckAmount)).contains(Wardrobe.ConfigData.getConfig().getString("Allow-Item.Boots-Slot.Specific-Check-Lore"))) {
+                    if (((String)ItemOnCursorLore.get(CheckAmount)).contains(Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Boots-Slot.Specific-Check-Lore"))) {
                         inv.setItem(ClickedSlot, ItemOnCursor);
                         p.setItemOnCursor((ItemStack)null);
-                        inv.setItem(ClickedSlot + 9, WardrobeGUI.CreateReadyButton(ClickedSlot - 27, inv, Title));
+                        inv.setItem(ClickedSlot + 9, WardrobeGUI.createReadyButton(ClickedSlot - 27, inv, Title));
                         return true;
                     }
                 }
             }
 
-            if (Wardrobe.ConfigData.getConfig().getString("Allow-Item.Boots-Slot.Name").equalsIgnoreCase("none") && Wardrobe.ConfigData.getConfig().getString("Allow-Item.Boots-Slot.Type").equalsIgnoreCase("none") && Wardrobe.ConfigData.getConfig().getString("Allow-Item.Boots-Slot.Lore").equalsIgnoreCase("none")) {
+            if (Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Boots-Slot.Name").equalsIgnoreCase("none") && Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Boots-Slot.Type").equalsIgnoreCase("none") && Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Boots-Slot.Lore").equalsIgnoreCase("none")) {
                 return false;
             } else {
                 CheckAmount = 0;
-                if (!Wardrobe.ConfigData.getConfig().getString("Allow-Item.Boots-Slot.Name").equalsIgnoreCase("none")) {
-                    if (!ItemOnCursor.getItemMeta().getDisplayName().contains(ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getConfig().getString("Allow-Item.Boots-Slot.Name")))) {
+                if (!Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Boots-Slot.Name").equalsIgnoreCase("none")) {
+                    if (!ItemOnCursor.getItemMeta().getDisplayName().contains(ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Boots-Slot.Name")))) {
                         return false;
                     }
                     CheckAmount = CheckAmount + 1;
@@ -1138,13 +1138,13 @@ public class GUIWork {
                     CheckAmount = CheckAmount + 1;
                 }
 
-                if (!Wardrobe.ConfigData.getConfig().getString("Allow-Item.Boots-Slot.Lore").equalsIgnoreCase("none")) {
+                if (!Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Boots-Slot.Lore").equalsIgnoreCase("none")) {
                     if (ItemOnCursorLore == null) {
                         return false;
                     }
 
                     for(int i = 0; i < ItemOnCursorLore.size(); ++i) {
-                        if (((String)ItemOnCursorLore.get(i)).contains(Wardrobe.ConfigData.getConfig().getString("Allow-Item.Boots-Slot.Lore"))) {
+                        if (((String)ItemOnCursorLore.get(i)).contains(Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Boots-Slot.Lore"))) {
                             ++CheckAmount;
                         }
                     }
@@ -1152,8 +1152,8 @@ public class GUIWork {
                     ++CheckAmount;
                 }
 
-                if (!Wardrobe.ConfigData.getConfig().getString("Allow-Item.Boots-Slot.Type").equalsIgnoreCase("none")) {
-                    if (!Wardrobe.ConfigData.getConfig().getString("Allow-Item.Boots-Slot.Type").contains(ItemOnCursorType)) {
+                if (!Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Boots-Slot.Type").equalsIgnoreCase("none")) {
+                    if (!Wardrobe.ConfigData.getFileConfig().getString("Allow-Item.Boots-Slot.Type").contains(ItemOnCursorType)) {
                         return false;
                     }
 
@@ -1165,7 +1165,7 @@ public class GUIWork {
                 if (CheckAmount == 3) {
                     inv.setItem(ClickedSlot, ItemOnCursor);
                     p.setItemOnCursor((ItemStack)null);
-                    inv.setItem(ClickedSlot + 9, WardrobeGUI.CreateReadyButton(ClickedSlot - 27, inv, Title));
+                    inv.setItem(ClickedSlot + 9, WardrobeGUI.createReadyButton(ClickedSlot - 27, inv, Title));
                     return true;
                 } else {
                     return false;
@@ -1176,25 +1176,25 @@ public class GUIWork {
 
     public static void CheckArmor(Player p, Inventory inv, int ButtonSlot, String Title) {
         if (p.getInventory().getHelmet() == null) {
-            inv.setItem(ButtonSlot - 36, WardrobeGUI.Background(ButtonSlot - 36, inv, Title));
+            inv.setItem(ButtonSlot - 36, WardrobeGUI.background(ButtonSlot - 36, inv, Title));
         } else {
             inv.setItem(ButtonSlot - 36, p.getInventory().getHelmet().clone());
         }
 
         if (p.getInventory().getChestplate() == null) {
-            inv.setItem(ButtonSlot - 27, WardrobeGUI.Background(ButtonSlot - 27, inv, Title));
+            inv.setItem(ButtonSlot - 27, WardrobeGUI.background(ButtonSlot - 27, inv, Title));
         } else {
             inv.setItem(ButtonSlot - 27, p.getInventory().getChestplate().clone());
         }
 
         if (p.getInventory().getLeggings() == null) {
-            inv.setItem(ButtonSlot - 18, WardrobeGUI.Background(ButtonSlot - 18, inv, Title));
+            inv.setItem(ButtonSlot - 18, WardrobeGUI.background(ButtonSlot - 18, inv, Title));
         } else {
             inv.setItem(ButtonSlot - 18, p.getInventory().getLeggings().clone());
         }
 
         if (p.getInventory().getBoots() == null) {
-            inv.setItem(ButtonSlot - 9, WardrobeGUI.Background(ButtonSlot - 9, inv, Title));
+            inv.setItem(ButtonSlot - 9, WardrobeGUI.background(ButtonSlot - 9, inv, Title));
         } else {
             inv.setItem(ButtonSlot - 9, p.getInventory().getBoots().clone());
         }

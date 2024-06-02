@@ -100,9 +100,9 @@ public class WardrobeCommand implements CommandExecutor {
      * @param args   The command arguments.
      */
     private void handlePlayerCommands(Player player, String[] args) {
-        if (!player.hasPermission(Wardrobe.ConfigData.getConfig().getString("Admin-Permission"))) {
+        if (!player.hasPermission(Wardrobe.ConfigData.getFileConfig().getString("Admin-Permission"))) {
             // If the player does not have permission, send a permission denied message
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getConfig().getString("Wardrobe_Message.Permission_Denied")));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', Wardrobe.ConfigData.getFileConfig().getString("Wardrobe_Message.Permission_Denied")));
             return;
         }
 
@@ -147,7 +147,7 @@ public class WardrobeCommand implements CommandExecutor {
             openWardrobe(args[1]);
         } else {
             // If no player name is provided, open the sender's wardrobe
-            WardrobeGUI.CreateWardrobePage1(player);
+            WardrobeGUI.createWardrobePage1(player);
         }
     }
 
@@ -171,7 +171,7 @@ public class WardrobeCommand implements CommandExecutor {
      * Reloads plugin configurations.
      */
     private void reloadConfigs() {
-        Wardrobe.ConfigData.ReloadConfig();
+        Wardrobe.ConfigData.reloadConfig();
         Wardrobe.Page_1.reloadConfig();
         Wardrobe.Page_2.reloadConfig();
     }
@@ -185,7 +185,7 @@ public class WardrobeCommand implements CommandExecutor {
         Player player = Bukkit.getPlayer(playerName);
         if (player != null) {
             // If the player is online, open their wardrobe
-            WardrobeGUI.CreateWardrobePage1(player);
+            WardrobeGUI.createWardrobePage1(player);
         } else {
             // If the player is not online, send a message indicating that
             Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[Wardrobe] " + ChatColor.RED + "That player is not online!");
